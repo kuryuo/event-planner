@@ -1,0 +1,12 @@
+.link {
+    display: inline-block;
+    color: var(--color-dark-gray-2);
+    font-size: 28px;
+    font-weight: 600;
+    text-decoration: none;
+    margin-top: 10px;
+}
+
+.link:hover {
+    text-decoration: underline;
+}

@@ -1,0 +1,61 @@
+.authPage {
+    display: flex;
+    height: 100vh;
+    position: relative;
+}
+
+img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.authPageContent {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 40%;
+    padding: 40px;
+    margin: 250px 180px 0px 0px;
+    background-color: transparent;
+    z-index: 1;
+}
+
+.authForm {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    align-items: center;
+}
+
+.authLinkContainer {
+    position: absolute;
+    top: 20px;
+    right: 40px;
+}
+
+.authLink {
+    text-decoration: none;
+    font-size: 28px;
+    font-weight: 600;
+    color: var(--color-dark-gray);
+    cursor: pointer;
+}
+
+h1 {
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 64px;
+    font-weight: 600;
+    color: var(--color-dark-gray);
+}
+
+input {
+    width: 50px;
+}
+
+.linkButtonContainer {
+    display: flex;
+    justify-content: flex-end;
+    width: 100%;
+}
