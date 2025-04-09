@@ -16,7 +16,7 @@ img {
     right: 0;
     width: 40%;
     padding: 40px;
-    margin: 250px 180px 0px 0px;
+    margin: 200px 100px 0 0;
     background-color: transparent;
     z-index: 1;
 }
@@ -38,7 +38,7 @@ img {
     text-decoration: none;
     font-size: 28px;
     font-weight: 600;
-    color: var(--color-dark-gray);
+    color: var(--dark-grey);
     cursor: pointer;
 }
 
@@ -47,7 +47,7 @@ h1 {
     margin-bottom: 20px;
     font-size: 64px;
     font-weight: 600;
-    color: var(--color-dark-gray);
+    color: var(--dark-grey);
 }
 
 input {

@@ -1,10 +1,10 @@
 import React from 'react';
-import InputField from '../../components/InputField/InputField.tsx';
-import Button from '../../components/Button/Button.tsx';
-import LinkButton from '../../components/LinkButton/LinkButton.tsx';
-import img from '../../assets/img/img.svg';
+import InputField from '@/components/input-field/InputField';
+import Button from '@/components/button/Button.tsx';
+import LinkButton from '@/components/link-button/LinkButton.tsx';
+import img from '@/assets/img/img.svg';
 import styles from './AuthPage.module.css';
-import {ROUTES} from "../../const.ts";
+import {ROUTES} from "@/const.ts";
 
 const LoginPage: React.FC = () => {
     return (

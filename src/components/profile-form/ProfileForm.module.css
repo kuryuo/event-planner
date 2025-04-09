@@ -1,0 +1,46 @@
+.profileForm {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    width: auto;
+}
+
+.section {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+h3 {
+    font-size: 32px;
+    font-weight: 600;
+    margin-bottom: 10px;
+    color: var(--dark-grey);
+}
+
+.inputRow {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 70px;
+}
+
+.inputColumn {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.inputGroup {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+label {
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.shortInput input {
+    width: 150px;
+}

@@ -1,0 +1,42 @@
+.profilePhoto {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+    position: relative;
+}
+
+.title{
+    font-size: 32px;
+    color: var(--dark-grey);
+    font-weight: 600;
+}
+
+.avatar {
+    width: 170px;
+    height: 170px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #e0e0e0;
+}
+
+.avatarContainer{
+    display: flex;
+    flex-direction: row;
+    align-items: self-end;
+}
+
+.icon {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 5px;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.icon svg {
+    width: 28px;
+    height: 28px;
+}

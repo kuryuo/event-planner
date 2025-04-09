@@ -1,0 +1,23 @@
+.profilePage {
+    display: flex;
+    flex-direction: row;
+}
+
+.contentContainer {
+    margin: 50px 100px 0 220px;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.profileContent {
+    display: flex;
+    flex-direction: row;
+    gap: 100px;
+}
+
+.formActionsContainer {
+    margin-top: 20px;
+    display: flex;
+    gap: 20px;
+}

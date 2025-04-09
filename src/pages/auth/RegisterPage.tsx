@@ -1,10 +1,10 @@
 import React from 'react';
-import InputField from '../../components/InputField/InputField.tsx';
-import Button from '../../components/Button/Button.tsx';
-import img from '../../assets/img/img.svg';
+import InputField from '@/components/input-field/InputField.tsx';
+import Button from '@/components/button/Button.tsx';
+import img from '@/assets/img/img.svg';
 import styles from './AuthPage.module.css';
-import LinkButton from "../../components/LinkButton/LinkButton.tsx";
-import {ROUTES} from "../../const.ts";
+import LinkButton from "@/components/link-button/LinkButton.tsx";
+import {ROUTES} from "@/const.ts";
 
 const RegisterPage: React.FC = () => {
     return (

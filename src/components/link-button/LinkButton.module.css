@@ -1,6 +1,6 @@
 .link {
     display: inline-block;
-    color: var(--color-dark-gray-2);
+    color: var(--dark-grey);
     font-size: 28px;
     font-weight: 600;
     text-decoration: none;
