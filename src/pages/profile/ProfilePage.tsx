@@ -11,9 +11,7 @@ const ProfilePage: React.FC = () => {
         <div className={styles.profilePage}>
             <Sidebar />
             <div className={styles.contentContainer}>
-                <div className={styles.headerContainer}>
                     <Header title="Мой профиль" />
-                </div>
 
                 <div className={styles.profileContent}>
                     <div className={styles.profileFormContainer}>
@@ -25,7 +23,10 @@ const ProfilePage: React.FC = () => {
                 </div>
 
                 <div className={styles.formActionsContainer}>
-                    <FormActions />
+                    <FormActions
+                        primaryText="Сохранить изменения"
+                        secondaryText="Отмена"
+                    />
                 </div>
             </div>
         </div>

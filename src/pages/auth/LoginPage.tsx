@@ -4,7 +4,7 @@ import Button from '@/components/button/Button.tsx';
 import LinkButton from '@/components/link-button/LinkButton.tsx';
 import img from '@/assets/img/img.svg';
 import styles from './AuthPage.module.css';
-import {ROUTES} from "@/const.ts";
+import {AppRoute} from "@/const.ts";
 
 const LoginPage: React.FC = () => {
     return (
@@ -14,17 +14,17 @@ const LoginPage: React.FC = () => {
             </div>
 
             <div className={styles.authLinkContainer}>
-                <LinkButton label="Регистрация" href={ROUTES.REGISTER} />
+                <LinkButton label="Регистрация" href={AppRoute.REGISTER} />
             </div>
 
             <div className={styles.authPageContent}>
                 <form className={styles.authForm}>
                     <h1>Вход</h1>
-                    <InputField label="Логин" type="text" placeholder="Введите логин" />
-                    <InputField label="Пароль" type="password" placeholder="Введите пароль" />
+                    <InputField type="text" placeholder="Введите логин" />
+                    <InputField type="password" placeholder="Введите пароль" />
                     <Button label="Войти" variant="default" />
                     <div className={styles.linkButtonContainer}>
-                        <LinkButton label="Забыли пароль?" href={ROUTES.RESET_PASSWORD} />
+                        <LinkButton label="Забыли пароль?" href={AppRoute.RESET_PASSWORD} />
                     </div>
                 </form>
             </div>

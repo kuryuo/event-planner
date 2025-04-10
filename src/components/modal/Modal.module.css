@@ -1,0 +1,103 @@
+.overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.modal {
+    background-color: var(--white);
+    border-radius: 12px;
+    padding: 30px;
+    width: 480px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.title {
+    font-size: 24px;
+    font-weight: 600;
+    color: var(--dark-grey);
+}
+
+.close {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+}
+
+.closeIcon {
+    width: 20px;
+    height: 20px;
+}
+
+.description {
+    font-size: 20px;
+    color: var(--grey);
+}
+
+.footer {
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+}
+
+.button {
+    padding: 10px 20px;
+    font-size: 18px;
+    border-radius: 8px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.default {
+    background-color: var(--grey);
+    color: white;
+    border: none;
+}
+
+.default:hover {
+    background-color: var(--light-grey);
+}
+
+.default:active {
+    background-color: var(--dark-grey);
+}
+
+.border {
+    border: 2px solid var(--grey);
+    background-color: var(--white);
+    color: var(--grey);
+}
+
+.border:active {
+    color: var(--white);
+    background-color: var(--grey);
+}
+
+.red {
+    background-color: var(--light-red);
+    color: white;
+    border: transparent;
+}
+
+.red:hover {
+    box-shadow: inset 0 0 0 2px var(--red-outline);
+}
+
+.red:active {
+    background-color: var(--deep-red);
+}
+

@@ -6,16 +6,16 @@ import deleteIcon from '@/assets/img/delete.svg';
 
 const ProfilePhoto: React.FC = () => {
     return (
-        <div className={styles.profilePhoto}>
+        <div className={styles.root}>
             <p className={styles.title}>Фото профиля</p>
-            <div className={styles.avatarContainer}>
+            <div className={styles.avatarWrap}>
                 <img src={avatar} alt="Фото профиля" className={styles.avatar} />
-                <div className={styles.iconButtons}>
-                    <button className={styles.icon} aria-label="Редактировать фото">
-                        <img src={editIcon} alt="Редактировать" className={styles.iconImage} />
+                <div className={styles.buttons}>
+                    <button className={styles.btn} aria-label="Редактировать фото">
+                        <img src={editIcon} alt="Редактировать" />
                     </button>
-                    <button className={styles.icon} aria-label="Удалить фото">
-                        <img src={deleteIcon} alt="Удалить" className={styles.iconImage} />
+                    <button className={styles.btn} aria-label="Удалить фото">
+                        <img src={deleteIcon} alt="Удалить" />
                     </button>
                 </div>
             </div>

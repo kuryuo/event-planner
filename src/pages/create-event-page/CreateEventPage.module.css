@@ -1,0 +1,25 @@
+.page {
+    display: flex;
+    flex-direction: row;
+}
+
+.content {
+    margin: 50px 100px 0 220px;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.formsContainer {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: flex-start;
+    gap: 70px;
+}
+
+.rightColumn {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}

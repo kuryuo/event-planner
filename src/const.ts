@@ -3,4 +3,5 @@ export enum AppRoute {
     REGISTER = "/register",
     RESET_PASSWORD = "/reset-password",
     PROFILE = "/profile",
-};
+    CREATE_EVENT = "/create-event",
+}

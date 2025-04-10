@@ -1,4 +1,4 @@
-.profilePhoto {
+.root {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
@@ -6,7 +6,7 @@
     position: relative;
 }
 
-.title{
+.title {
     font-size: 32px;
     color: var(--dark-grey);
     font-weight: 600;
@@ -20,13 +20,19 @@
     border: 2px solid #e0e0e0;
 }
 
-.avatarContainer{
+.avatarWrap {
     display: flex;
     flex-direction: row;
-    align-items: self-end;
+    align-items: flex-end;
+    gap: 10px;
 }
 
-.icon {
+.buttons {
+    display: flex;
+    gap: 10px;
+}
+
+.btn {
     background-color: transparent;
     border: none;
     cursor: pointer;
@@ -36,7 +42,7 @@
     align-items: center;
 }
 
-.icon svg {
+.btn img {
     width: 28px;
     height: 28px;
 }

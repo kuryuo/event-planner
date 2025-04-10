@@ -7,11 +7,11 @@ const Input: React.FC<{
     placeholder?: string;
 }> = ({ label, type, placeholder }) => {
     return (
-        <div className={styles.inputWrapper}>
-            {label && <label htmlFor={label} className={styles.inputLabel}>{label}</label>}
+        <div className={styles.wrapper}>
+            {label && <label htmlFor={label} className={styles.label}>{label}</label>}
             <input
                 id={label}
-                className={styles.inputField}
+                className={styles.input}
                 type={type}
                 placeholder={placeholder}
             />

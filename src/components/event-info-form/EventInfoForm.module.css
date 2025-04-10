@@ -1,8 +1,6 @@
 .form {
     display: flex;
     flex-direction: column;
-    gap: 20px;
-    width: auto;
 }
 
 .section {
@@ -39,8 +37,4 @@
 label {
     font-size: 14px;
     font-weight: 600;
-}
-
-.short input {
-    width: 150px;
 }
