@@ -1,0 +1,14 @@
+.tag {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    background-color: var(--lilac);
+    padding: 6px 16px;
+    border-radius: 16px;
+    width: fit-content;
+}
+
+.label {
+    font-size: 20px;
+    color: var(--dark-grey);
+}

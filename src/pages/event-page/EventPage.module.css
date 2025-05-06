@@ -1,0 +1,43 @@
+.page {
+    display: flex;
+    flex-direction: row;
+}
+
+.content {
+    margin: 50px 100px 0 220px;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.main {
+    display: flex;
+    flex-direction: row;
+    gap: 60px;
+    align-items: flex-start;
+    margin-top: 30px;
+}
+
+.leftColumn {
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+    flex: 2;
+}
+
+.rightColumn {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    flex: 1;
+}
+
+.tags {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.customButton {
+    margin-left: auto;
+}

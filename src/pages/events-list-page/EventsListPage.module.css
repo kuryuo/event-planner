@@ -1,0 +1,12 @@
+.page {
+    display: flex;
+    flex-direction: row;
+}
+
+.content {
+    margin: 50px 100px 0 220px;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    gap: 30px;
+}

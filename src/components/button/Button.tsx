@@ -5,10 +5,12 @@ interface ButtonProps {
     label: string;
     onClick?: () => void;
     variant: 'default' | 'border' | 'red';
+    size?: 'default' | 'small';
+    className?: string;
 }
 
-const Button: React.FC<ButtonProps> = ({ label, onClick, variant }) => {
-    const buttonClass = `${styles.button} ${styles[variant]}`;
+const Button: React.FC<ButtonProps> = ({ label, onClick, variant, size = 'default', className }) => {
+    const buttonClass = `${styles.button} ${styles[variant]} ${styles[size]} ${className ? className : ''}`;
 
     return (
         <button className={buttonClass} onClick={onClick}>

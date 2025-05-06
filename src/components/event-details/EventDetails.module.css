@@ -1,0 +1,25 @@
+.meta {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    border-radius: 10px;
+    border: 1px solid var(--dark-grey);
+    padding: 16px;
+}
+
+.item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 24px;
+}
+
+.icon {
+    width: 30px;
+    height: 30px;
+}
+
+.text {
+    font-weight: 400;
+    color: var(--dark-grey);
+}

@@ -1,0 +1,32 @@
+.page {
+    display: flex;
+    flex-direction: row;
+}
+
+.content {
+    margin: 50px 100px 0 220px;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.back {
+    font-size: 32px;
+    margin: 20px 0;
+    color: var(--dark-grey);
+    cursor: pointer;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    gap: 20px;
+}
+
+.photo {
+    width: 100%;
+    max-width: 350px;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 8px;
+}

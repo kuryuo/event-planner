@@ -3,7 +3,7 @@ import Sidebar from '@/components/sidebar/Sidebar';
 import Header from '@/components/header/Header';
 import ProfileForm from '@/components/profile-form/ProfileForm';
 import ProfilePhoto from '@/components/profile-photo/ProfilePhoto';
-import FormActions from '@/components/form-actions/FormActions';
+import FormButtons from '@/components/form-buttons/FormButtons';
 import styles from './ProfilePage.module.css';
 
 const ProfilePage: React.FC = () => {
@@ -23,7 +23,7 @@ const ProfilePage: React.FC = () => {
                 </div>
 
                 <div className={styles.formActionsContainer}>
-                    <FormActions
+                    <FormButtons
                         primaryText="Сохранить изменения"
                         secondaryText="Отмена"
                     />

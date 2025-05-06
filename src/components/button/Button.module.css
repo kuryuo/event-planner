@@ -3,6 +3,8 @@
     font-size: 28px;
     padding: 10px 55px;
     border-radius: 10px;
+    width: fit-content;
+    cursor: pointer;
 }
 
 .default {
@@ -43,4 +45,10 @@
 
 .red:active {
     background-color: var(--deep-red);
+}
+
+.small {
+    font-size: 22px;
+    padding: 7px 40px;
+    width: fit-content;
 }

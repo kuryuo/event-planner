@@ -1,13 +1,13 @@
 import React from 'react';
-import styles from './CreateEventPage.module.css';
+import styles from './NewEventPage.module.css';
 import Sidebar from '@/components/sidebar/Sidebar';
 import Header from '@/components/header/Header';
 import EventInfoForm from "@/components/event-info-form/EventInfoForm";
 import PositioningForm from '@/components/positioning-form/PositioningForm';
 import ProfilePhoto from '@/components/profile-photo/ProfilePhoto';
-import FormActions from "@/components/form-actions/FormActions";
+import FormButtons from "@/components/form-buttons/FormButtons";
 
-const CreateEventPage: React.FC = () => {
+const NewEventPage: React.FC = () => {
     return (
         <div className={styles.page}>
             <Sidebar />
@@ -18,12 +18,12 @@ const CreateEventPage: React.FC = () => {
                     <EventInfoForm />
                     <div className={styles.rightColumn}>
                         <PositioningForm />
-                        <ProfilePhoto />
+                        <ProfilePhoto title="Изображение" />
                     </div>
                 </div>
 
                 <div className={styles.formActionsContainer}>
-                    <FormActions
+                    <FormButtons
                         primaryText="Создать мероприятие"
                         secondaryText="Отмена"
                     />
@@ -33,4 +33,4 @@ const CreateEventPage: React.FC = () => {
     );
 };
 
-export default CreateEventPage;
+export default NewEventPage;

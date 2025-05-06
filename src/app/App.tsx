@@ -1,23 +1,27 @@
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import LoginPage from "@/pages/auth/LoginPage";
-import ForgotPasswordPage from "@/pages/auth/PasswordResetPage";
-import RegisterPage from "@/pages/auth/RegisterPage";
-import ProfilePage from "@/pages/profile/ProfilePage";
-import CreateEventPage from "@/pages/create-event-page/CreateEventPage";
+import AuthPage from "@/pages/auth/AuthPage";
+import ProfilePage from '@/pages/profile-page/ProfilePage';
+import NewEventPage from '@/pages/new-event-page/NewEventPage';
+import EventPage from '@/pages/event-page/EventPage';
+import AdminEventPage from '@/pages/organizer-event-page/OrganizerEventPage';
+import EventsListPage from '@/pages/events-list-page/EventsListPage';
+import EventPhotosPage from "@/pages/event-photos-page/EventPhotosPage";
 
-import Modal from "@/components/modal/Modal";
+import Modal from '@/components/modal/Modal';
 
-import {AppRoute} from "@/const";
+import { AppRoute } from '@/const';
 
 function App() {
     return (
         <Router>
             <Routes>
-                <Route path={AppRoute.LOGIN} element={<LoginPage />} />
-                <Route path={AppRoute.REGISTER} element={<RegisterPage />} />
-                <Route path={AppRoute.RESET_PASSWORD} element={<ForgotPasswordPage />} />
+                <Route path={AppRoute.AUTH} element={<AuthPage />} />
                 <Route path={AppRoute.PROFILE} element={<ProfilePage />} />
-                <Route path={AppRoute.CREATE_EVENT} element={<CreateEventPage />} />
+                <Route path={AppRoute.CREATE_EVENT} element={<NewEventPage />} />
+                <Route path={AppRoute.EVENT} element={<EventPage />} />
+                <Route path={AppRoute.ADMIN_EVENT} element={<AdminEventPage />} />
+                <Route path={AppRoute.EVENT_LIST} element={<EventsListPage />} />
+                <Route path={AppRoute.PHOTOS_EVENT} element={<EventPhotosPage/>} />
 
                 <Route
                     path="/modal"
@@ -32,7 +36,6 @@ function App() {
                             primaryType="red"
                             secondaryType="border"
                         />
-
                     }
                 />
             </Routes>

@@ -1,0 +1,38 @@
+.gallery {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.title {
+    font-size: 32px;
+    font-weight: 500;
+    color: var(--dark-grey);
+}
+
+.row {
+    display: flex;
+    gap: 12px;
+    overflow: hidden;
+    width: 100%;
+}
+
+.image {
+    width: 200px;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 8px;
+    flex-shrink: 0;
+}
+
+.footer {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 4px;
+}
+
+.showAll {
+    font-size: 24px;
+    color: var(--grey);
+    cursor: pointer;
+}

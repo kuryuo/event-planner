@@ -1,5 +1,5 @@
 import React from 'react';
-import styles from './FormActions.module.css';
+import styles from './FormButtons.module.css';
 import Button from '@/components/button/Button';
 
 type FormActionsProps = {
@@ -11,7 +11,7 @@ type FormActionsProps = {
     className?: string;
 };
 
-const FormActions: React.FC<FormActionsProps> = ({
+const FormButtons: React.FC<FormActionsProps> = ({
                                                      primaryText,
                                                      secondaryText,
                                                      onPrimaryClick,
@@ -41,4 +41,4 @@ const FormActions: React.FC<FormActionsProps> = ({
     );
 };
 
-export default FormActions;
+export default FormButtons;

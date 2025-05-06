@@ -3,11 +3,16 @@ import styles from './LinkButton.module.css';
 
 interface LinkButtonProps {
     label: string;
-    href: string;
+    onClick?: () => void;
+    type?: 'button' | 'submit';
 }
 
-const LinkButton: React.FC<LinkButtonProps> = ({ label, href }) => {
-    return <a className={styles.link} href={href}>{label}</a>;
+const LinkButton: React.FC<LinkButtonProps> = ({ label, onClick, type = 'button' }) => {
+    return (
+        <button className={styles.link} onClick={onClick} type={type}>
+            {label}
+        </button>
+    );
 };
 
 export default LinkButton;

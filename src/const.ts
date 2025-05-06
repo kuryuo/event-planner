@@ -1,7 +1,9 @@
 export enum AppRoute {
-    LOGIN = "/",
-    REGISTER = "/register",
-    RESET_PASSWORD = "/reset-password",
+    AUTH = "/",
     PROFILE = "/profile",
     CREATE_EVENT = "/create-event",
+    EVENT = "/event",
+    ADMIN_EVENT = "/admin-event",
+    EVENT_LIST = "/event-list",
+    PHOTOS_EVENT = "/photos-event",
 }
