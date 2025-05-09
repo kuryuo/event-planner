@@ -1,0 +1,36 @@
+.root {
+    padding: 12px;
+    border-radius: 8px;
+    width: 315px;
+}
+
+.title {
+    font-weight: 600;
+    font-size: 20px;
+    margin-bottom: 10px;
+    color: var(--dark-grey);
+}
+
+.checkboxList {
+    background-color: var(--dark-white_borders);
+    padding: 20px;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-top: 10px;
+    max-height: 250px;
+    overflow-y: auto;
+}
+
+.checkboxRow {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 14px;
+}
+
+.role{
+    color: var(--dark-grey);
+    font-size: 18px;
+}

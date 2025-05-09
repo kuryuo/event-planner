@@ -50,10 +50,6 @@ h1 {
     color: var(--dark-grey);
 }
 
-input {
-    width: 50px;
-}
-
 .linkButtonContainer {
     display: flex;
     justify-content: flex-end;

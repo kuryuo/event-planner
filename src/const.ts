@@ -6,4 +6,6 @@ export enum AppRoute {
     ADMIN_EVENT = "/admin-event",
     EVENT_LIST = "/event-list",
     PHOTOS_EVENT = "/photos-event",
+    SUBSCRIBERS = "/subscribers",
+    INVITE = "/invite",
 }

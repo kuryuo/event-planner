@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import InputField from '@/components/input-field/InputField';
-import Button from '@/components/button/Button';
-import LinkButton from '@/components/link-button/LinkButton';
+import InputField from '@/shared/ui/input-field/InputField';
+import Button from '@/shared/ui/button/Button';
+import LinkButton from '@/shared/ui/link-button/LinkButton';
 import img from '@/assets/img/img.svg';
 import styles from './AuthPage.module.css';
 import { AppRoute } from '@/const';
@@ -41,21 +41,21 @@ const AuthPage: React.FC = () => {
 
                     {mode === 'login' && (
                         <>
-                            <InputField type="text" placeholder="Введите логин" />
-                            <InputField type="password" placeholder="Введите пароль" />
+                            <InputField type="text" placeholder="Введите логин" size = "medium" />
+                            <InputField type="password" placeholder="Введите пароль" size = "medium" />
                         </>
                     )}
 
                     {mode === 'register' && (
                         <>
-                            <InputField type="email" placeholder="Введите email" />
-                            <InputField type="password" placeholder="Введите пароль" />
-                            <InputField type="password" placeholder="Повторите пароль" />
+                            <InputField type="email" placeholder="Введите email" size = "medium" />
+                            <InputField type="password" placeholder="Введите пароль" size = "medium" />
+                            <InputField type="password" placeholder="Повторите пароль" size = "medium" />
                         </>
                     )}
 
                     {mode === 'reset' && (
-                        <InputField type="email" placeholder="Введите email для восстановления" />
+                        <InputField type="email" placeholder="Введите email для восстановления" size = "medium" />
                     )}
 
                     <Button
