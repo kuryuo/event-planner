@@ -18,7 +18,7 @@ const ProfilePage: React.FC = () => {
                         <ProfileForm />
                     </div>
                     <div className={styles.profilePhotoContainer}>
-                        <Avatar />
+                        <Avatar/>
                     </div>
                 </div>
 

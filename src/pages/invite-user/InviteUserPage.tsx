@@ -4,7 +4,9 @@ import Sidebar from '@/widgets/sidebar/Sidebar';
 import Header from '@/widgets/header/Header';
 import InputField from "@/shared/ui/input-field/InputField";
 import Arrow from '@/assets/img/arrow.svg';
+import { useNavigate } from 'react-router-dom';
 import UserCard from "@/entities/user/ui/user-card/UserCard";
+import {AppRoute} from "@/const";
 
 const participants = Array(8).fill({
     name: 'Иванов Иван',
@@ -13,6 +15,7 @@ const participants = Array(8).fill({
 
 const InviteUserPage: React.FC = () => {
     const [searchValue, setSearchValue] = useState('');
+    const navigate = useNavigate();
 
     return (
         <div className={styles.page}>
@@ -22,7 +25,7 @@ const InviteUserPage: React.FC = () => {
 
                 <div className={styles.topRow}>
                     <div className={styles.tabs}>
-                        <img src={Arrow} className={styles.arrow} alt="arrow" />
+                        <img src={Arrow} className={styles.arrow} alt="arrow" onClick={() => navigate(AppRoute.SUBSCRIBERS)}/>
                         <span className={styles.participants}>Пригласить участника</span>
                     </div>
                     <InputField

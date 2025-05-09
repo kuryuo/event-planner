@@ -17,6 +17,15 @@
     font-size: 24px;
     color: var(--dark-grey);
     cursor: pointer;
+    transition: transform 0.2s ease;
+}
+
+.arrow:hover {
+    transform: scale(1.1);
+}
+
+.arrow:active {
+    transform: scale(0.95);
 }
 
 .month {
@@ -44,4 +53,13 @@
 .iconButton img {
     width: 38px;
     height: 38px;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.iconButton:hover img {
+    transform: scale(1.05);
+}
+
+.iconButton:active img {
+    transform: scale(0.95);
 }

@@ -22,9 +22,23 @@
     display: flex;
     align-items: center;
     border-radius: 12px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    box-shadow: var(--shadow);
     padding: 8px 16px;
     gap: 8px;
+}
+
+.inputContainer {
+    transition: background-color 0.25s ease-in-out, border 0.25s ease-in-out;
+    border: 1px solid transparent;
+}
+
+.inputContainer:hover {
+    background-color: rgba(0, 0, 0, 0.03);
+}
+
+.inputContainer:focus-within {
+    border: 2px solid var(--light-blue);
+    background-color: rgba(0, 0, 0, 0.015);
 }
 
 .input {

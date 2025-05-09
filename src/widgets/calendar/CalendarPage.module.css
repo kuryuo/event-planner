@@ -1,0 +1,57 @@
+:global([class*='calendarWrapper']) {
+    background-color: transparent !important;
+    border-radius: 0 !important;
+    padding: 0 !important;
+    box-shadow: none !important;
+}
+
+:global(.rbc-header) {
+    background-color: transparent;
+    color: var(--dark-grey);
+    text-transform: lowercase;
+    padding: 12px 0;
+}
+
+:global(.rbc-header span) {
+    font-size: 24px;
+    font-weight: 400;
+}
+
+:global(.rbc-calendar),
+:global(.rbc-calendar .rbc-header),
+:global(.rbc-calendar .rbc-date-cell),
+:global(.rbc-calendar .rbc-event),
+:global(.rbc-calendar .rbc-day-bg),
+:global(.rbc-calendar .rbc-label) {
+    font-family: 'Averta', sans-serif !important;
+}
+
+:global(.rbc-date-cell .rbc-button-link) {
+    color: var(--dark-grey);
+    font-size: 24px;
+    font-weight: 500;
+    background: transparent;
+    border: none;
+    cursor: default;
+    padding: 0;
+    text-align: left;
+}
+
+:global(.rbc-month-view) {
+    table-layout: fixed;
+    width: 100%; /* пусть занимает всё доступное */
+}
+
+:global(.rbc-month-row) {
+    min-height: 125px;
+    height: auto;
+}
+
+:global(.rbc-date-cell) {
+    padding: 8px;
+    box-sizing: border-box;
+    overflow: visible !important;
+    position: relative;
+    vertical-align: top;
+}
+

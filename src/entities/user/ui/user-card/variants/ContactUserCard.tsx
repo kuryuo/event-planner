@@ -14,7 +14,6 @@ const ContactUserCard: React.FC<ContactUserCardProps> = ({ name, role }) => {
             <div className={styles.infoBlock}>
                 <p className={styles.name}>{name}</p>
                 {role && <p className={styles.role}>{role}</p>}
-                <input type="checkbox" className={styles.contactCheckbox} />
             </div>
         </div>
     );

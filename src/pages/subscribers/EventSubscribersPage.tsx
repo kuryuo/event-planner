@@ -6,7 +6,9 @@ import InputField from "@/shared/ui/input-field/InputField";
 import UserRoleFilter from '@/features/manage-subscribers/ui/user-role-filter/UserRoleFilter';
 import UserCard from '@/entities/user/ui/user-card/UserCard';
 import Button from '@/shared/ui/button/Button';
+import { useNavigate } from 'react-router-dom';
 import Arrow from '@/assets/img/arrow.svg';
+import {AppRoute} from "@/const";
 
 const participants = Array(8).fill({
     name: 'Иванов Иван',
@@ -15,6 +17,7 @@ const participants = Array(8).fill({
 
 const EventSubscribersPage: React.FC = () => {
     const [searchValue, setSearchValue] = useState('');
+    const navigate = useNavigate();
 
     return (
         <div className={styles.page}>
@@ -24,9 +27,9 @@ const EventSubscribersPage: React.FC = () => {
 
                 <div className={styles.topRow}>
                     <div className={styles.tabs}>
-                        <img src={Arrow} className={styles.arrow} alt="arrow" />
+                        <img src={Arrow} className={styles.arrow} alt="arrow" onClick={() => navigate(AppRoute.EVENT)}/>
                         <span className={styles.participants}>Участники</span>
-                        <Button label = 'Пригласить пользователя' variant = 'border' size = 'small'/>
+                        <Button label = 'Пригласить пользователя' variant = 'border' size = 'small' onClick={() => navigate(AppRoute.INVITE)}/>
                     </div>
                     <InputField
                         icon="search"

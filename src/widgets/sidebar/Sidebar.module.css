@@ -21,4 +21,14 @@
     height: 50px;
     object-fit: contain;
     margin-bottom: 30px;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    cursor: pointer;
+}
+
+.icon:hover {
+    transform: scale(1.05);
+}
+
+.icon:active {
+    transform: scale(0.95);
 }

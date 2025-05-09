@@ -8,4 +8,5 @@ export enum AppRoute {
     PHOTOS_EVENT = "/photos-event",
     SUBSCRIBERS = "/subscribers",
     INVITE = "/invite",
+    CALENDAR = "/calendar",
 }

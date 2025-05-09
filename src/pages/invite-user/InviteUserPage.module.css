@@ -19,9 +19,10 @@
 
 .tabs {
     display: flex;
-    gap: 30px;
+    gap: 12px;
     font-size: 18px;
     font-weight: 500;
+    align-items: center;
 }
 
 .mainContent {
@@ -40,14 +41,14 @@
 }
 
 .arrow{
-    width: 40px;
-    height: 40px;
+    width: 24px;
+    height: 24px;
     cursor: pointer;
 }
 
 .participants{
     font-size: 32px;
-    color: var(--dark-grey)
+    color: var(--dark-grey);
 }
 
 .addParticipants{

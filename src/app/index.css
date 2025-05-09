@@ -14,6 +14,7 @@
     --dark-grey: #585858;
     --grey: #696967;
     --light-grey: #858585;
+    --light-grey2: #E6E6E6;
     --pale-grey: #C7C7C7;
     --light-blue: #D5EEF3;
     --lilac: #D0D4ED;
@@ -24,7 +25,8 @@
     --light-red: #FF8080;
     --red-outline: #843F3F;
     --interface-color: #D9D9D9;
-    --dark-white_borders: #EAEAEA
+    --dark-white_borders: #EAEAEA;
+    --shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
 }
 
 body {

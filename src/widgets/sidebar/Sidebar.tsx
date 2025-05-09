@@ -30,7 +30,7 @@ const Sidebar: React.FC = () => {
             </div>
             <nav className={styles.menu}>
                 <ul>
-                    <li className={styles.menuItem}>
+                    <li className={styles.menuItem} onClick={() => navigate(AppRoute.CALENDAR)}>
                         <img src={calendarIcon} alt="Календарь" className={styles.icon} />
                     </li>
                     <li className={styles.menuItem}>

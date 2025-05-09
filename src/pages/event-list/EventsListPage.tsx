@@ -11,7 +11,11 @@ const EventsListPage: React.FC = () => {
             <Sidebar />
             <div className={styles.content}>
                 <Header title="Календарь" />
-                <EventsToolbar />
+                <EventsToolbar
+                    label="Март 2025"
+                    onNavigate={() => {}}
+                    date={new Date()}
+                />
                 <EventListItem
                     day="18 марта"
                     time="15:00 - 16:00"

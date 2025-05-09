@@ -5,7 +5,7 @@ import editIcon from '@/assets/img/edit.svg';
 import deleteIcon from '@/assets/img/delete.svg';
 
 type ProfilePhotoProps = {
-    title: string;
+    title?: string;
 };
 
 const Avatar: React.FC<ProfilePhotoProps> = ({ title }) => {

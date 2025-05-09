@@ -8,6 +8,12 @@
     font-size: 32px;
     font-weight: 500;
     color: var(--dark-grey);
+    cursor: pointer;
+    transition: color 0.2s ease;
+}
+
+.title:hover {
+    color: var(--light-grey);
 }
 
 .participantCount {
@@ -27,5 +33,5 @@
     height: 75px;
     border-radius: 50%;
     object-fit: cover;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    box-shadow: var(--shadow);
 }

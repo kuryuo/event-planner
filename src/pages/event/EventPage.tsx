@@ -38,7 +38,7 @@ const EventPage: React.FC<EventPageProps> = ({ mode }) => {
                         </div>
 
                         <div className={styles.descriptionContainer}>
-                            <EventDescription text="Вальпургиева ночь — ночь в канун дня святой Вальпурги..." />
+                            <EventDescription text="Вальпургиева ночь (от немецкого Walpurgisnacht) — ночь в канун дня поминания святой Вальпурги (1 мая). Этот день у древних германцев совпадает с языческим праздником «великий шабаш», который проходит на горе Брокен. Вальпургиева ночь (от немецкого Walpurgisnacht) — ночь в канун дня поминания святой Вальпурги (1 мая). Вальпургиева ночь (от немецкого Walpurgisnacht) — ночь в канун дня поминания святой Вальпурги (1 мая). " />
                         </div>
 
                         <div className={styles.galleryContainer}>
@@ -54,7 +54,12 @@ const EventPage: React.FC<EventPageProps> = ({ mode }) => {
                                 <Button label="Перейти в чат" variant="default" size="small" />
                                 <Button label="Завершить" variant="red" size="small" />
                                 <button className={styles.button}>
-                                    <img src={SettingsIcon} alt="Настройки" width={24} height={24} />
+                                    <img
+                                        src={SettingsIcon}
+                                        alt="Настройки"
+                                        width={24}
+                                        height={24}
+                                    />
                                 </button>
                             </div>
                         ) : (

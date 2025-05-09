@@ -8,6 +8,8 @@ import EventPhotosPage from "@/pages/photos/EventPhotosPage";
 import EventSubscribersPage from "@/pages/subscribers/EventSubscribersPage";
 import InviteUserPage from "@/pages/invite-user/InviteUserPage";
 
+import CalendarPage from "@/pages/calendar/CalendarPage";
+
 import Modal from '@/shared/ui/modal/Modal';
 
 import { AppRoute } from '@/const';
@@ -25,6 +27,7 @@ function App() {
                 <Route path={AppRoute.PHOTOS_EVENT} element={<EventPhotosPage/>} />
                 <Route path={AppRoute.SUBSCRIBERS} element={<EventSubscribersPage/>} />
                 <Route path={AppRoute.INVITE} element={<InviteUserPage/>} />
+                <Route path={AppRoute.CALENDAR} element={<CalendarPage/>} />
 
                 <Route
                     path="/modal"
