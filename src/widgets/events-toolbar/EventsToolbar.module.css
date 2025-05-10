@@ -43,23 +43,26 @@
     gap: 20px;
 }
 
+.calendar,
+.list,
+.filter {
+    width: 38px;
+    height: 38px;
+    color: var(--dark-grey);
+    transition: color 0.2s ease, transform 0.2s ease;
+}
+
+.filter:hover {
+    transform: scale(1.1);
+}
+
+.active {
+    color: var(--turquoise);
+}
+
 .iconButton {
     background: none;
     border: none;
     padding: 5px;
     cursor: pointer;
-}
-
-.iconButton img {
-    width: 38px;
-    height: 38px;
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
-}
-
-.iconButton:hover img {
-    transform: scale(1.05);
-}
-
-.iconButton:active img {
-    transform: scale(0.95);
 }

@@ -1,0 +1,84 @@
+.overlay {
+    position: fixed;
+    top: 150px;
+    right: 200px;
+    z-index: 1000;
+    background: white;
+    border-radius: 16px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+    width: 400px;
+    max-height: 400px;
+    overflow-y: auto;
+    padding: 20px;
+}
+
+.modal {
+    display: flex;
+    flex-direction: column;
+}
+
+.modalTitle {
+    font-size: 24px;
+    color: var(--dark-grey)
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 22px;
+    font-weight: 600;
+    margin-bottom: 16px;
+}
+
+.content {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    max-height: 150px;
+    overflow-y: auto;
+    padding-right: 4px;
+}
+
+.content::-webkit-scrollbar {
+    width: 6px;
+}
+
+.content::-webkit-scrollbar-thumb {
+    background-color: var(--light-grey);
+    border-radius: 6px;
+}
+
+.item {
+    display: flex;
+    gap: 12px;
+}
+
+.close {
+    background: none;
+    color: var(--dark-grey);
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+}
+
+.close:hover {
+    color: var(--grey);
+}
+
+.avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.title {
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--dark-grey);
+}
+
+.message {
+    color: var(--grey);
+}

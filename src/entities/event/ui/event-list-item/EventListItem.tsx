@@ -10,18 +10,18 @@ type DayEventItemProps = {
 
 const EventListItem: React.FC<DayEventItemProps> = ({ day, time, title, color = '#a8d5a2' }) => {
     return (
-        <div className={styles.item}>
+        <div className={styles.wrapper}>
             <div className={styles.row}>
                 <div className={styles.left}>
-                    <span className={styles.day}>{day}</span>
-                    <div className={styles.timeWrapper}>
+                    <span className={styles.date}>{day}</span>
+                    <div className={styles.timeBlock}>
                         <span className={styles.marker} style={{ backgroundColor: color }} />
                         <span className={styles.time}>{time}</span>
                     </div>
                 </div>
                 <div className={styles.title}>{title}</div>
             </div>
-            <div className={styles.divider} />
+            <div className={styles.line} />
         </div>
     );
 };

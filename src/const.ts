@@ -9,4 +9,5 @@ export enum AppRoute {
     SUBSCRIBERS = "/subscribers",
     INVITE = "/invite",
     CALENDAR = "/calendar",
+    EDIT_EVENT = "/edit-event",
 }

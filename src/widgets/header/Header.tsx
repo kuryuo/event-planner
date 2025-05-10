@@ -1,33 +1,48 @@
-import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useRef, useState } from 'react';
 import styles from './Header.module.css';
 import notificationIcon from '@/assets/img/notification.svg';
 import avatar from '@/assets/img/avatar.svg';
-import { AppRoute } from '@/const.ts';
+import NotificationsModal from '@/widgets/header/NotificationsModal';
+import ProfileModal from '@/widgets/header/ProfileModal';
+import { useClickOutside } from '@/shared/hooks/useClickOutside';
 
 type HeaderProps = {
     title: string;
 };
 
 const Header: React.FC<HeaderProps> = ({ title }) => {
-    const navigate = useNavigate();
+    const [showModal, setShowModal] = useState(false);
+    const [showProfile, setShowProfile] = useState(false);
 
-    const handleProfileClick = () => {
-        navigate(AppRoute.PROFILE);
-    };
+    const notificationRef = useRef<HTMLDivElement>(null);
+    const profileRef = useRef<HTMLDivElement>(null);
+
+    useClickOutside(notificationRef, () => showModal && setShowModal(false));
+    useClickOutside(profileRef, () => showProfile && setShowProfile(false));
 
     return (
         <header className={styles.header}>
             <h1 className={styles.title}>{title}</h1>
             <div className={styles.right}>
-                <img src={notificationIcon} alt="Уведомления" className={styles.icon} />
-                <img
-                    src={avatar}
-                    alt="Профиль"
-                    className={styles.avatar}
-                    onClick={handleProfileClick}
-                    style={{ cursor: 'pointer' }}
-                />
+                <div ref={notificationRef}>
+                    <img
+                        src={notificationIcon}
+                        alt="Уведомления"
+                        className={styles.icon}
+                        onClick={() => setShowModal(true)}
+                    />
+                    {showModal && <NotificationsModal onClose={() => setShowModal(false)} />}
+                </div>
+
+                <div style={{ position: 'relative' }} ref={profileRef}>
+                    <img
+                        src={avatar}
+                        alt="Профиль"
+                        className={styles.avatar}
+                        onClick={() => setShowProfile(true)}
+                    />
+                    {showProfile && <ProfileModal onClose={() => setShowProfile(false)} />}
+                </div>
             </div>
         </header>
     );

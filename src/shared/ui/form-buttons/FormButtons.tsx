@@ -9,6 +9,7 @@ type FormActionsProps = {
     onSecondaryClick?: () => void;
     reverse?: boolean;
     className?: string;
+    buttonSize?: 'default' | 'small';
 };
 
 const FormButtons: React.FC<FormActionsProps> = ({
@@ -18,17 +19,20 @@ const FormButtons: React.FC<FormActionsProps> = ({
                                                      onSecondaryClick,
                                                      reverse = false,
                                                      className,
+                                                     buttonSize = 'default', // ← значение по умолчанию
                                                  }) => {
     const buttons = [
         <Button
             key="primary"
             variant="default"
+            size={buttonSize}
             label={primaryText}
             onClick={onPrimaryClick}
         />,
         <Button
             key="secondary"
             variant="border"
+            size={buttonSize}
             label={secondaryText}
             onClick={onSecondaryClick}
         />,

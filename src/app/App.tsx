@@ -7,10 +7,7 @@ import EventsListPage from '@/pages/event-list/EventsListPage';
 import EventPhotosPage from "@/pages/photos/EventPhotosPage";
 import EventSubscribersPage from "@/pages/subscribers/EventSubscribersPage";
 import InviteUserPage from "@/pages/invite-user/InviteUserPage";
-
 import CalendarPage from "@/pages/calendar/CalendarPage";
-
-import Modal from '@/shared/ui/modal/Modal';
 
 import { AppRoute } from '@/const';
 
@@ -21,6 +18,7 @@ function App() {
                 <Route path={AppRoute.AUTH} element={<AuthPage />} />
                 <Route path={AppRoute.PROFILE} element={<ProfilePage />} />
                 <Route path={AppRoute.CREATE_EVENT} element={<NewEventPage />} />
+                <Route path={AppRoute.EDIT_EVENT} element={<NewEventPage isEditMode />} />
                 <Route path={AppRoute.EVENT} element={<EventPage mode = "participant"/>} />
                 <Route path={AppRoute.ADMIN_EVENT} element={<EventPage mode = "organizer" />} />
                 <Route path={AppRoute.EVENT_LIST} element={<EventsListPage />} />
@@ -28,22 +26,6 @@ function App() {
                 <Route path={AppRoute.SUBSCRIBERS} element={<EventSubscribersPage/>} />
                 <Route path={AppRoute.INVITE} element={<InviteUserPage/>} />
                 <Route path={AppRoute.CALENDAR} element={<CalendarPage/>} />
-
-                <Route
-                    path="/modal"
-                    element={
-                        <Modal
-                            isOpen={true}
-                            onClose={() => {}}
-                            title="Выйти из аккаунта?"
-                            description="Вы уверены, что хотите выйти?"
-                            primaryText="Выйти"
-                            secondaryText="Отмена"
-                            primaryType="red"
-                            secondaryType="border"
-                        />
-                    }
-                />
             </Routes>
         </Router>
     );

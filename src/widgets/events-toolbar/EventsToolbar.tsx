@@ -1,11 +1,13 @@
-import React from 'react'
-import { useNavigate } from 'react-router-dom'
+import React, {useState} from 'react'
+import { useNavigate, useLocation } from 'react-router-dom'
 import styles from './EventsToolbar.module.css'
-import calendarIcon from '@/assets/img/calendar2.svg'
-import listIcon from '@/assets/img/list.svg'
+import CalendarIcon from '@/assets/img/calendar2.svg?react'
+import ListIcon from '@/assets/img/list.svg?react'
+import FilterIcon from '@/assets/img/filter.svg?react'
 import { format } from 'date-fns'
 import { ru } from 'date-fns/locale'
 import {AppRoute} from "@/const";
+import EventFilterModal from "@/widgets/event-filter-modal/EventFilterModal";
 
 type ToolbarProps = {
     label: string
@@ -15,6 +17,11 @@ type ToolbarProps = {
 
 const EventsToolbar: React.FC<ToolbarProps> = ({ onNavigate, date }) => {
     const navigate = useNavigate()
+    const location = useLocation();
+    const isCalendar = location.pathname === AppRoute.CALENDAR;
+    const isEventList = location.pathname === AppRoute.EVENT_LIST;
+
+    const [showFilters, setShowFilters] = useState(false);
 
     const month = format(date, 'LLLL', { locale: ru })
     const year = format(date, 'yyyy', { locale: ru })
@@ -31,11 +38,16 @@ const EventsToolbar: React.FC<ToolbarProps> = ({ onNavigate, date }) => {
             </div>
 
             <div className={styles.right}>
+                <button className={styles.iconButton} onClick={() => setShowFilters(true)}>
+                    <FilterIcon className={styles.filter} />
+                </button>
+
+                {showFilters && <EventFilterModal onClose={() => setShowFilters(false)} />}
                 <button className={styles.iconButton} onClick={() => navigate(AppRoute.CALENDAR)}>
-                    <img src={calendarIcon} alt="Календарь" />
+                    <CalendarIcon className={`${styles.calendar} ${isCalendar ? styles.active : ''}`} />
                 </button>
                 <button className={styles.iconButton} onClick={() => navigate(AppRoute.EVENT_LIST)}>
-                    <img src={listIcon} alt="Список" />
+                    <ListIcon className={`${styles.list} ${isEventList ? styles.active : ''}`} />
                 </button>
             </div>
         </div>

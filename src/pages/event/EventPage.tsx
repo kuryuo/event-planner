@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styles from './EventPage.module.css';
 
 import Sidebar from '@/widgets/sidebar/Sidebar';
@@ -11,8 +11,11 @@ import EventDetails from '@/widgets/event-details/EventDetails';
 import EventSubscribersPreview from '@/widgets/event-subscribers-preview/EventSubscribersPreview';
 import ContactsBlock from '@/widgets/event-contacts/EventContacts';
 import Button from '@/shared/ui/button/Button';
+import Modal from '@/shared/ui/modal/Modal';
+import { useNavigate } from 'react-router-dom';
 
 import SettingsIcon from '@/assets/img/settings.svg';
+import {AppRoute} from "@/const";
 
 type EventPageMode = 'participant' | 'organizer';
 
@@ -21,7 +24,17 @@ interface EventPageProps {
 }
 
 const EventPage: React.FC<EventPageProps> = ({ mode }) => {
+    const navigate = useNavigate();
     const isOrganizer = mode === 'organizer';
+    const [isFinishModalOpen, setIsFinishModalOpen] = useState(false);
+    const handleFinish = () => {
+        setIsFinishModalOpen(true);
+    };
+
+    const handleConfirmFinish = () => {
+        setIsFinishModalOpen(false);
+        console.log('Мероприятие завершено');
+    };
 
     return (
         <div className={styles.page}>
@@ -52,14 +65,14 @@ const EventPage: React.FC<EventPageProps> = ({ mode }) => {
                         {isOrganizer ? (
                             <div className={styles.buttonGroup}>
                                 <Button label="Перейти в чат" variant="default" size="small" />
-                                <Button label="Завершить" variant="red" size="small" />
-                                <button className={styles.button}>
-                                    <img
-                                        src={SettingsIcon}
-                                        alt="Настройки"
-                                        width={24}
-                                        height={24}
-                                    />
+                                <Button
+                                    label="Завершить"
+                                    variant="red"
+                                    size="small"
+                                    onClick={handleFinish}
+                                />
+                                <button className={styles.button} onClick={() => navigate(AppRoute.EDIT_EVENT)}>
+                                    <img src={SettingsIcon} alt="Настройки" width={24} height={24} />
                                 </button>
                             </div>
                         ) : (
@@ -74,6 +87,19 @@ const EventPage: React.FC<EventPageProps> = ({ mode }) => {
                         <EventDetails />
                         <EventSubscribersPreview />
                         <ContactsBlock />
+                        <Modal
+                            isOpen={isFinishModalOpen}
+                            onClose={() => setIsFinishModalOpen(false)}
+                            onConfirm={handleConfirmFinish}
+                            title="Подтверждение завершения"
+                            description='Вы уверены, что хотите завершить мероприятие “Масленница 2025”?'
+                            primaryText="Завершить"
+                            secondaryText="Отмена"
+                            primaryType="red"
+                            secondaryType="border"
+                            buttonSize="small"
+                        />
+
                     </div>
                 </div>
             </div>

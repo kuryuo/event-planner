@@ -1,0 +1,51 @@
+.container {
+    width: 100%;
+    max-width: 500px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 30px;
+    border-radius: 10px;
+    font-size: 16px;
+}
+
+.success {
+    background-color: var(--light-green);
+    color: var(--dark-grey);
+}
+
+.error {
+    background-color: var(--light-red);
+    color: var(--white);
+}
+
+.message {
+    font-size: 24px;
+}
+
+.closeButton {
+    margin-left: 10px;
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+}
+
+.closeIcon {
+    width: 17px;
+    height: 17px;
+    transition: transform 0.2s ease, opacity 0.2s ease;
+}
+
+.closeButton:hover .closeIcon {
+    transform: scale(1.2);
+    opacity: 0.8;
+}
+
+.closeSuccess {
+    color: var(--green);
+}
+
+.closeError {
+    color: var(--deep-red);
+}

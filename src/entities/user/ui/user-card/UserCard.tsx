@@ -17,7 +17,7 @@ const UserCard: React.FC<UserCardProps> = (props) => {
         case 'contact':
             return <ContactUserCard name={props.name} role={props.role} />;
         case 'interactive':
-            return <InteractiveUserCard name={props.name} role={props.role} onMenuClick={props.onMenuClick} />;
+            return <InteractiveUserCard name={props.name} role={props.role}/>;
         case 'checkboxOnly':
             return <CheckboxOnlyUserCard name={props.name} checked={props.checked} onToggle={props.onToggle} />;
         default:

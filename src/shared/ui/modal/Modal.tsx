@@ -1,27 +1,32 @@
 import React from 'react';
 import styles from './Modal.module.css';
-import close from '@/assets/img/close.svg'
+import Close from '@/assets/img/close.svg?react';
+import Button from '@/shared/ui/button/Button';
 
 type ModalProps = {
     isOpen: boolean;
     onClose: () => void;
+    onConfirm: () => void;
     title: string;
     description: string;
     primaryText: string;
     secondaryText: string;
     primaryType?: 'default' | 'red' | 'border';
     secondaryType?: 'default' | 'red' | 'border';
+    buttonSize?: 'default' | 'small';
 };
 
 const Modal: React.FC<ModalProps> = ({
                                          isOpen,
                                          onClose,
+                                         onConfirm,
                                          title,
                                          description,
                                          primaryText,
                                          secondaryText,
                                          primaryType = 'default',
                                          secondaryType = 'border',
+                                         buttonSize = 'default',
                                      }) => {
     if (!isOpen) return null;
 
@@ -31,19 +36,28 @@ const Modal: React.FC<ModalProps> = ({
                 <div className={styles.header}>
                     <h3 className={styles.title}>{title}</h3>
                     <button className={styles.close} onClick={onClose} aria-label="Закрыть">
-                        <img src={close} alt="Закрыть" className={styles.closeIcon} />
+                        <Close className={styles.closeIcon} />
                     </button>
                 </div>
 
                 <p className={styles.description}>{description}</p>
 
                 <div className={styles.footer}>
-                    <button className={`${styles.button} ${styles[secondaryType]}`}>
-                        {secondaryText}
-                    </button>
-                    <button className={`${styles.button} ${styles[primaryType]}`}>
-                        {primaryText}
-                    </button>
+                    <Button
+                        label={secondaryText}
+                        onClick={onClose}
+                        variant={secondaryType}
+                        size={buttonSize}
+                    />
+                    <Button
+                        label={primaryText}
+                        onClick={() => {
+                            console.log('[Modal] Кнопка подтверждения нажата');
+                            onConfirm?.(); // безопасный вызов
+                        }}
+                        variant={primaryType}
+                        size={buttonSize}
+                    />
                 </div>
             </div>
         </div>

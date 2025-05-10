@@ -1,4 +1,4 @@
-.item {
+.wrapper {
     display: flex;
     flex-direction: column;
     gap: 8px;
@@ -20,12 +20,12 @@
     color: var(--dark-grey);
 }
 
-.day {
+.date {
     font-size: 40px;
     font-weight: 700;
 }
 
-.timeWrapper {
+.timeBlock {
     display: flex;
     align-items: center;
     gap: 8px;
@@ -50,7 +50,7 @@
     color: var(--grey);
 }
 
-.divider {
+.line {
     margin-top: 8px;
     border-bottom: 1px solid var(--light-grey);
 }

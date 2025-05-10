@@ -44,3 +44,9 @@ label {
 .short input {
     width: 150px;
 }
+
+.error {
+    color: red;
+    font-size: 12px;
+    margin-top: 4px;
+}

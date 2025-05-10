@@ -2,7 +2,20 @@ import React from 'react';
 import styles from './ProfileForm.module.css';
 import Input from '@/shared/ui/input-field/InputField';
 
-const ProfileForm: React.FC = () => {
+interface Props {
+    formData: {
+        firstName: string;
+        lastName: string;
+        middleName: string;
+        phoneNumber: string;
+        telegram: string;
+        city: string;
+    };
+    onChange: (field: string, value: string) => void;
+    formErrors: Record<string, string>;
+}
+
+const ProfileForm: React.FC<Props> = ({ formData, onChange, formErrors }) => {
     return (
         <form className={styles.form}>
             <div className={styles.section}>
@@ -10,25 +23,72 @@ const ProfileForm: React.FC = () => {
                 <div className={styles.row}>
                     <div className={styles.column}>
                         <div className={styles.group}>
-                            <Input label="Имя" type="text" placeholder="Роман" />
+                            <Input
+                                label="Фамилия"
+                                value={formData.lastName}
+                                onChange={(v) => onChange('lastName', v)}
+                            />
+                            {formErrors.lastName && (
+                                <span className={styles.error}>{formErrors.lastName}</span>
+                            )}
                         </div>
+
                         <div className={styles.group}>
-                            <Input label="Фамилия" type="text" placeholder="Романов" />
+                            <Input
+                                label="Имя"
+                                value={formData.firstName}
+                                onChange={(v) => onChange('firstName', v)}
+                            />
+                            {formErrors.firstName && (
+                                <span className={styles.error}>{formErrors.firstName}</span>
+                            )}
                         </div>
+
                         <div className={styles.group}>
-                            <Input label="Отчество" type="text" placeholder="Романович" />
+                            <Input
+                                label="Отчество"
+                                value={formData.middleName}
+                                onChange={(v) => onChange('middleName', v)}
+                            />
+                            {formErrors.middleName && (
+                                <span className={styles.error}>{formErrors.middleName}</span>
+                            )}
                         </div>
+
                         <div className={styles.group}>
-                            <Input label="Телефон" type="tel" placeholder="+7 (924) 678-56-23" />
+                            <Input
+                                label="Телефон"
+                                type="tel"
+                                value={formData.phoneNumber}
+                                onChange={(v) => onChange('phoneNumber', v)}
+                            />
+                            {formErrors.phoneNumber && (
+                                <span className={styles.error}>{formErrors.phoneNumber}</span>
+                            )}
                         </div>
                     </div>
 
                     <div className={styles.column}>
                         <div className={styles.group}>
-                            <Input label="Телеграмм" type="text" placeholder="@user23456" />
+                            <Input
+                                label="Телеграмм"
+                                value={formData.telegram}
+                                onChange={(v) => onChange('telegram', v)}
+                            />
+                            {formErrors.telegram && (
+                                <span className={styles.error}>{formErrors.telegram}</span>
+                            )}
                         </div>
+
                         <div className={styles.group}>
-                            <Input label="Город" type="text" placeholder="Екатеринбург" />
+                            <Input
+                                label="Город"
+                                value={formData.city}
+                                onChange={(v) => onChange('city', v)}
+                            />
+                            {formErrors.city && (
+                                <span className={styles.error}>{formErrors.city}</span>
+                            )}
                         </div>
                     </div>
                 </div>

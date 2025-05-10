@@ -21,37 +21,15 @@ img {
     z-index: 1;
 }
 
-.authForm {
+.authPage {
     display: flex;
-    flex-direction: column;
-    gap: 20px;
-    align-items: center;
+    height: 100vh;
+    position: relative;
 }
 
-.authLinkContainer {
+.authTopLink {
     position: absolute;
     top: 20px;
     right: 40px;
-}
-
-.authLink {
-    text-decoration: none;
-    font-size: 28px;
-    font-weight: 600;
-    color: var(--dark-grey);
-    cursor: pointer;
-}
-
-h1 {
-    text-align: center;
-    margin-bottom: 20px;
-    font-size: 64px;
-    font-weight: 600;
-    color: var(--dark-grey);
-}
-
-.linkButtonContainer {
-    display: flex;
-    justify-content: flex-end;
-    width: 100%;
+    z-index: 2;
 }
