@@ -6,8 +6,7 @@ export interface ProfileResponse {
     phoneNumber: string | null;
     telegram: string | null;
     city: string | null;
-    educationalInstitution: string | null;
-    courseNumber: number | null;
+
 }
 
 export interface UpdateProfileRequest {
@@ -17,6 +16,4 @@ export interface UpdateProfileRequest {
     phoneNumber: string;
     telegram: string;
     city: string;
-    educationalInstitution: string;
-    courseNumber: number;
 }

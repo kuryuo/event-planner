@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { useGetProfileQuery, useUpdateProfileMutation } from '@/shared/api/user/profileApi';
 import { validateProfileForm } from '@/shared/lib/validation/profileValidation';
 import { useDispatch } from 'react-redux';
-import { setProfile } from '@/shared/model/store/profileSlice';
+import { setProfile } from '@/features/user-profile/model/profileSlice';
 import { authStorage } from '@/shared/lib/localStorage/authStorage';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/app/store';
@@ -27,8 +27,6 @@ export const useProfileForm = () => {
         phoneNumber: '',
         telegram: '',
         city: '',
-        educationalInstitution: '',
-        courseNumber: 1,
     });
 
     const [successMessage, setSuccessMessage] = useState('');
@@ -57,8 +55,6 @@ export const useProfileForm = () => {
                 phoneNumber: data.phoneNumber || '',
                 telegram: data.telegram || '',
                 city: data.city || '',
-                educationalInstitution: data.educationalInstitution || '',
-                courseNumber: data.courseNumber || 1,
             });
         }
     }, [data, isLoading, dispatch, currentProfile]);

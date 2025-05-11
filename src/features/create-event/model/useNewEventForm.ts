@@ -38,6 +38,7 @@ export const useCreateEventForm = () => {
             startDate: toISOString(eventInfo!.startDate),
             endDate: toISOString(eventInfo!.endDate),
             categories: positioning!.categories,
+            roles: positioning!.roles,
             maxParticipants: positioning!.maxParticipants ?? 0,
         };
 

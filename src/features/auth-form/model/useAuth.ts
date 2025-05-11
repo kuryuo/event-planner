@@ -10,7 +10,7 @@ import { validateAuth } from '@/shared/lib/validation/validateAuth';
 import { authStorage } from '@/shared/lib/localStorage/authStorage';
 import { saveProfileToStorage } from '@/shared/lib/localStorage/profileStorage';
 
-import { setProfile } from '@/shared/model/store/profileSlice';
+import { setProfile } from '@/features/user-profile/model/profileSlice';
 import { baseApi } from '@/shared/api/baseApi';
 
 export function useAuth(mode: 'login' | 'register' | 'reset') {

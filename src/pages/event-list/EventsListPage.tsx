@@ -1,11 +1,28 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
+import { useGetEventsQuery } from '@/shared/api/event/eventApi';
+import { Link } from 'react-router-dom';
 import styles from './EventsListPage.module.css';
 import Sidebar from '@/widgets/sidebar/Sidebar';
 import Header from '@/widgets/header/Header';
 import EventsToolbar from '@/widgets/events-toolbar/EventsToolbar';
 import EventListItem from "@/entities/event/ui/event-list-item/EventListItem";
+import { RootState } from '@/app/store';
+import { formatDateToMonthDay, formatTime } from '@/shared/lib/dateUtils';
+import { AppRoute } from '@/const';
 
 const EventsListPage: React.FC = () => {
+    const { error, isLoading } = useGetEventsQuery();
+    const events = useSelector((state: RootState) => state.events.events);
+
+    if (isLoading) {
+        return <div>Loading...</div>;
+    }
+
+    if (error) {
+        return <div>Error loading events</div>;
+    }
+
     return (
         <div className={styles.page}>
             <Sidebar />
@@ -16,35 +33,23 @@ const EventsListPage: React.FC = () => {
                     onNavigate={() => {}}
                     date={new Date()}
                 />
-                <EventListItem
-                    day="18 марта"
-                    time="15:00 - 16:00"
-                    title="Воркшоп. Создание презентаций"
-                />
-                <EventListItem
-                    day="21 марта"
-                    time="13:00 - 15:00"
-                    title="Мастер-класс. Актёрское мастерство"
-                    color="#ffd9b3"
-                />
-                <EventListItem
-                    day="23 марта"
-                    time="10:00 - 11:30"
-                    title="Тренинг. Командная работа"
-                    color="#b3e5fc"
-                />
-                <EventListItem
-                    day="25 марта"
-                    time="17:00 - 18:00"
-                    title="Встреча с наставником"
-                    color="#ffcccb"
-                />
-                <EventListItem
-                    day="26 марта"
-                    time="19:00 - 21:00"
-                    title="Киноночь. Документальные фильмы"
-                    color="#e0b0ff"
-                />
+                {events.length > 0 ? (
+                    events.map((event) => (
+                        <Link
+                            key={event.id}
+                            to={AppRoute.EVENT.replace(":eventId", event.id)}
+                        >
+                            <EventListItem
+                                day={formatDateToMonthDay(event.startDate)}
+                                time={`${formatTime(event.startDate)} - ${formatTime(event.endDate)}`}
+                                title={event.name}
+                                color="#a8d5a2"
+                            />
+                        </Link>
+                    ))
+                ) : (
+                    <div>No events available.</div>
+                )}
             </div>
         </div>
     );

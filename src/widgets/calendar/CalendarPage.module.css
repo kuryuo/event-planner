@@ -39,7 +39,7 @@
 
 :global(.rbc-month-view) {
     table-layout: fixed;
-    width: 100%; /* пусть занимает всё доступное */
+    width: 100%;
 }
 
 :global(.rbc-month-row) {

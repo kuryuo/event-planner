@@ -1,10 +1,12 @@
 import { configureStore } from '@reduxjs/toolkit';
-import profileReducer from '@/shared/model/store/profileSlice';
+import profileReducer from '@/features/user-profile/model/profileSlice';
+import eventReducer from '@/features/events/model/eventsSlice';
 import { baseApi } from '@/shared/api/baseApi';
 
 export const store = configureStore({
     reducer: {
         profile: profileReducer,
+        events: eventReducer,
         [baseApi.reducerPath]: baseApi.reducer,
     },
     middleware: (getDefaultMiddleware) =>

@@ -36,5 +36,6 @@ export interface CreateEventRequest {
     eventType: string;
     responsiblePersonId: string;
     maxParticipants: number;
-    categories: string[];
+    categories: string[]
+    roles: string[];
 }

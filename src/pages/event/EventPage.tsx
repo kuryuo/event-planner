@@ -1,5 +1,8 @@
 import React, { useState } from 'react';
+import { useGetEventByIdQuery } from '@/shared/api/event/eventApi';
 import styles from './EventPage.module.css';
+import { useNavigate, useParams } from 'react-router-dom';
+import {formatDateToMonthDay} from "@/shared/lib/dateUtils";
 
 import Sidebar from '@/widgets/sidebar/Sidebar';
 import Header from '@/widgets/header/Header';
@@ -12,10 +15,14 @@ import EventSubscribersPreview from '@/widgets/event-subscribers-preview/EventSu
 import ContactsBlock from '@/widgets/event-contacts/EventContacts';
 import Button from '@/shared/ui/button/Button';
 import Modal from '@/shared/ui/modal/Modal';
-import { useNavigate } from 'react-router-dom';
-
 import SettingsIcon from '@/assets/img/settings.svg';
-import {AppRoute} from "@/const";
+import { AppRoute } from "@/const";
+
+const eventTypeMap: { [key: string]: string } = {
+    "open": "Открытое",
+    "closed": "Закрытое",
+    "private": "Частное",
+};
 
 type EventPageMode = 'participant' | 'organizer';
 
@@ -27,6 +34,11 @@ const EventPage: React.FC<EventPageProps> = ({ mode }) => {
     const navigate = useNavigate();
     const isOrganizer = mode === 'organizer';
     const [isFinishModalOpen, setIsFinishModalOpen] = useState(false);
+
+    const { eventId } = useParams<{ eventId: string }>();
+
+    const { data: event, error, isLoading } = useGetEventByIdQuery(eventId || "");
+
     const handleFinish = () => {
         setIsFinishModalOpen(true);
     };
@@ -35,22 +47,30 @@ const EventPage: React.FC<EventPageProps> = ({ mode }) => {
         setIsFinishModalOpen(false);
     };
 
+    if (isLoading) {
+        return <div>Loading...</div>;
+    }
+
+    if (error) {
+        return <div>Error loading event details</div>;
+    }
+
     return (
         <div className={styles.page}>
             <Sidebar />
             <div className={styles.content}>
-                <Header title="Масленница 2025" />
+                <Header title={event?.name || "Loading..."} />
 
                 <div className={styles.main}>
                     <div className={styles.leftColumn}>
                         <div className={styles.tags}>
-                            <EventTag text="интерактивное" />
-                            <EventTag text="IT" />
-                            <EventTag text="внеучебное" />
+                            {event?.categories?.map((category: string, index: number) => (
+                                <EventTag key={index} text={category} />
+                            ))}
                         </div>
 
                         <div className={styles.descriptionContainer}>
-                            <EventDescription text="Вальпургиева ночь (от немецкого Walpurgisnacht) — ночь в канун дня поминания святой Вальпурги (1 мая). Этот день у древних германцев совпадает с языческим праздником «великий шабаш», который проходит на горе Брокен. Вальпургиева ночь (от немецкого Walpurgisnacht) — ночь в канун дня поминания святой Вальпурги (1 мая). Вальпургиева ночь (от немецкого Walpurgisnacht) — ночь в канун дня поминания святой Вальпурги (1 мая). " />
+                            <EventDescription text={event?.description || "No description available"} />
                         </div>
 
                         <div className={styles.galleryContainer}>
@@ -83,7 +103,13 @@ const EventPage: React.FC<EventPageProps> = ({ mode }) => {
                             />
                         )}
 
-                        <EventDetails />
+                        <EventDetails
+                            eventType={eventTypeMap[event?.eventType || ""] || "Не указано"}
+                            location={event?.location || "Не указано"}
+                            startDate={formatDateToMonthDay(event?.startDate || "")}
+                            endDate={formatDateToMonthDay(event?.endDate || "")}
+                        />
+
                         <EventSubscribersPreview />
                         <ContactsBlock />
                         <Modal
@@ -91,14 +117,13 @@ const EventPage: React.FC<EventPageProps> = ({ mode }) => {
                             onClose={() => setIsFinishModalOpen(false)}
                             onConfirm={handleConfirmFinish}
                             title="Подтверждение завершения"
-                            description='Вы уверены, что хотите завершить мероприятие “Масленница 2025”?'
+                            description={`Вы уверены, что хотите завершить мероприятие “${event?.name}”?`}
                             primaryText="Завершить"
                             secondaryText="Отмена"
                             primaryType="red"
                             secondaryType="border"
                             buttonSize="small"
                         />
-
                     </div>
                 </div>
             </div>

@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { baseApi } from '@/shared/api/baseApi';
-import { clearProfile } from '@/shared/model/store/profileSlice';
+import { clearProfile } from '@/features/user-profile/model/profileSlice';
 import { AppRoute } from '@/const';
 import { RootState } from '@/app/store';
 import { useLogoutMutation } from '@/shared/api/auth/authApi';

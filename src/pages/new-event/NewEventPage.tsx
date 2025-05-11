@@ -12,10 +12,12 @@ import Notification from '@/shared/ui/notification/Notification';
 
 import { useCreateEventForm } from '@/features/create-event/model/useNewEventForm';
 
-const NewEventPage: React.FC = () => {
+interface NewEventPageProps {
+    isEditMode?: boolean;
+}
+
+const NewEventPage: React.FC<NewEventPageProps> = ({ isEditMode = false }) => {
     const {
-        // eventInfo,
-        // positioning,
         setEventInfo,
         setPositioning,
         notification,
@@ -32,7 +34,7 @@ const NewEventPage: React.FC = () => {
         <div className={styles.page}>
             <Sidebar />
             <div className={styles.content}>
-                <Header title="Создание мероприятия" />
+                <Header title={isEditMode ? "Редактирование мероприятия" : "Создание мероприятия"} />
 
                 <div className={styles.formsContainer}>
                     <EventInfoFormContainer onChange={setEventInfo} />
@@ -44,7 +46,7 @@ const NewEventPage: React.FC = () => {
 
                 <div className={styles.formActionsContainer}>
                     <FormButtons
-                        primaryText="Создать мероприятие"
+                        primaryText={isEditMode ? "Сохранить изменения" : "Создать мероприятие"}
                         secondaryText="Отмена"
                         onPrimaryClick={handleSubmit}
                         onSecondaryClick={handleCancel}
