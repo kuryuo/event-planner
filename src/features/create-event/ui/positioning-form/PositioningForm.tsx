@@ -1,78 +1,70 @@
 import React from 'react';
 import styles from './PositioningForm.module.css';
+import TagsInput from '../../../../shared/ui/tags-input/TagsInput';
+import ParticipantsLimit from '../../../../shared/ui/participants-limit/ParticipantsLimit';
 
-const PositioningForm: React.FC = () => {
+interface Props {
+    categories: string[];
+    roles: string[];
+    categoryInput: string;
+    roleInput: string;
+    onCategoryInput: (val: string) => void;
+    onRoleInput: (val: string) => void;
+    onKeyDown: (
+        e: React.KeyboardEvent<HTMLInputElement>,
+        type: 'category' | 'role'
+    ) => void;
+    removeTag: (type: 'category' | 'role', tag: string) => void;
+    maxEnabled: boolean;
+    setMaxEnabled: (val: boolean) => void;
+    maxParticipants: number;
+    setMaxParticipants: (val: number) => void;
+}
+
+const PositioningForm: React.FC<Props> = ({
+                                              categories,
+                                              roles,
+                                              categoryInput,
+                                              roleInput,
+                                              onCategoryInput,
+                                              onRoleInput,
+                                              onKeyDown,
+                                              removeTag,
+                                              maxEnabled,
+                                              setMaxEnabled,
+                                              maxParticipants,
+                                              setMaxParticipants,
+                                          }) => {
     return (
         <div className={styles.form}>
             <h3 className={styles.title}>Позиционирование</h3>
 
-            <div className={styles.block}>
-                <label className={styles.label}>Категории</label>
-                <div className={styles.tags}>
-                    <div className={styles.tag}>
-                        <span>интерактивное</span>
-                        <button className={styles.remove}>X</button>
-                    </div>
-                    <div className={styles.tag}>
-                        <span>IT</span>
-                        <button className={styles.remove}>X</button>
-                    </div>
-                    <div className={styles.tag}>
-                        <span>внеучебное</span>
-                        <button className={styles.remove}>X</button>
-                    </div>
-                    <div className={styles.tag}>
-                        <span>научно-познавательное</span>
-                        <button className={styles.remove}>X</button>
-                    </div>
-                </div>
-            </div>
+            <TagsInput
+                label="Категории"
+                tags={categories}
+                inputValue={categoryInput}
+                onInputChange={onCategoryInput}
+                onKeyDown={(e) => onKeyDown(e, 'category')}
+                onRemove={(tag) => removeTag('category', tag)}
+                placeholder="Введите категорию и нажмите пробел"
+            />
 
-            <div className={styles.block}>
-                <label className={styles.label}>Роли</label>
-                <div className={styles.tags}>
-                    <div className={styles.tag}>
-                        <span>Организатор</span>
-                        <button className={styles.remove}>X</button>
-                    </div>
-                    <div className={styles.tag}>
-                        <span>Волонтер</span>
-                        <button className={styles.remove}>X</button>
-                    </div>
-                    <div className={styles.tag}>
-                        <span>Спикер</span>
-                        <button className={styles.remove}>X</button>
-                    </div>
-                    <div className={styles.tag}>
-                        <span>Технический специалист</span>
-                        <button className={styles.remove}>X</button>
-                    </div>
-                </div>
-            </div>
+            <TagsInput
+                label="Роли"
+                tags={roles}
+                inputValue={roleInput}
+                onInputChange={onRoleInput}
+                onKeyDown={(e) => onKeyDown(e, 'role')}
+                onRemove={(tag) => removeTag('role', tag)}
+                placeholder="Введите роль и нажмите пробел"
+            />
 
-            <div>
-                <div className={styles.limitRow}>
-                    <label className={styles.checkboxWrap}>
-                        <input type="checkbox" className={styles.checkbox} />
-                        Установить макс. количество участников
-                    </label>
-
-                    <div className={styles.counter}>
-                        <label htmlFor="participantsLimit" className={styles.label}>
-                            Ограничение
-                        </label>
-                        <input
-                            type="number"
-                            id="participantsLimit"
-                            className={styles.counterInput}
-                            defaultValue={250}
-                            min={0}
-                        />
-                    </div>
-
-                </div>
-
-            </div>
+            <ParticipantsLimit
+                maxEnabled={maxEnabled}
+                setMaxEnabled={setMaxEnabled}
+                maxParticipants={maxParticipants}
+                setMaxParticipants={setMaxParticipants}
+            />
         </div>
     );
 };

@@ -1,0 +1,51 @@
+.label {
+    font-size: 18px;
+    font-weight: 200;
+    color: var(--dark-grey);
+    position: absolute;
+    top: -14px;
+    left: 25px;
+    pointer-events: none;
+    background-color: var(--white);
+    transition: all 0.2s ease-in-out;
+}
+
+.limitRow {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+}
+
+.checkboxWrap {
+    font-size: 24px;
+    font-weight: 400;
+    color: var(--dark-grey);
+    display: flex;
+    gap: 8px;
+}
+
+.checkbox {
+    width: 20px;
+    height: 20px;
+    margin-top: 7px;
+}
+
+.counter {
+    position: relative;
+    display: flex;
+    align-items: center;
+    border: 1px solid var(--dark-white);
+    border-radius: 10px;
+    padding: 10px 60px;
+    box-shadow: var(--shadow);
+}
+
+.counterInput {
+    width: 60px;
+    text-align: center;
+    font-size: 24px;
+    color: var(--dark-grey);
+    border: none;
+    outline: none;
+}

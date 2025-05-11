@@ -6,7 +6,7 @@ import {AppRoute} from "@/const";
 
 const EventSubscribersPreview: React.FC = () => {
     const navigate = useNavigate();
-    const participants = Array(10).fill(avatar); // больше 4-х
+    const participants = Array(10).fill(avatar);
 
     return (
         <div className={styles.subscribers}>

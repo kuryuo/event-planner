@@ -3,7 +3,7 @@ import styles from './Header.module.css';
 import notificationIcon from '@/assets/img/notification.svg';
 import avatar from '@/assets/img/avatar.svg';
 import NotificationsModal from '@/widgets/header/NotificationsModal';
-import ProfileModal from '@/widgets/header/ProfileModal';
+import ProfileModalContainer from '@/features/user-profile/ui/profile-modal/ProfileModalContainer';
 import { useClickOutside } from '@/shared/hooks/useClickOutside';
 
 type HeaderProps = {
@@ -41,7 +41,7 @@ const Header: React.FC<HeaderProps> = ({ title }) => {
                         className={styles.avatar}
                         onClick={() => setShowProfile(true)}
                     />
-                    {showProfile && <ProfileModal onClose={() => setShowProfile(false)} />}
+                    {showProfile && <ProfileModalContainer onClose={() => setShowProfile(false)} />}
                 </div>
             </div>
         </header>

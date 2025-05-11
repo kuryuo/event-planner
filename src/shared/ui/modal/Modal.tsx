@@ -52,8 +52,7 @@ const Modal: React.FC<ModalProps> = ({
                     <Button
                         label={primaryText}
                         onClick={() => {
-                            console.log('[Modal] Кнопка подтверждения нажата');
-                            onConfirm?.(); // безопасный вызов
+                            onConfirm?.();
                         }}
                         variant={primaryType}
                         size={buttonSize}

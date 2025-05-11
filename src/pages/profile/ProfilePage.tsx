@@ -3,8 +3,8 @@ import Sidebar from '@/widgets/sidebar/Sidebar';
 import Header from '@/widgets/header/Header';
 import Avatar from '@/shared/ui/avatar/Avatar';
 import FormButtons from '@/shared/ui/form-buttons/FormButtons';
-import { useProfileForm } from '@/features/edit-profile/model/useProfileForm';
-import ProfileFormContainer from '@/features/edit-profile/ui/profile-form/ProfileFormContainer';
+import { useProfileForm } from '@/features/user-profile/model/useProfileForm';
+import ProfileFormContainer from '@/features/user-profile/ui/profile-form/ProfileFormContainer';
 import Notification from '@/shared/ui/notification/Notification';
 import styles from './ProfilePage.module.css';
 import { useNavigate } from 'react-router-dom';
@@ -16,10 +16,8 @@ const ProfilePage: React.FC = () => {
         formData,
         handleChange,
         handleSubmit,
-        successMessage,
-        errorMessage,
-        clearMessages,
-        formErrors
+        notification,
+        setNotification,
     } = useProfileForm();
 
     return (
@@ -33,7 +31,6 @@ const ProfilePage: React.FC = () => {
                         <ProfileFormContainer
                             formData={formData}
                             onChange={handleChange}
-                            formErrors={formErrors}
                         />
                     </div>
                     <div className={styles.profilePhotoContainer}>
@@ -50,12 +47,12 @@ const ProfilePage: React.FC = () => {
                     />
                 </div>
 
-                {(successMessage || errorMessage) && (
+                {notification && (
                     <div style={{ position: 'fixed', bottom: 20, right: 20, zIndex: 1000 }}>
                         <Notification
-                            message={successMessage || errorMessage}
-                            type={successMessage ? 'success' : 'error'}
-                            onClose={clearMessages}
+                            message={notification.message}
+                            type={notification.type}
+                            onClose={() => setNotification(null)}
                         />
                     </div>
                 )}

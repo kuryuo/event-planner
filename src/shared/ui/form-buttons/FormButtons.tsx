@@ -19,7 +19,7 @@ const FormButtons: React.FC<FormActionsProps> = ({
                                                      onSecondaryClick,
                                                      reverse = false,
                                                      className,
-                                                     buttonSize = 'default', // ← значение по умолчанию
+                                                     buttonSize = 'default',
                                                  }) => {
     const buttons = [
         <Button

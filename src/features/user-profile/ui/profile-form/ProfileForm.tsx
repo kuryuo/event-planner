@@ -1,21 +1,9 @@
 import React from 'react';
 import styles from './ProfileForm.module.css';
 import Input from '@/shared/ui/input-field/InputField';
+import { ProfileFormProps } from '@/features/user-profile/model/types';
 
-interface Props {
-    formData: {
-        firstName: string;
-        lastName: string;
-        middleName: string;
-        phoneNumber: string;
-        telegram: string;
-        city: string;
-    };
-    onChange: (field: string, value: string) => void;
-    formErrors: Record<string, string>;
-}
-
-const ProfileForm: React.FC<Props> = ({ formData, onChange, formErrors }) => {
+const ProfileForm: React.FC<ProfileFormProps> = ({ formData, onChange }) => {
     return (
         <form className={styles.form}>
             <div className={styles.section}>
@@ -28,9 +16,6 @@ const ProfileForm: React.FC<Props> = ({ formData, onChange, formErrors }) => {
                                 value={formData.lastName}
                                 onChange={(v) => onChange('lastName', v)}
                             />
-                            {formErrors.lastName && (
-                                <span className={styles.error}>{formErrors.lastName}</span>
-                            )}
                         </div>
 
                         <div className={styles.group}>
@@ -39,9 +24,6 @@ const ProfileForm: React.FC<Props> = ({ formData, onChange, formErrors }) => {
                                 value={formData.firstName}
                                 onChange={(v) => onChange('firstName', v)}
                             />
-                            {formErrors.firstName && (
-                                <span className={styles.error}>{formErrors.firstName}</span>
-                            )}
                         </div>
 
                         <div className={styles.group}>
@@ -50,9 +32,6 @@ const ProfileForm: React.FC<Props> = ({ formData, onChange, formErrors }) => {
                                 value={formData.middleName}
                                 onChange={(v) => onChange('middleName', v)}
                             />
-                            {formErrors.middleName && (
-                                <span className={styles.error}>{formErrors.middleName}</span>
-                            )}
                         </div>
 
                         <div className={styles.group}>
@@ -62,9 +41,6 @@ const ProfileForm: React.FC<Props> = ({ formData, onChange, formErrors }) => {
                                 value={formData.phoneNumber}
                                 onChange={(v) => onChange('phoneNumber', v)}
                             />
-                            {formErrors.phoneNumber && (
-                                <span className={styles.error}>{formErrors.phoneNumber}</span>
-                            )}
                         </div>
                     </div>
 
@@ -75,9 +51,6 @@ const ProfileForm: React.FC<Props> = ({ formData, onChange, formErrors }) => {
                                 value={formData.telegram}
                                 onChange={(v) => onChange('telegram', v)}
                             />
-                            {formErrors.telegram && (
-                                <span className={styles.error}>{formErrors.telegram}</span>
-                            )}
                         </div>
 
                         <div className={styles.group}>
@@ -86,9 +59,6 @@ const ProfileForm: React.FC<Props> = ({ formData, onChange, formErrors }) => {
                                 value={formData.city}
                                 onChange={(v) => onChange('city', v)}
                             />
-                            {formErrors.city && (
-                                <span className={styles.error}>{formErrors.city}</span>
-                            )}
                         </div>
                     </div>
                 </div>

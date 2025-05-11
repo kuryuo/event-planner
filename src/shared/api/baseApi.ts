@@ -1,5 +1,5 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import { authStorage } from '@/shared/lib/authStorage';
+import { authStorage } from '@/shared/lib/localStorage/authStorage';
 
 export const baseApi = createApi({
     reducerPath: 'api',

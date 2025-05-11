@@ -32,9 +32,47 @@
     display: flex;
     flex-direction: column;
     gap: 5px;
+    position: relative;
 }
 
 label {
     font-size: 14px;
     font-weight: 600;
+}
+
+.label {
+    position: absolute;
+    top: -14px;
+    left: 25px;
+    font-size: 18px;
+    font-weight: 100;
+    color: var(--grey);
+    pointer-events: none;
+    background-color: var(--white);
+    transition: all 0.2s ease-in-out;
+}
+
+.select {
+    color: var(--dark-grey);
+    font-size: 24px;
+    display: flex;
+    align-items: center;
+    border-radius: 12px;
+    box-shadow: var(--shadow);
+    padding: 8px 16px;
+    gap: 8px;
+}
+
+.select {
+    transition: background-color 0.25s ease-in-out, border 0.25s ease-in-out;
+    border: 1px solid transparent;
+}
+
+.select:hover {
+    background-color: rgba(0, 0, 0, 0.03);
+}
+
+.select:focus-within {
+    border: 2px solid var(--light-blue);
+    background-color: rgba(0, 0, 0, 0.015);
 }

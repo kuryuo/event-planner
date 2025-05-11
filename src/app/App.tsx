@@ -1,7 +1,7 @@
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import AuthPage from "@/pages/auth/AuthPage";
 import ProfilePage from '@/pages/profile/ProfilePage';
-import NewEventPage from '@/pages/create-event/CreateEventPage';
+import NewEventPage from '@/pages/new-event/NewEventPage';
 import EventPage from '@/pages/event/EventPage';
 import EventsListPage from '@/pages/event-list/EventsListPage';
 import EventPhotosPage from "@/pages/photos/EventPhotosPage";

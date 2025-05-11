@@ -3,6 +3,7 @@ import InputField from '@/shared/ui/input-field/InputField';
 import Button from '@/shared/ui/button/Button';
 import LinkButton from '@/shared/ui/link-button/LinkButton';
 import styles from './AuthForm.module.css';
+import Notification from '@/shared/ui/notification/Notification';
 import { useAuth } from '../model/useAuth';
 
 type Props = {
@@ -15,7 +16,8 @@ const AuthForm: React.FC<Props> = ({ mode, setMode }) => {
         email, password,
         setEmail, setPassword,
         handleSubmit,
-        error,
+        notification,
+        setNotification,
     } = useAuth(mode);
 
     return (
@@ -56,8 +58,6 @@ const AuthForm: React.FC<Props> = ({ mode, setMode }) => {
                 />
             )}
 
-            {error && <div className={styles.error}>{error}</div>}
-
             <Button
                 label={
                     mode === 'login'
@@ -68,6 +68,16 @@ const AuthForm: React.FC<Props> = ({ mode, setMode }) => {
                 }
                 variant="default"
             />
+
+            {notification && (
+                <div style={{ position: 'fixed', bottom: 20, right: 20, zIndex: 1000 }}>
+                    <Notification
+                        message={notification.message}
+                        type={notification.type}
+                        onClose={() => setNotification(null)}
+                    />
+                </div>
+            )}
 
             {mode === 'login' && (
                 <div className={styles.links}>

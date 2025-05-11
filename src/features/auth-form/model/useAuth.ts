@@ -1,68 +1,62 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useLoginMutation, useRegisterMutation } from '@/shared/api/authApi';
+import { useDispatch } from 'react-redux';
+
+import { useLoginMutation, useRegisterMutation } from '@/shared/api/auth/authApi';
+import { useLazyGetProfileQuery } from '@/shared/api/user/profileApi';
+
 import { AppRoute } from '@/const';
 import { validateAuth } from '@/shared/lib/validation/validateAuth';
-import { authStorage } from '@/shared/lib/authStorage';
-import { useDispatch } from 'react-redux';
-import { baseApi } from '@/shared/api/baseApi'
-import { useLazyGetProfileQuery } from '@/shared/api/profileApi';
+import { authStorage } from '@/shared/lib/localStorage/authStorage';
+import { saveProfileToStorage } from '@/shared/lib/localStorage/profileStorage';
+
 import { setProfile } from '@/shared/model/store/profileSlice';
+import { baseApi } from '@/shared/api/baseApi';
 
 export function useAuth(mode: 'login' | 'register' | 'reset') {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const [error, setError] = useState<string | null>(null);
-    const dispatch = useDispatch();
-    const [fetchProfile] = useLazyGetProfileQuery();
+    const [notification, setNotification] = useState<{ message: string; type: 'success' | 'error' } | null>(null);
 
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+
+    const [fetchProfile] = useLazyGetProfileQuery();
     const [register, { isLoading: isRegistering }] = useRegisterMutation();
     const [login, { isLoading: isLoggingIn }] = useLoginMutation();
-    const navigate = useNavigate();
 
     const isLoading = isRegistering || isLoggingIn;
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        setError(null);
+        setNotification(null);
 
         const validationError = validateAuth(mode, email, password);
         if (validationError) {
-            setError(validationError);
+            setNotification({ type: 'error', message: validationError });
             return;
         }
 
         try {
-            if (mode === 'register') {
-                const response = await register({ email, password }).unwrap();
-                authStorage.setToken(response.token);
-                dispatch(baseApi.util.resetApiState());
+            const auth = mode === 'register' ? register : login;
+            const { token } = await auth({ email, password }).unwrap();
 
-                const profile = await fetchProfile().unwrap();
-                dispatch(setProfile({
-                    firstName: profile.firstName || '',
-                    lastName: profile.lastName || '',
-                }));
+            authStorage.setToken(token);
+            dispatch(baseApi.util.resetApiState());
 
-                navigate(AppRoute.EVENT_LIST);
+            const profile = await fetchProfile().unwrap();
+            const normalized = {
+                id: profile.id,
+                firstName: profile.firstName ?? '',
+                lastName: profile.lastName ?? '',
+            };
 
-            } else if (mode === 'login') {
-                const response = await login({ email, password }).unwrap();
-                authStorage.setToken(response.token);
-                dispatch(baseApi.util.resetApiState());
+            dispatch(setProfile(normalized));
+            saveProfileToStorage(normalized);
 
-                const profile = await fetchProfile().unwrap();
-                dispatch(setProfile({
-                    firstName: profile.firstName || '',
-                    lastName: profile.lastName || '',
-                }));
-
-                navigate(AppRoute.EVENT_LIST);
-            } else {
-                // сброс пароля
-            }
+            navigate(AppRoute.EVENT_LIST);
         } catch {
-            setError('Неверный email или пароль');
+            setNotification({ type: 'error', message: 'Неверный email или пароль' });
         }
     };
 
@@ -72,7 +66,8 @@ export function useAuth(mode: 'login' | 'register' | 'reset') {
         setEmail,
         setPassword,
         handleSubmit,
-        error,
         isLoading,
+        notification,
+        setNotification,
     };
 }

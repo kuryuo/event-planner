@@ -26,7 +26,6 @@ const EventFilterModal: React.FC<Props> = ({ onClose }) => {
     };
 
     const handleApply = () => {
-        // логика применения фильтров
         onClose();
     };
 

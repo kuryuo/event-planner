@@ -33,7 +33,6 @@ const EventPage: React.FC<EventPageProps> = ({ mode }) => {
 
     const handleConfirmFinish = () => {
         setIsFinishModalOpen(false);
-        console.log('Мероприятие завершено');
     };
 
     return (
