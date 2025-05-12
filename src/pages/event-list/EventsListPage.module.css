@@ -10,3 +10,11 @@
     width: 100%;
     gap: 20px;
 }
+
+.empty{
+    font-size: 35px;
+    color: var(--turquoise);
+    display: flex;
+    justify-content: center;
+}
+

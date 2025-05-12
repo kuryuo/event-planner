@@ -31,7 +31,6 @@ const EventsListPage: React.FC = () => {
 
     const getEventLink = (eventId: string, responsiblePersonId: string) => {
         const mode = responsiblePersonId === currentUserId ? 'organizer' : 'participant';
-
         return `${AppRoute.EVENT.replace(':eventId', eventId)}?mode=${mode}`;
     };
 
@@ -42,18 +41,24 @@ const EventsListPage: React.FC = () => {
                 <Header title="Календарь" />
                 <EventsToolbar label="Март 2025" onNavigate={() => {}} date={new Date()} />
                 {events.length > 0 ? (
-                    events.map((event: Event) => (
-                        <Link key={event.id} to={getEventLink(event.id, event.responsiblePersonId)}>
-                            <EventListItem
-                                day={formatDateToMonthDay(event.startDate)}
-                                time={`${formatTime(event.startDate)} - ${formatTime(event.endDate)}`}
-                                title={event.name}
-                                color="#a8d5a2"
-                            />
-                        </Link>
-                    ))
+                    events.map((event: Event) => {
+                        // Преобразуем строки в объект Date перед передачей в функции
+                        const startDate = new Date(event.startDate);
+                        const endDate = new Date(event.endDate);
+
+                        return (
+                            <Link key={event.id} to={getEventLink(event.id, event.responsiblePersonId)}>
+                                <EventListItem
+                                    day={formatDateToMonthDay(startDate)}
+                                    time={`${formatTime(startDate)} - ${formatTime(endDate)}`}
+                                    title={event.name}
+                                    color="#a8d5a2"
+                                />
+                            </Link>
+                        );
+                    })
                 ) : (
-                    <div>No events available.</div>
+                    <div className={styles.empty}>Пока нет ни одного мероприятия(</div>
                 )}
             </div>
         </div>

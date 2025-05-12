@@ -1,19 +1,3 @@
-export interface Event {
-    id: string;
-    name: string;
-    description: string;
-    startDate: string;
-    endDate: string;
-    location: string;
-    format: string;
-    eventType: string;
-    responsiblePersonId: string;
-    maxParticipants: number;
-    categories: string[];
-    participantsCount?: number;
-    hasFreePlaces?: boolean;
-}
-
 export interface EventFilters {
     start?: string;
     end?: string;

@@ -8,7 +8,9 @@ interface Props {
         name: string;
         description: string;
         startDate: string;
+        startTime: string;
         endDate: string;
+        endTime: string;
         location: string;
         format: string;
         eventType: string;
@@ -61,6 +63,18 @@ const EventInfoForm: React.FC<Props> = ({ formData, onChange }) => {
                                 <option value="closed">Закрытое</option>
                             </select>
                         </div>
+                        <div className={styles.group}>
+                            <label className={styles.label}>Формат</label>
+                            <select
+                                className={styles.select}
+                                value={formData.format}
+                                onChange={(e) => handleChange('format', e.target.value)}
+                            >
+                                <option value="online">Онлайн</option>
+                                <option value="offline">Офлайн</option>
+                                <option value="hybrid">Гибрид</option>
+                            </select>
+                        </div>
                     </div>
 
                     <div className={styles.column}>
@@ -81,16 +95,20 @@ const EventInfoForm: React.FC<Props> = ({ formData, onChange }) => {
                             />
                         </div>
                         <div className={styles.group}>
-                            <label className={styles.label}>Формат</label>
-                            <select
-                                className={styles.select}
-                                value={formData.format}
-                                onChange={(e) => handleChange('format', e.target.value)}
-                            >
-                                <option value="online">Онлайн</option>
-                                <option value="offline">Офлайн</option>
-                                <option value="hybrid">Гибрид</option>
-                            </select>
+                            <Input
+                                label="Время начала"
+                                type="time"
+                                value={formData.startTime}
+                                onChange={(v) => handleChange('startTime', v)}
+                            />
+                        </div>
+                        <div className={styles.group}>
+                            <Input
+                                label="Время окончания"
+                                type="time"
+                                value={formData.endTime}
+                                onChange={(v) => handleChange('endTime', v)}
+                            />
                         </div>
                     </div>
                 </div>

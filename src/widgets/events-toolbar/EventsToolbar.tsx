@@ -7,7 +7,7 @@ import FilterIcon from '@/assets/img/filter.svg?react'
 import { format } from 'date-fns'
 import { ru } from 'date-fns/locale'
 import {AppRoute} from "@/const";
-import EventFilterModal from "@/widgets/event-filter-modal/EventFilterModal";
+import EventFilterModal from "@/entities/event/ui/event-filter-modal/EventFilterModal";
 
 type ToolbarProps = {
     label: string

@@ -2,27 +2,20 @@ import React, { useState } from 'react';
 import { useParams, useNavigate, useLocation } from 'react-router-dom';
 import { useGetEventByIdQuery } from '@/shared/api/event/eventApi';
 import styles from './EventPage.module.css';
-import { formatDateToMonthDay } from '@/shared/lib/dateUtils';
 
 import Sidebar from '@/widgets/sidebar/Sidebar';
 import Header from '@/widgets/header/Header';
 import EventTag from '@/entities/event/ui/event-tag/EventTag';
-import EventDescription from '@/widgets/event-description/EventDescription';
-import EventPhotosPreview from '@/widgets/event-photos-preview/EventPhotosPreview';
-import EventNotifications from '@/widgets/event-notifications/EventNotifications';
-import EventDetails from '@/widgets/event-details/EventDetails';
-import EventSubscribersPreview from '@/widgets/event-subscribers-preview/EventSubscribersPreview';
-import ContactsBlock from '@/widgets/event-contacts/EventContacts';
+import EventDescription from '@/entities/event/ui/event-description/EventDescription';
+import EventPhotosPreview from '@/entities/event/ui/event-photos-preview/EventPhotosPreview';
+import EventPost from '@/entities/event/ui/event-post/EventPost';
+import EventDetails from '@/entities/event/ui/event-details/EventDetails';
+import EventSubscribersPreview from '@/entities/event/ui/event-subscribers-preview/EventSubscribersPreview';
+import ContactsBlock from '@/entities/event/ui/event-contacts/EventContacts';
 import Button from '@/shared/ui/button/Button';
 import Modal from '@/shared/ui/modal/Modal';
 import SettingsIcon from '@/assets/img/settings.svg';
 import { AppRoute } from '@/const';
-
-const eventTypeMap: { [key: string]: string } = {
-    open: 'Открытое',
-    closed: 'Закрытое',
-    private: 'Частное',
-};
 
 const EventPage: React.FC = () => {
     const navigate = useNavigate();
@@ -82,7 +75,7 @@ const EventPage: React.FC = () => {
                             <EventPhotosPreview />
                         </div>
 
-                        <EventNotifications />
+                        <EventPost />
                     </div>
 
                     <div className={styles.rightColumn}>
@@ -113,12 +106,7 @@ const EventPage: React.FC = () => {
                             />
                         )}
 
-                        <EventDetails
-                            eventType={eventTypeMap[event?.eventType || ''] || 'Не указано'}
-                            location={event?.location || 'Не указано'}
-                            startDate={formatDateToMonthDay(event?.startDate || '')}
-                            endDate={formatDateToMonthDay(event?.endDate || '')}
-                        />
+                        <EventDetails event={event} />
 
                         <EventSubscribersPreview />
                         <ContactsBlock />

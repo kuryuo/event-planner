@@ -21,6 +21,7 @@
     font-weight: 600;
     font-size: 24px;
     color: var(--dark-grey);
+    text-align: center;
 }
 
 .avatar {

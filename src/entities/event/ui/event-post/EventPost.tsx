@@ -1,8 +1,8 @@
 import React from 'react';
-import styles from './EventNotifications.module.css';
+import styles from './EventPost.module.css';
 import cat from '@/assets/img/cat.png';
 
-const EventNotifications: React.FC = () => {
+const EventPost: React.FC = () => {
     const notifications = [
         {
             title: 'Масленница',
@@ -35,4 +35,4 @@ const EventNotifications: React.FC = () => {
     );
 };
 
-export default EventNotifications;
+export default EventPost;

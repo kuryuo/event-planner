@@ -2,7 +2,7 @@ import React from 'react'
 import styles from './CalendarPage.module.css'
 import Sidebar from '@/widgets/sidebar/Sidebar'
 import Header from '@/widgets/header/Header'
-import EventCalendar from '@/widgets/calendar/EventCalendar'
+import CalendarContainer from '@/features/calendar/ui/CalendarContainer'
 
 const CalendarPage: React.FC = () => {
     return (
@@ -11,7 +11,7 @@ const CalendarPage: React.FC = () => {
             <div className={styles.content}>
                 <Header title="Календарь" />
                 <div className={styles.calendarWrapper}>
-                    <EventCalendar />
+                    <CalendarContainer />
                 </div>
             </div>
         </div>

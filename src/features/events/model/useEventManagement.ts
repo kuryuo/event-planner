@@ -4,7 +4,7 @@ import { useDeleteEventMutation, useGetEventByIdQuery, useCreateEventMutation } 
 import { AppRoute } from '@/const';
 import { CreateEventRequest } from '@/shared/api/event/types';
 import { validateCreateEvent } from '@/shared/lib/validation/validateCreateEvent';
-import { useAppSelector } from '@/shared/lib/hooks';
+import { useAppSelector } from '@/shared/hooks';
 import { EventInfoFormData, PositioningFormData } from './types';
 
 export const useEventManagement = (eventId: string | undefined, isEditMode: boolean) => {
@@ -88,15 +88,23 @@ export const useEventManagement = (eventId: string | undefined, isEditMode: bool
             return;
         }
 
+        const startDateTime = `${eventInfo?.startDate}T${eventInfo?.startTime}`;
+        const endDateTime = `${eventInfo?.endDate}T${eventInfo?.endTime}`;
+
+        const startDateISO = toISOString(startDateTime);
+        const endDateISO = toISOString(endDateTime);
+
         const body: CreateEventRequest = {
             ...eventInfo!,
             responsiblePersonId: userId,
-            startDate: toISOString(eventInfo!.startDate),
-            endDate: toISOString(eventInfo!.endDate),
+            startDate: startDateISO,
+            endDate: endDateISO,
             categories: positioning!.categories,
             roles: positioning!.roles,
             maxParticipants: positioning!.maxParticipants ?? 0,
         };
+
+        console.log('Данные, отправленные на сервер:', body);
 
         try {
             await createEvent(body).unwrap();
