@@ -66,7 +66,7 @@ const AuthForm: React.FC<Props> = ({ mode, setMode }) => {
                             ? 'Зарегистрироваться'
                             : 'Отправить запрос'
                 }
-                variant="default"
+                variant="grey"
             />
 
             {notification && (

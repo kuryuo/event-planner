@@ -4,7 +4,7 @@ import styles from './Button.module.css';
 interface ButtonProps {
     label: string;
     onClick?: () => void;
-    variant: 'default' | 'border' | 'red';
+    variant: 'grey' | 'border' | 'red';
     size?: 'default' | 'small';
     className?: string;
 }

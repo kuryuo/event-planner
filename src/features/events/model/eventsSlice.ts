@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { eventApi } from '@/shared/api/event/eventApi';
 
-interface Event {
+export interface Event {
     id: string;
     name: string;
     description: string;

@@ -24,7 +24,7 @@ const FormButtons: React.FC<FormActionsProps> = ({
     const buttons = [
         <Button
             key="primary"
-            variant="default"
+            variant="grey"
             size={buttonSize}
             label={primaryText}
             onClick={onPrimaryClick}

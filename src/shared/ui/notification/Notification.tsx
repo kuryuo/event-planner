@@ -4,7 +4,7 @@ import Close from '@/assets/img/close.svg?react';
 
 interface NotificationProps {
     message: string;
-    type: 'success' | 'error';
+    type: 'success' | 'error' | 'info';
     onClose: () => void;
 }
 

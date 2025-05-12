@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
+import { useParams, useNavigate, useLocation } from 'react-router-dom';
 import { useGetEventByIdQuery } from '@/shared/api/event/eventApi';
 import styles from './EventPage.module.css';
-import { useNavigate, useParams } from 'react-router-dom';
-import {formatDateToMonthDay} from "@/shared/lib/dateUtils";
+import { formatDateToMonthDay } from '@/shared/lib/dateUtils';
 
 import Sidebar from '@/widgets/sidebar/Sidebar';
 import Header from '@/widgets/header/Header';
@@ -16,28 +16,23 @@ import ContactsBlock from '@/widgets/event-contacts/EventContacts';
 import Button from '@/shared/ui/button/Button';
 import Modal from '@/shared/ui/modal/Modal';
 import SettingsIcon from '@/assets/img/settings.svg';
-import { AppRoute } from "@/const";
+import { AppRoute } from '@/const';
 
 const eventTypeMap: { [key: string]: string } = {
-    "open": "Открытое",
-    "closed": "Закрытое",
-    "private": "Частное",
+    open: 'Открытое',
+    closed: 'Закрытое',
+    private: 'Частное',
 };
 
-type EventPageMode = 'participant' | 'organizer';
-
-interface EventPageProps {
-    mode: EventPageMode;
-}
-
-const EventPage: React.FC<EventPageProps> = ({ mode }) => {
+const EventPage: React.FC = () => {
     const navigate = useNavigate();
-    const isOrganizer = mode === 'organizer';
     const [isFinishModalOpen, setIsFinishModalOpen] = useState(false);
 
     const { eventId } = useParams<{ eventId: string }>();
+    const { search } = useLocation();
+    const { data: event, error, isLoading } = useGetEventByIdQuery(eventId || '');
 
-    const { data: event, error, isLoading } = useGetEventByIdQuery(eventId || "");
+    const isOrganizer = new URLSearchParams(search).get('mode') === 'organizer';
 
     const handleFinish = () => {
         setIsFinishModalOpen(true);
@@ -45,6 +40,14 @@ const EventPage: React.FC<EventPageProps> = ({ mode }) => {
 
     const handleConfirmFinish = () => {
         setIsFinishModalOpen(false);
+    };
+
+    const handleEditEvent = () => {
+        if (eventId) {
+            navigate(AppRoute.EDIT_EVENT.replace(':eventId', eventId));
+        } else {
+            console.error('eventId is undefined');
+        }
     };
 
     if (isLoading) {
@@ -59,7 +62,7 @@ const EventPage: React.FC<EventPageProps> = ({ mode }) => {
         <div className={styles.page}>
             <Sidebar />
             <div className={styles.content}>
-                <Header title={event?.name || "Loading..."} />
+                <Header title={event?.name || 'Loading...'} />
 
                 <div className={styles.main}>
                     <div className={styles.leftColumn}>
@@ -70,7 +73,9 @@ const EventPage: React.FC<EventPageProps> = ({ mode }) => {
                         </div>
 
                         <div className={styles.descriptionContainer}>
-                            <EventDescription text={event?.description || "No description available"} />
+                            <EventDescription
+                                text={event?.description || 'No description available'}
+                            />
                         </div>
 
                         <div className={styles.galleryContainer}>
@@ -83,31 +88,36 @@ const EventPage: React.FC<EventPageProps> = ({ mode }) => {
                     <div className={styles.rightColumn}>
                         {isOrganizer ? (
                             <div className={styles.buttonGroup}>
-                                <Button label="Перейти в чат" variant="default" size="small" />
+                                <Button label="Перейти в чат" variant="grey" size="small" />
                                 <Button
                                     label="Завершить"
                                     variant="red"
                                     size="small"
                                     onClick={handleFinish}
                                 />
-                                <button className={styles.button} onClick={() => navigate(AppRoute.EDIT_EVENT)}>
-                                    <img src={SettingsIcon} alt="Настройки" width={24} height={24} />
+                                <button className={styles.button} onClick={handleEditEvent}>
+                                    <img
+                                        src={SettingsIcon}
+                                        alt="Настройки"
+                                        width={24}
+                                        height={24}
+                                    />
                                 </button>
                             </div>
                         ) : (
                             <Button
                                 label="Я пойду"
-                                variant="default"
+                                variant="grey"
                                 size="small"
                                 className={styles.customButton}
                             />
                         )}
 
                         <EventDetails
-                            eventType={eventTypeMap[event?.eventType || ""] || "Не указано"}
-                            location={event?.location || "Не указано"}
-                            startDate={formatDateToMonthDay(event?.startDate || "")}
-                            endDate={formatDateToMonthDay(event?.endDate || "")}
+                            eventType={eventTypeMap[event?.eventType || ''] || 'Не указано'}
+                            location={event?.location || 'Не указано'}
+                            startDate={formatDateToMonthDay(event?.startDate || '')}
+                            endDate={formatDateToMonthDay(event?.endDate || '')}
                         />
 
                         <EventSubscribersPreview />

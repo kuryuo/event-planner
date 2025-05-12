@@ -7,7 +7,11 @@
     cursor: pointer;
 }
 
-.default {
+.default{
+    width: auto;
+}
+
+.grey {
     width: auto;
     border: none;
     background-color: var(--grey);
@@ -15,11 +19,11 @@
     transition: background-color 0.2s ease, color 0.2s ease, border 0.2s ease;
 }
 
-.default:hover {
+.grey:hover {
     background-color: var(--light-grey);
 }
 
-.default:active {
+.grey:active {
     background-color: var(--dark-grey);
 }
 

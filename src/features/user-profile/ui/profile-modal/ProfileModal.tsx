@@ -36,7 +36,7 @@ const ProfileModal: React.FC<ProfileModalProps> = ({
                 description="Вы уверены, что хотите выйти?"
                 primaryText="Выйти"
                 secondaryText="Отмена"
-                primaryType="default"
+                primaryType="grey"
                 secondaryType="border"
                 buttonSize="small"
             />

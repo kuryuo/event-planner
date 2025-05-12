@@ -1,7 +1,7 @@
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import AuthPage from "@/pages/auth/AuthPage";
 import ProfilePage from '@/pages/profile/ProfilePage';
-import NewEventPage from '@/pages/new-event/NewEventPage';
+import EventManagementPage from '@/pages/event-management-page/EventManagementPage';
 import EventPage from '@/pages/event/EventPage';
 import EventsListPage from '@/pages/event-list/EventsListPage';
 import EventPhotosPage from "@/pages/photos/EventPhotosPage";
@@ -17,8 +17,8 @@ function App() {
             <Routes>
                 <Route path={AppRoute.AUTH} element={<AuthPage />} />
                 <Route path={AppRoute.PROFILE} element={<ProfilePage />} />
-                <Route path={AppRoute.CREATE_EVENT} element={<NewEventPage />} />
-                <Route path={AppRoute.EDIT_EVENT} element={<NewEventPage isEditMode />} />
+                <Route path={AppRoute.CREATE_EVENT} element={<EventManagementPage />} />
+                <Route path={AppRoute.EDIT_EVENT} element={<EventManagementPage isEditMode />} />
                 <Route path={AppRoute.EVENT} element={<EventPage mode = "participant"/>} />
                 <Route path={AppRoute.ADMIN_EVENT} element={<EventPage mode = "organizer" />} />
                 <Route path={AppRoute.EVENT_LIST} element={<EventsListPage />} />

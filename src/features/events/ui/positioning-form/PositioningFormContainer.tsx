@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import PositioningForm from './PositioningForm';
-import {PositioningFormData} from "@/features/create-event/model/types";
+import { PositioningFormData } from "@/features/events/model/types";
 
 interface Props {
     onChange?: (data: PositioningFormData) => void;
+    initialValues?: PositioningFormData;  // Добавляем initialValues для редактирования
 }
 
-const PositioningFormContainer: React.FC<Props> = ({ onChange }) => {
+const PositioningFormContainer: React.FC<Props> = ({ onChange, initialValues }) => {
     const [categories, setCategories] = useState<string[]>([]);
     const [roles, setRoles] = useState<string[]>([]);
     const [maxEnabled, setMaxEnabled] = useState(false);
@@ -39,6 +40,16 @@ const PositioningFormContainer: React.FC<Props> = ({ onChange }) => {
         if (type === 'category') setCategories(categories.filter(c => c !== tag));
         if (type === 'role') setRoles(roles.filter(r => r !== tag));
     };
+
+    // Используем initialValues для редактирования, если они переданы
+    useEffect(() => {
+        if (initialValues) {
+            setCategories(initialValues.categories || []);
+            setRoles(initialValues.roles || []);
+            setMaxEnabled(!!initialValues.maxParticipants);
+            setMaxParticipants(initialValues.maxParticipants || 250);
+        }
+    }, [initialValues]);
 
     useEffect(() => {
         if (onChange) {

@@ -11,8 +11,8 @@ type ModalProps = {
     description: string;
     primaryText: string;
     secondaryText: string;
-    primaryType?: 'default' | 'red' | 'border';
-    secondaryType?: 'default' | 'red' | 'border';
+    primaryType?: 'grey' | 'red' | 'border';
+    secondaryType?: 'grey' | 'red' | 'border';
     buttonSize?: 'default' | 'small';
 };
 
@@ -24,7 +24,7 @@ const Modal: React.FC<ModalProps> = ({
                                          description,
                                          primaryText,
                                          secondaryText,
-                                         primaryType = 'default',
+                                         primaryType = 'grey',
                                          secondaryType = 'border',
                                          buttonSize = 'default',
                                      }) => {

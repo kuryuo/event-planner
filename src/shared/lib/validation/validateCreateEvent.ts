@@ -1,4 +1,4 @@
-import { EventInfoFormData, PositioningFormData } from '@/features/create-event/model/types';
+import { EventInfoFormData, PositioningFormData } from '@/features/events/model/types';
 
 interface ValidationResult {
     isValid: boolean;
