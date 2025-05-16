@@ -8,7 +8,7 @@ import { EventType } from '../model/useCalendar';
 import EventsToolbar from "@/widgets/events-toolbar/EventsToolbar";
 import { format as dateFnsFormat } from 'date-fns/format';
 import { useNavigate } from 'react-router-dom';
-import {AppRoute} from "@/const";
+import { AppRoute } from "@/const";
 
 const locales = { ru };
 
@@ -31,19 +31,14 @@ type EventCalendarProps = {
 const EventCalendar: React.FC<EventCalendarProps> = ({ date, events, onNavigate, onShowMore, currentUserId }) => {
     const navigate = useNavigate();
 
-    // Функция для обработки клика по событию
-    const onEventClick = (eventId: string, responsiblePersonId: string) => {
-        console.log('Event ID:', eventId);
-        console.log('Responsible Person ID:', responsiblePersonId);
-        console.log('Current User ID:', currentUserId);
-
+    const getEventLink = (eventId: string, responsiblePersonId: string) => {
         const mode = responsiblePersonId === currentUserId ? 'organizer' : 'participant';
-        console.log('Mode:', mode);
-
-        const eventLink = `${AppRoute.EVENT.replace(':eventId', eventId)}?mode=${mode}`;
-        navigate(eventLink);
+        return `${AppRoute.EVENT.replace(':eventId', eventId)}?mode=${mode}`;
     };
 
+    const onEventClick = (eventId: string, responsiblePersonId: string) => {
+        navigate(getEventLink(eventId, responsiblePersonId));
+    };
 
     return (
         <div className={styles.calendarWrapper}>

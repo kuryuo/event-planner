@@ -28,7 +28,6 @@ const EventModal: React.FC<EventModalProps> = ({ events, selectedDate, onClose }
 
         const eventLink = `${AppRoute.EVENT.replace(':eventId', eventId)}?mode=${mode}`;
 
-        console.log('Navigating to:', eventLink);
         navigate(eventLink);
     };
 

@@ -19,8 +19,7 @@ function App() {
                 <Route path={AppRoute.PROFILE} element={<ProfilePage />} />
                 <Route path={AppRoute.CREATE_EVENT} element={<EventManagementPage />} />
                 <Route path={AppRoute.EDIT_EVENT} element={<EventManagementPage isEditMode />} />
-                <Route path={AppRoute.EVENT} element={<EventPage mode = "participant"/>} />
-                <Route path={AppRoute.ADMIN_EVENT} element={<EventPage mode = "organizer" />} />
+                <Route path={AppRoute.EVENT} element={<EventPage />} />
                 <Route path={AppRoute.EVENT_LIST} element={<EventsListPage />} />
                 <Route path={AppRoute.PHOTOS_EVENT} element={<EventPhotosPage/>} />
                 <Route path={AppRoute.SUBSCRIBERS} element={<EventSubscribersPage/>} />

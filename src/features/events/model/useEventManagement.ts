@@ -1,11 +1,12 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useDeleteEventMutation, useGetEventByIdQuery, useCreateEventMutation } from '@/shared/api/event/eventApi';
+import { useDeleteEventMutation, useGetEventByIdQuery, useCreateEventMutation, useUpdateEventMutation } from '@/shared/api/event/eventApi';
 import { AppRoute } from '@/const';
 import { CreateEventRequest } from '@/shared/api/event/types';
 import { validateCreateEvent } from '@/shared/lib/validation/validateCreateEvent';
-import { useAppSelector } from '@/shared/hooks';
 import { EventInfoFormData, PositioningFormData } from './types';
+import { useSelector } from 'react-redux';
+import { RootState } from '@/app/store';
 
 export const useEventManagement = (eventId: string | undefined, isEditMode: boolean) => {
     const navigate = useNavigate();
@@ -13,8 +14,9 @@ export const useEventManagement = (eventId: string | undefined, isEditMode: bool
     const { data: event, error, isLoading } = useGetEventByIdQuery(eventId || '');
     const [deleteEvent] = useDeleteEventMutation();
     const [createEvent] = useCreateEventMutation();
+    const [updateEvent] = useUpdateEventMutation();
 
-    const userId = useAppSelector((state) => state.profile.id);
+    const currentUserId = useSelector((state: RootState) => state.profile.id);
 
     const [eventInfo, setEventInfo] = useState<EventInfoFormData | null>(null);
     const [positioning, setPositioning] = useState<PositioningFormData | null>(null);
@@ -30,9 +32,14 @@ export const useEventManagement = (eventId: string | undefined, isEditMode: bool
 
     const toISOString = (date: string) => new Date(date).toISOString();
 
+    const getEventLink = (eventId: string, responsiblePersonId: string) => {
+        const mode = responsiblePersonId === currentUserId ? 'organizer' : 'participant';
+        return `${AppRoute.EVENT.replace(':eventId', eventId)}?mode=${mode}`;
+    };
+
     const handleCancel = () => {
-        if (isEditMode && eventId) {
-            navigate(AppRoute.EVENT.replace(':eventId', eventId));
+        if (isEditMode && eventId && event) {
+            navigate(getEventLink(eventId, event.responsiblePersonId));
         } else {
             setIsModalOpen(true);
         }
@@ -66,21 +73,13 @@ export const useEventManagement = (eventId: string | undefined, isEditMode: bool
     };
 
     const handleSubmit = async () => {
-        if (isEditMode) {
-            setNotification({
-                type: 'info',
-                message: 'Вы в режиме редактирования, запрос на создание не будет отправлен',
-            });
-            return;
-        }
-
         const validation = validateCreateEvent(eventInfo, positioning);
         if (!validation.isValid) {
             setNotification({ type: 'error', message: validation.message || 'Ошибка валидации' });
             return;
         }
 
-        if (!userId) {
+        if (!currentUserId) {
             setNotification({
                 type: 'error',
                 message: 'Пожалуйста, войдите в аккаунт или дождитесь загрузки профиля',
@@ -96,7 +95,7 @@ export const useEventManagement = (eventId: string | undefined, isEditMode: bool
 
         const body: CreateEventRequest = {
             ...eventInfo!,
-            responsiblePersonId: userId,
+            responsiblePersonId: currentUserId,
             startDate: startDateISO,
             endDate: endDateISO,
             categories: positioning!.categories,
@@ -104,13 +103,24 @@ export const useEventManagement = (eventId: string | undefined, isEditMode: bool
             maxParticipants: positioning!.maxParticipants ?? 0,
         };
 
-        console.log('Данные, отправленные на сервер:', body);
-
         try {
-            await createEvent(body).unwrap();
-            setNotification({ type: 'success', message: 'Мероприятие успешно создано!' });
+            if (isEditMode && eventId) {
+                await updateEvent({ eventId, body }).unwrap();
+                setNotification({ type: 'success', message: 'Мероприятие успешно обновлено!' });
+
+                const redirectId = eventId;
+                const redirectResponsible = currentUserId;
+                navigate(getEventLink(redirectId, redirectResponsible));
+            } else {
+                await createEvent(body).unwrap();
+                setNotification({ type: 'success', message: 'Мероприятие успешно создано!' });
+                navigate(AppRoute.EVENT_LIST);
+            }
         } catch {
-            setNotification({ type: 'error', message: 'Ошибка при создании события' });
+            setNotification({
+                type: 'error',
+                message: isEditMode ? 'Ошибка при обновлении мероприятия' : 'Ошибка при создании события',
+            });
         }
     };
 

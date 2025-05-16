@@ -32,6 +32,8 @@ const EventInfoFormContainer: React.FC<Props> = ({ onChange, initialValues }) =>
 
                 startDate: formatDateForInput(initialValues.startDate),
                 endDate: formatDateForInput(initialValues.endDate),
+                startTime: formatTimeForInput(initialValues.startDate),
+                endTime: formatTimeForInput(initialValues.endDate),
             });
         }
     }, [initialValues, formData.startDate, formData.endDate]);
@@ -51,6 +53,13 @@ const formatDateForInput = (date: string) => {
     const month = (parsedDate.getMonth() + 1).toString().padStart(2, '0');
     const day = parsedDate.getDate().toString().padStart(2, '0');
     return `${year}-${month}-${day}`;
+};
+
+const formatTimeForInput = (dateTime: string) => {
+    const parsedDate = new Date(dateTime);
+    const hours = parsedDate.getHours().toString().padStart(2, '0');
+    const minutes = parsedDate.getMinutes().toString().padStart(2, '0');
+    return `${hours}:${minutes}`;
 };
 
 export default EventInfoFormContainer;

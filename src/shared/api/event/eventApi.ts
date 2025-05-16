@@ -19,6 +19,14 @@ export const eventApi = baseApi.injectEndpoints({
                 body,
             }),
         }),
+        updateEvent: builder.mutation<any, { eventId: string; body: any }>({
+            query: ({ eventId, body }) => ({
+                url: 'events',
+                method: 'PUT',
+                params: { eventId },
+                body,
+            }),
+        }),
         deleteEvent: builder.mutation<any, string>({
             query: (eventId) => ({
                 url: 'events',
@@ -26,7 +34,7 @@ export const eventApi = baseApi.injectEndpoints({
                 params: { eventId },
             }),
         }),
-        createEventById: builder.mutation<any, { eventId: string, body: any }>({
+        createEventById: builder.mutation<any, { eventId: string; body: any }>({
             query: ({ eventId, body }) => ({
                 url: `events/${eventId}`,
                 method: 'POST',
@@ -39,15 +47,36 @@ export const eventApi = baseApi.injectEndpoints({
                 method: 'DELETE',
             }),
         }),
-        addUserToEvent: builder.mutation<any, { eventId: string, userId: string, roleId?: string }>({
+        addUserToEvent: builder.mutation<any, { eventId: string; userId: string; roleId?: string }>({
             query: ({ eventId, userId, roleId }) => ({
                 url: `events/${eventId}/${userId}`,
                 method: 'POST',
-                params: { roleId },
+                params: roleId ? { roleId } : undefined,
             }),
         }),
         getEventRoles: builder.query<any, string>({
             query: (eventId) => `events/roles/${eventId}`,
+        }),
+        getEventSubscribers: builder.query<any, string>({
+            query: (eventId) => ({
+                url: 'events/subscribers',
+                params: { eventId },
+            }),
+        }),
+        getEventPhotos: builder.query<any, string>({
+            query: (eventId) => `events/${eventId}/photos`,
+        }),
+        uploadEventPhoto: builder.mutation<any, { eventId: string; file: File }>({
+            query: ({ eventId, file }) => {
+                const formData = new FormData();
+                formData.append('file', file);
+
+                return {
+                    url: `events/${eventId}/photos`,
+                    method: 'POST',
+                    body: formData,
+                };
+            },
         }),
     }),
     overrideExisting: false,
@@ -57,9 +86,13 @@ export const {
     useGetEventsQuery,
     useGetEventByIdQuery,
     useCreateEventMutation,
+    useUpdateEventMutation,
     useDeleteEventMutation,
     useCreateEventByIdMutation,
     useDeleteEventByIdMutation,
     useAddUserToEventMutation,
     useGetEventRolesQuery,
+    useGetEventSubscribersQuery,
+    useGetEventPhotosQuery,
+    useUploadEventPhotoMutation,
 } = eventApi;

@@ -16,4 +16,5 @@ export interface UpdateProfileRequest {
     phoneNumber: string;
     telegram: string;
     city: string;
+    file?: File;
 }

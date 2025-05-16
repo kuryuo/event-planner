@@ -33,8 +33,6 @@ export const useCalendar = () => {
             );
         });
 
-        console.log('Filtered Events:', filteredEvents);
-
         setSelectedEvents(filteredEvents);
         setIsModalOpen(true);
     };

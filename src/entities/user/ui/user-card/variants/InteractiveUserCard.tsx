@@ -21,7 +21,6 @@ const InteractiveUserCard: React.FC<InteractiveUserCardProps> = ({ name, role })
     });
 
     const handleConfirmExclude = () => {
-        console.log(`Исключён: ${name}`);
         setShowModal(false);
     };
 
