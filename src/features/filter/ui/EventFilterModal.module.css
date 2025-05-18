@@ -81,3 +81,12 @@
     color: white;
     border-color: var(--turquoise);
 }
+
+.footerActions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 1.5rem;
+    gap: 1rem;
+}
+

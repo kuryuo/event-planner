@@ -16,6 +16,9 @@ import Button from '@/shared/ui/button/Button';
 import Modal from '@/shared/ui/modal/Modal';
 import SettingsIcon from '@/assets/img/settings.svg';
 import { AppRoute } from '@/const';
+import {RootState} from "@/app/store";
+import {useSelector} from "react-redux";
+import { useEventSubscription } from '@/features/events/model/useEventSubscription';
 
 const EventPage: React.FC = () => {
     const navigate = useNavigate();
@@ -24,6 +27,9 @@ const EventPage: React.FC = () => {
     const { eventId } = useParams<{ eventId: string }>();
     const { search } = useLocation();
     const { data: event, error, isLoading } = useGetEventByIdQuery(eventId || '');
+    const currentUserId = useSelector((state: RootState) => state.profile.id);
+    const initialSubscribed = !!event?.subscribers?.includes(currentUserId);
+    const { isSubscribed, handleToggleSubscription } = useEventSubscription(eventId || '', initialSubscribed);
 
     const isOrganizer = new URLSearchParams(search).get('mode') === 'organizer';
 
@@ -99,10 +105,11 @@ const EventPage: React.FC = () => {
                             </div>
                         ) : (
                             <Button
-                                label="Я пойду"
-                                variant="grey"
+                                label={isSubscribed ? 'Я не пойду' : 'Я пойду'}
+                                variant={isSubscribed ? 'red' : 'grey'}
                                 size="small"
                                 className={styles.customButton}
+                                onClick={handleToggleSubscription}
                             />
                         )}
 

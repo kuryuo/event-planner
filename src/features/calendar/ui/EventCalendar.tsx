@@ -5,10 +5,11 @@ import { ru } from 'date-fns/locale';
 import React from 'react';
 import styles from './EventCalendar.module.css';
 import { EventType } from '../model/useCalendar';
-import EventsToolbar from "@/widgets/events-toolbar/EventsToolbar";
+import EventsToolbar from '@/widgets/events-toolbar/EventsToolbar';
 import { format as dateFnsFormat } from 'date-fns/format';
 import { useNavigate } from 'react-router-dom';
-import { AppRoute } from "@/const";
+import { AppRoute } from '@/const';
+import { EventFilters } from '@/shared/api/event/types';
 
 const locales = { ru };
 
@@ -26,9 +27,10 @@ type EventCalendarProps = {
     onNavigate: (date: Date) => void;
     onShowMore: (events: EventType[], date: Date) => void;
     currentUserId: string;
+    onApplyFilters: (filters: EventFilters) => void;
 };
 
-const EventCalendar: React.FC<EventCalendarProps> = ({ date, events, onNavigate, onShowMore, currentUserId }) => {
+const EventCalendar: React.FC<EventCalendarProps> = ({ date, events, onNavigate, onShowMore, currentUserId, onApplyFilters }) => {
     const navigate = useNavigate();
 
     const getEventLink = (eventId: string, responsiblePersonId: string) => {
@@ -40,10 +42,17 @@ const EventCalendar: React.FC<EventCalendarProps> = ({ date, events, onNavigate,
         navigate(getEventLink(eventId, responsiblePersonId));
     };
 
+    const CustomToolbar = (props: any) => (
+        <EventsToolbar
+            {...props}
+            onApplyFilters={onApplyFilters}
+        />
+    );
+
     return (
         <div className={styles.calendarWrapper}>
             <Calendar
-                components={{ toolbar: EventsToolbar }}
+                components={{ toolbar: CustomToolbar }}
                 formats={{
                     weekdayFormat: (date: Date) => dateFnsFormat(date, 'EEEE', { locale: ru }),
                 }}

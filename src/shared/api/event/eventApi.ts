@@ -6,7 +6,7 @@ export const eventApi = baseApi.injectEndpoints({
             query: (params) => ({
                 url: 'events',
                 method: 'GET',
-                params: { ...params, Count: 10 },
+                params: { ...params, Count: 50 },
             }),
         }),
         getEventById: builder.query<any, string>({
@@ -34,14 +34,13 @@ export const eventApi = baseApi.injectEndpoints({
                 params: { eventId },
             }),
         }),
-        createEventById: builder.mutation<any, { eventId: string; body: any }>({
-            query: ({ eventId, body }) => ({
+        createEventById: builder.mutation<any, string>({ // подписка
+            query: (eventId) => ({
                 url: `events/${eventId}`,
                 method: 'POST',
-                body,
             }),
         }),
-        deleteEventById: builder.mutation<any, string>({
+        deleteEventById: builder.mutation<any, string>({ //отписка
             query: (eventId) => ({
                 url: `events/${eventId}`,
                 method: 'DELETE',
@@ -60,6 +59,7 @@ export const eventApi = baseApi.injectEndpoints({
         getEventSubscribers: builder.query<any, string>({
             query: (eventId) => ({
                 url: 'events/subscribers',
+                method: 'GET',
                 params: { eventId },
             }),
         }),
@@ -83,16 +83,16 @@ export const eventApi = baseApi.injectEndpoints({
 });
 
 export const {
-    useGetEventsQuery,
-    useGetEventByIdQuery,
-    useCreateEventMutation,
-    useUpdateEventMutation,
-    useDeleteEventMutation,
-    useCreateEventByIdMutation,
-    useDeleteEventByIdMutation,
-    useAddUserToEventMutation,
-    useGetEventRolesQuery,
-    useGetEventSubscribersQuery,
-    useGetEventPhotosQuery,
-    useUploadEventPhotoMutation,
+    useGetEventsQuery, //список ивентов
+    useGetEventByIdQuery, //найти ивент по id ивент
+    useCreateEventMutation, //создать ивент
+    useUpdateEventMutation, //обновить ивент
+    useDeleteEventMutation, //удалить ивент
+    useCreateEventByIdMutation, //подписка
+    useDeleteEventByIdMutation, //отписка
+    useAddUserToEventMutation, //задать роль
+    useGetEventRolesQuery, //роли на ивенте
+    useGetEventSubscribersQuery, //список подписчиков
+    useGetEventPhotosQuery, //фотки
+    useUploadEventPhotoMutation, //загрузить фотки
 } = eventApi;

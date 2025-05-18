@@ -4,7 +4,7 @@ import { PositioningFormData } from "@/features/events/model/types";
 
 interface Props {
     onChange?: (data: PositioningFormData) => void;
-    initialValues?: PositioningFormData;  // Добавляем initialValues для редактирования
+    initialValues?: PositioningFormData;
 }
 
 const PositioningFormContainer: React.FC<Props> = ({ onChange, initialValues }) => {
@@ -41,7 +41,6 @@ const PositioningFormContainer: React.FC<Props> = ({ onChange, initialValues }) 
         if (type === 'role') setRoles(roles.filter(r => r !== tag));
     };
 
-    // Используем initialValues для редактирования, если они переданы
     useEffect(() => {
         if (initialValues) {
             setCategories(initialValues.categories || []);

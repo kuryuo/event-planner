@@ -43,7 +43,7 @@ const EventModal: React.FC<EventModalProps> = ({ events, selectedDate, onClose }
                             <li
                                 key={event.id}
                                 className={styles.cards}
-                                onClick={() => onEventClick(event.id, event.responsiblePersonId)} // Обработчик клика на событие
+                                onClick={() => onEventClick(event.id, event.responsiblePersonId)}
                             >
                                 <strong className={styles.name}>{event.title}</strong>
                                 <div className={styles.datetime}>Дата: {formatDateToMonthDay(event.start)} - {formatDateToMonthDay(event.end)}</div>

@@ -18,16 +18,22 @@ export interface Event {
 
 interface EventState {
     events: Event[];
+    selectedEventId: string | null;
 }
 
 const initialState: EventState = {
     events: [],
+    selectedEventId: null,
 };
 
 const eventSlice = createSlice({
     name: 'events',
     initialState,
-    reducers: {},
+    reducers: {
+        setSelectedEventId(state, action) {
+            state.selectedEventId = action.payload;
+        },
+    },
     extraReducers: (builder) => {
         builder.addMatcher(
             eventApi.endpoints.getEvents.matchFulfilled,
@@ -43,5 +49,7 @@ const eventSlice = createSlice({
         );
     },
 });
+
+export const { setSelectedEventId } = eventSlice.actions;
 
 export default eventSlice.reducer;
