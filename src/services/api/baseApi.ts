@@ -4,7 +4,7 @@ import { authStorage } from '@/utils/localStorage/authStorage';
 export const baseApi = createApi({
     reducerPath: 'api',
     baseQuery: fetchBaseQuery({
-        baseUrl: 'https://smarteventmanager.ru/api/',
+        baseUrl: 'https://smarteventmanager.ru/api',
         prepareHeaders: (headers) => {
             const token = authStorage.getToken();
             if (token) {

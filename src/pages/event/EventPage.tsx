@@ -89,6 +89,7 @@ const EventPage: React.FC = () => {
                             <EventPhotosPreview
                                 eventId={eventId || ''}
                                 responsiblePersonId={event?.responsiblePersonId}
+                                eventTitle={event?.name || ''}
                             />
 
                             {isOrganizer && (

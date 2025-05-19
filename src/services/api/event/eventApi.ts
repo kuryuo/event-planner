@@ -3,12 +3,20 @@ import { baseApi } from '../baseApi';
 export const eventApi = baseApi.injectEndpoints({
     endpoints: (builder) => ({
         getEvents: builder.query<any, Record<string, any> | void>({
-            query: (params) => ({
-                url: 'events',
-                method: 'GET',
-                params: { ...params, Count: 50 },
-            }),
+            query: (params) => {
+                const preparedParams = {
+                    ...params,
+                    Count: 50,
+                };
+
+                return {
+                    url: 'events',
+                    method: 'GET',
+                    params: preparedParams,
+                };
+            },
         }),
+
         getEventById: builder.query<any, string>({
             query: (eventId) => `events/${eventId}`,
         }),
