@@ -6,7 +6,7 @@ const TextAreaField: React.FC<{
     placeholder?: string;
     value: string;
     onChange: (value: string) => void;
-}> = ({ label, placeholder }) => {
+}> = ({ label, placeholder, value, onChange }) => {
     return (
         <div className={styles.inputWrapper}>
             {label && <label htmlFor={label} className={styles.inputLabel}>{label}</label>}
@@ -14,6 +14,8 @@ const TextAreaField: React.FC<{
                 id={label}
                 className={styles.inputField}
                 placeholder={placeholder}
+                value={value}
+                onChange={(e) => onChange(e.target.value)}
             />
         </div>
     );

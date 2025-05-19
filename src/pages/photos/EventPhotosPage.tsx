@@ -1,24 +1,33 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import styles from './EventPhotosPage.module.css';
 import Sidebar from '@/widgets/sidebar/Sidebar';
 import Header from '@/widgets/header/Header';
 import { AppRoute } from '@/const.ts';
 import CloseIcon from '@/assets/img/close.svg?react';
 import Arrow from '@/assets/img/arrow.svg';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { useEventPhotos } from '@/features/events/model/useEventPhotos';
+import {RootState} from "@/app/store";
+import {useSelector} from "react-redux";
 
 const EventPhotosPage: React.FC = () => {
     const navigate = useNavigate();
-
-    const photos = Array(12)
-        .fill(null)
-        .map((_, i) => `https://picsum.photos/1920/1080?random=${i + 1}`);
+    const location = useLocation();
+    const BASE_URL = 'http://95.82.231.190:5002';
+    const eventId = location.state?.eventId;
+    const { photos, isLoading, isError } = useEventPhotos(eventId || '');
 
     const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
+    const responsiblePersonId = location.state?.responsiblePersonId;
+
+    const currentUserId = useSelector((state: RootState) => state.profile.id);
+
+    const mode = responsiblePersonId === currentUserId ? 'organizer' : 'participant';
 
     const handleBackClick = () => {
-        navigate(AppRoute.EVENT);
+        navigate(`${AppRoute.EVENT.replace(':eventId', eventId)}?mode=${mode}`);
     };
+
 
     const handlePhotoClick = (index: number) => {
         setSelectedIndex(index);
@@ -41,24 +50,28 @@ const EventPhotosPage: React.FC = () => {
                     <span>Все фотографии</span>
                 </div>
 
-                <div className={styles.grid}>
-                    {photos.map((src, i) => (
-                        <img
-                            key={i}
-                            src={src}
-                            alt={`Фото ${i + 1}`}
-                            className={styles.photo}
-                            onClick={() => handlePhotoClick(i)}
-                        />
-                    ))}
-                </div>
+                {isLoading && <p>Загрузка фотографий...</p>}
+                {isError && <p>Ошибка при загрузке фотографий</p>}
+                {!isLoading && !isError && (
+                    <div className={styles.grid}>
+                        {photos.map((src: string, i: number) => (
+                            <img
+                                key={i}
+                                src={`${BASE_URL}${src}`}
+                                alt={`Фото ${i + 1}`}
+                                className={styles.photo}
+                                onClick={() => handlePhotoClick(i)}
+                            />
+                        ))}
+                    </div>
+                )}
             </div>
 
             {showModal && (
                 <div className={styles.modalOverlay}>
                     <div className={styles.modalContent}>
                         <img
-                            src={photos[selectedIndex!]}
+                            src={`${BASE_URL}${photos[selectedIndex!]}`}
                             alt={`Фото ${selectedIndex! + 1}`}
                             className={styles.modalImage}
                         />

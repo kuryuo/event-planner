@@ -1,4 +1,5 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
 import styles from './EventSubscribersPage.module.css';
 import Sidebar from '@/widgets/sidebar/Sidebar';
 import Header from '@/widgets/header/Header';
@@ -6,18 +7,26 @@ import InputField from "@/shared/ui/input-field/InputField";
 import UserRoleFilter from '@/features/manage-subscribers/ui/user-role-filter/UserRoleFilter';
 import UserCard from '@/entities/user/ui/user-card/UserCard';
 import Button from '@/shared/ui/button/Button';
-import { useNavigate } from 'react-router-dom';
 import Arrow from '@/assets/img/arrow.svg';
-import {AppRoute} from "@/const";
-
-const participants = Array(8).fill({
-    name: 'Иванов Иван',
-    role: 'Руководитель проекта',
-});
+import { AppRoute } from "@/const";
+import { useEventSubscribers } from '@/features/manage-subscribers/model/useEventSubscribers';
+import {RootState} from "@/app/store";
+import {useSelector} from "react-redux";
 
 const EventSubscribersPage: React.FC = () => {
-    const [searchValue, setSearchValue] = useState('');
     const navigate = useNavigate();
+    const location = useLocation();
+    const eventId = location.state?.eventId;
+    const responsiblePersonId = location.state?.responsiblePersonId;
+    const currentUserId = useSelector((state: RootState) => state.profile.id);
+
+    const [searchValue, setSearchValue] = useState('');
+
+    const { subscribers, isLoading, isError } = useEventSubscribers(eventId);
+
+    if (!eventId) {
+        return <div>Не передан ID события</div>;
+    }
 
     return (
         <div className={styles.page}>
@@ -27,9 +36,22 @@ const EventSubscribersPage: React.FC = () => {
 
                 <div className={styles.topRow}>
                     <div className={styles.tabs}>
-                        <img src={Arrow} className={styles.arrow} alt="arrow" onClick={() => navigate(AppRoute.EVENT)}/>
+                        <img
+                            src={Arrow}
+                            className={styles.arrow}
+                            alt="arrow"
+                            onClick={() => {
+                                const mode = responsiblePersonId === currentUserId ? 'organizer' : 'participant';
+                                navigate(`${AppRoute.EVENT.replace(':eventId', eventId)}?mode=${mode}`);
+                            }}
+                        />
                         <span className={styles.participants}>Участники</span>
-                        <Button label = 'Пригласить пользователя' variant = 'border' size = 'small' onClick={() => navigate(AppRoute.INVITE)}/>
+                        <Button
+                            label="Пригласить пользователя"
+                            variant="border"
+                            size="small"
+                            onClick={() => navigate(AppRoute.INVITE)}
+                        />
                     </div>
                     <InputField
                         icon="search"
@@ -43,14 +65,24 @@ const EventSubscribersPage: React.FC = () => {
                 <div className={styles.mainContent}>
                     <div className={styles.participantsList}>
                         <div className={styles.grid}>
-                            {participants.map((p, i) => (
-                                <UserCard
-                                    key={i}
-                                    name={p.name}
-                                    role={p.role}
-                                    variant="interactive"
-                                />
-                            ))}
+                            {isLoading && <p>Загрузка участников...</p>}
+                            {isError && <p>Ошибка при загрузке участников</p>}
+                            {!isLoading && !isError &&
+                                subscribers.map((p: any, i: number) => {
+                                    const fullName = [p.lastName, p.firstName, p.middleName]
+                                        .filter(Boolean)
+                                        .join(' ')
+                                        .trim();
+
+                                    return (
+                                        <UserCard
+                                            key={p.id || i}
+                                            name={fullName || p.email}
+                                            role={p.eventRole || 'Участник'}
+                                            variant="interactive"
+                                        />
+                                    );
+                                })}
                         </div>
                     </div>
                     <div className={styles.filterBlock}>

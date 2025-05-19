@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { useParams, useNavigate, useLocation } from 'react-router-dom';
 import { useGetEventByIdQuery } from '@/shared/api/event/eventApi';
+import { useUploadEventPhotos } from '@/features/events/model/useUploadEventPhotos';
 import styles from './EventPage.module.css';
 
 import Sidebar from '@/widgets/sidebar/Sidebar';
@@ -41,6 +42,9 @@ const EventPage: React.FC = () => {
         setIsFinishModalOpen(false);
     };
 
+    const fileInputRef = useRef<HTMLInputElement>(null);
+    const { handleUpload } = useUploadEventPhotos(eventId || '');
+
     const handleEditEvent = () => {
         if (eventId) {
             navigate(AppRoute.EDIT_EVENT.replace(':eventId', eventId));
@@ -78,7 +82,29 @@ const EventPage: React.FC = () => {
                         </div>
 
                         <div className={styles.galleryContainer}>
-                            <EventPhotosPreview />
+                            <EventPhotosPreview
+                                eventId={eventId || ''}
+                                responsiblePersonId={event?.responsiblePersonId}
+                            />
+
+                            {isOrganizer && (
+                                <div className={styles.addPhotoBlock}>
+                                    <Button
+                                        label="Загрузить фото"
+                                        variant="border"
+                                        size="small"
+                                        onClick={() => fileInputRef.current?.click()}
+                                    />
+                                    <input
+                                        ref={fileInputRef}
+                                        type="file"
+                                        accept="image/*"
+                                        multiple
+                                        style={{ display: 'none' }}
+                                        onChange={(e) => handleUpload(e.target.files)}
+                                    />
+                                </div>
+                            )}
                         </div>
 
                         <EventPost />
@@ -115,7 +141,7 @@ const EventPage: React.FC = () => {
 
                         <EventDetails event={event} />
 
-                        <EventSubscribersPreview />
+                        <EventSubscribersPreview eventId={eventId || ''} />
                         <ContactsBlock />
                         <Modal
                             isOpen={isFinishModalOpen}

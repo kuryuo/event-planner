@@ -1,23 +1,41 @@
 import React from 'react';
 import styles from './EventSubscribersPreview.module.css';
-import avatar from '@/assets/img/avatar.svg';
+import avatarPlaceholder from '@/assets/img/avatar.svg';
 import { useNavigate } from 'react-router-dom';
-import {AppRoute} from "@/const";
+import { AppRoute } from '@/const';
+import { useEventSubscribers } from '@/features/manage-subscribers/model/useEventSubscribers';
 
-const EventSubscribersPreview: React.FC = () => {
+type Props = {
+    eventId: string;
+};
+
+const EventSubscribersPreview: React.FC<Props> = ({ eventId }) => {
     const navigate = useNavigate();
-    const participants = Array(10).fill(avatar);
+    const { subscribers, isLoading, isError } = useEventSubscribers(eventId);
+
+    const handleClick = () => {
+        navigate(AppRoute.SUBSCRIBERS, { state: { eventId } });
+    };
+
+    if (isError) return null;
 
     return (
         <div className={styles.subscribers}>
-            <p className={styles.title} onClick={() => navigate(AppRoute.SUBSCRIBERS)}>
+            <p className={styles.title} onClick={handleClick}>
                 Подписчики
-                <span className={styles.participantCount}>{participants.length}</span>
+                {!isLoading && (
+                    <span className={styles.participantCount}>{subscribers.length}</span>
+                )}
             </p>
 
             <div className={styles.avatars}>
-                {participants.slice(0, 4).map((src, index) => (
-                    <img key={index} src={src} alt="Участник" className={styles.avatar} />
+                {subscribers.slice(0, 4).map((user: any, index: number) => (
+                    <img
+                        key={user.id || index}
+                        src={user.avatarUrl || avatarPlaceholder}
+                        alt={user.name || 'Аватар'}
+                        className={styles.avatar}
+                    />
                 ))}
             </div>
         </div>

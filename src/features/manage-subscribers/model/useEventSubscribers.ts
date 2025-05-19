@@ -1,0 +1,21 @@
+import { useGetEventSubscribersQuery } from '@/shared/api/event/eventApi';
+
+export const useEventSubscribers = (eventId?: string) => {
+    const {
+        data,
+        isLoading,
+        isError,
+        refetch,
+    } = useGetEventSubscribersQuery(eventId!, {
+        skip: !eventId,
+    });
+
+    const subscribers = Array.isArray(data?.res) ? data.res : [];
+
+    return {
+        subscribers,
+        isLoading,
+        isError,
+        refetch,
+    };
+};

@@ -2,32 +2,44 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import styles from './EventPhotosPreview.module.css';
 import { AppRoute } from '@/const.ts';
+import { useEventPhotos } from '@/features/events/model/useEventPhotos';
 
-const EventPhotosPreview: React.FC = () => {
+type Props = {
+    eventId: string;
+    responsiblePersonId: string;
+};
+
+const EventPhotosPreview: React.FC<Props> = ({ eventId, responsiblePersonId }) => {
     const navigate = useNavigate();
-
-    const photos = Array(5)
-        .fill(null)
-        .map((_, i) => `https://picsum.photos/200/150?random=${i + 1}`);
+    const { photos, isLoading, isError } = useEventPhotos(eventId);
+    const BASE_URL = 'http://95.82.231.190:5002';
 
     const handleShowAllClick = () => {
-        navigate(AppRoute.PHOTOS_EVENT);
+        navigate(AppRoute.PHOTOS_EVENT, {
+            state: {
+                eventId,
+                responsiblePersonId,
+            },
+        });
     };
 
     return (
         <div className={styles.gallery}>
             <h4 className={styles.title}>Фотографии</h4>
 
-            <div className={styles.row}>
-                {photos.map((src, index) => (
-                    <img
-                        key={index}
-                        src={src}
-                        alt={`Фото ${index + 1}`}
-                        className={styles.image}
-                    />
-                ))}
-            </div>
+            {isLoading && <p>Загрузка...</p>}
+            {!isLoading && !isError && (
+                <div className={styles.row}>
+                    {photos.slice(0, 5).map((src: string, index: number) => (
+                        <img
+                            key={index}
+                            src={`${BASE_URL}${src}`}
+                            alt={`Фото ${index + 1}`}
+                            className={styles.image}
+                        />
+                    ))}
+                </div>
+            )}
 
             <div className={styles.footer}>
                 <span
