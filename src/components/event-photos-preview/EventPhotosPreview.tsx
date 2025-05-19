@@ -12,7 +12,7 @@ type Props = {
 const EventPhotosPreview: React.FC<Props> = ({ eventId, responsiblePersonId }) => {
     const navigate = useNavigate();
     const { photos, isLoading, isError } = useEventPhotos(eventId);
-    const BASE_URL = 'http://95.82.231.190:5002';
+    const BASE_URL = 'https://smarteventmanager.ru/';
 
     const handleShowAllClick = () => {
         navigate(AppRoute.PHOTOS_EVENT, {

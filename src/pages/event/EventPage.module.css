@@ -49,24 +49,6 @@
     gap: 12px;
 }
 
-.buttonGroup {
-    display: flex;
-    align-items: center;
-    justify-content: flex-end;
-    gap: 12px;
-}
-
-.button {
-    background: none;
-    border: none;
-    padding: 6px;
-    cursor: pointer;
-}
-
-.customButton {
-    margin-left: auto;
-}
-
 .addPhotoBlock {
     margin-top: 12px;
 }

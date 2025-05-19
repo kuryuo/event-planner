@@ -4,8 +4,8 @@ import UserCard from '@/components/user-card/UserCard';
 
 const EventContacts: React.FC = () => {
     const contacts = [
-        { name: 'Иванов Иван', role: 'Руководитель проекта' },
-        { name: 'Петрова Мария', role: 'Координатор' },
+        { name: 'Контакт 1', role: 'Роль' },
+        { name: 'Контакт 2', role: 'Роль' },
     ];
 
     return (

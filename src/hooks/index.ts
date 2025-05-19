@@ -8,6 +8,7 @@ export * from './event/useEventPhotos';
 export * from './event/useEventSubscribers';
 export * from './event/useEventSubscription';
 export * from './event/useUploadEventPhotos';
+export * from './event/useEventSubscriptionStatus'
 
 export * from './profile/useProfileForm';
 export * from './profile/useProfileModal';

@@ -11,7 +11,7 @@ import { useCurrentProfile, useEventPhotos } from '@/hooks';
 const EventPhotosPage: React.FC = () => {
     const navigate = useNavigate();
     const location = useLocation();
-    const BASE_URL = 'http://95.82.231.190:5002';
+    const BASE_URL = 'https://smarteventmanager.ru/';
     const eventId = location.state?.eventId;
     const { photos, isLoading, isError } = useEventPhotos(eventId || '');
 

@@ -4,9 +4,11 @@ import { useGetEventByIdQuery } from '@/services/api/event/eventApi';
 import styles from './EventPage.module.css';
 
 import Sidebar from '@/components/sidebar/Sidebar';
+import Notification from '@/components/notification/Notification';
 import Header from '@/components/header/Header';
 import EventTag from '@/components/event-tag/EventTag';
 import EventDescription from '@/components/event-description/EventDescription';
+import EventActionsPanel from '@/components/event-actions-panel/EventActionsPanel';
 import EventPhotosPreview from '@/components/event-photos-preview/EventPhotosPreview';
 import EventPost from '@/components/event-post/EventPost';
 import EventDetails from '@/components/event-details/EventDetails';
@@ -14,9 +16,12 @@ import EventSubscribersPreview from '@/components/event-subscribers-preview/Even
 import ContactsBlock from '@/components/event-contacts/EventContacts';
 import Button from '@/components/button/Button';
 import Modal from '@/components/modal/Modal';
-import SettingsIcon from '@/assets/img/settings.svg';
 import { getEditEventLink } from '@/utils/navigation';
-import { useCurrentProfile, useUploadEventPhotos, useEventSubscription, useEventPhotos } from '@/hooks';
+import {
+    useUploadEventPhotos,
+    useEventPhotos,
+    useEventSubscriptionStatus
+} from '@/hooks';
 
 const EventPage: React.FC = () => {
     const navigate = useNavigate();
@@ -24,45 +29,47 @@ const EventPage: React.FC = () => {
 
     const { eventId } = useParams<{ eventId: string }>();
     const { search } = useLocation();
+
     const { data: event, error, isLoading } = useGetEventByIdQuery(eventId || '');
-    const currentUserId = useCurrentProfile().id;
-    const initialSubscribed = !!event?.subscribers?.includes(currentUserId);
-    const { isSubscribed, handleToggleSubscription } = useEventSubscription(
-        eventId || '',
-        initialSubscribed,
-    );
+
+    const {
+        isSubscribersLoading,
+        isSubscribersError,
+        isSubscribed,
+        handleToggleSubscription,
+    } = useEventSubscriptionStatus(eventId);
 
     const isOrganizer = new URLSearchParams(search).get('mode') === 'organizer';
-
-    const handleFinish = () => {
-        setIsFinishModalOpen(true);
-    };
-
-    const handleConfirmFinish = () => {
-        setIsFinishModalOpen(false);
-    };
 
     const fileInputRef = useRef<HTMLInputElement>(null);
     const { refetch: refetchPhotos } = useEventPhotos(eventId || '');
     const { handleUpload } = useUploadEventPhotos(eventId || '', refetchPhotos);
 
-    const handleEditEvent = () => {
-        navigate(getEditEventLink(eventId!));
-    };
+    const handleFinish = () => setIsFinishModalOpen(true);
+    const handleConfirmFinish = () => setIsFinishModalOpen(false);
+    const handleEditEvent = () => navigate(getEditEventLink(eventId!));
 
-    if (isLoading) {
-        return <div>Loading...</div>;
+    if (isLoading || isSubscribersLoading) {
+        return <div>Загрузка...</div>;
     }
 
-    if (error) {
-        return <div>Error loading event details</div>;
+    if (error || isSubscribersError) {
+        return (
+            <div style={{ position: 'fixed', bottom: 20, right: 20, zIndex: 1000 }}>
+                <Notification
+                    message="Ошибка загрузки данных мероприятия"
+                    type="error"
+                    onClose={() => {}}
+                />
+            </div>
+        );
     }
 
     return (
         <div className={styles.page}>
             <Sidebar />
             <div className={styles.content}>
-                <Header title={event?.name || 'Loading...'} />
+                <Header title={event?.name || 'Загрузка...'} />
 
                 <div className={styles.main}>
                     <div className={styles.leftColumn}>
@@ -73,9 +80,7 @@ const EventPage: React.FC = () => {
                         </div>
 
                         <div className={styles.descriptionContainer}>
-                            <EventDescription
-                                text={event?.description || 'No description available'}
-                            />
+                            <EventDescription text={event?.description || 'Описание отсутствует'} />
                         </div>
 
                         <div className={styles.galleryContainer}>
@@ -108,38 +113,19 @@ const EventPage: React.FC = () => {
                     </div>
 
                     <div className={styles.rightColumn}>
-                        {isOrganizer ? (
-                            <div className={styles.buttonGroup}>
-                                <Button label="Перейти в чат" variant="grey" size="small" />
-                                <Button
-                                    label="Завершить"
-                                    variant="red"
-                                    size="small"
-                                    onClick={handleFinish}
-                                />
-                                <button className={styles.button} onClick={handleEditEvent}>
-                                    <img
-                                        src={SettingsIcon}
-                                        alt="Настройки"
-                                        width={24}
-                                        height={24}
-                                    />
-                                </button>
-                            </div>
-                        ) : (
-                            <Button
-                                label={isSubscribed ? 'Я не пойду' : 'Я пойду'}
-                                variant={isSubscribed ? 'red' : 'grey'}
-                                size="small"
-                                className={styles.customButton}
-                                onClick={handleToggleSubscription}
-                            />
-                        )}
+                        <EventActionsPanel
+                            isOrganizer={isOrganizer}
+                            isSubscribed={isSubscribed}
+                            onToggleSubscription={handleToggleSubscription}
+                            onFinish={handleFinish}
+                            onEdit={handleEditEvent}
+                        />
 
                         <EventDetails event={event} />
 
                         <EventSubscribersPreview eventId={eventId || ''} />
                         <ContactsBlock />
+
                         <Modal
                             isOpen={isFinishModalOpen}
                             onClose={() => setIsFinishModalOpen(false)}

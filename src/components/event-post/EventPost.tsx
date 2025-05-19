@@ -5,11 +5,10 @@ import cat from '@/assets/img/cat.png';
 const EventPost: React.FC = () => {
     const notifications = [
         {
-            title: 'Масленница',
-            year: '2025',
+            title: 'Мероприятие',
             message:
                 'Добрый день, уважаемые участники! Мы вас с таким нетерпением ждём, что наше мероприятие переносится на 2 часа. Время начала - 16:00',
-            date: '29 фев',
+            date: 'Дата/время',
         },
     ];
 
@@ -23,7 +22,7 @@ const EventPost: React.FC = () => {
                         <div className={styles.content}>
                             <div className={styles.nameRow}>
                                 <span className={styles.name}>{n.title}</span>
-                                <span className={styles.year}>{n.year}</span>
+                                {/*<span className={styles.year}>{n.year}</span>*/}
                             </div>
                             <p className={styles.text}>{n.message}</p>
                         </div>
