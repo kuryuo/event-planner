@@ -9,7 +9,7 @@ import EventSubscribersPage from "@/pages/subscribers/EventSubscribersPage";
 import InviteUserPage from "@/pages/invite-user/InviteUserPage";
 import CalendarPage from "@/pages/calendar/CalendarPage";
 
-import { AppRoute } from '@/const';
+import { AppRoute } from '@/utils/const';
 
 function App() {
     return (

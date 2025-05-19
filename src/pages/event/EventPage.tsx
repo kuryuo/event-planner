@@ -1,25 +1,25 @@
 import React, { useState, useRef } from 'react';
 import { useParams, useNavigate, useLocation } from 'react-router-dom';
-import { useGetEventByIdQuery } from '@/shared/api/event/eventApi';
-import { useUploadEventPhotos } from '@/features/events/model/useUploadEventPhotos';
+import { useGetEventByIdQuery } from '@/services/api/event/eventApi';
+import { useUploadEventPhotos } from '@/hooks/useUploadEventPhotos';
 import styles from './EventPage.module.css';
 
-import Sidebar from '@/widgets/sidebar/Sidebar';
-import Header from '@/widgets/header/Header';
-import EventTag from '@/entities/event/ui/event-tag/EventTag';
-import EventDescription from '@/entities/event/ui/event-description/EventDescription';
-import EventPhotosPreview from '@/entities/event/ui/event-photos-preview/EventPhotosPreview';
-import EventPost from '@/entities/event/ui/event-post/EventPost';
-import EventDetails from '@/entities/event/ui/event-details/EventDetails';
-import EventSubscribersPreview from '@/entities/event/ui/event-subscribers-preview/EventSubscribersPreview';
-import ContactsBlock from '@/entities/event/ui/event-contacts/EventContacts';
-import Button from '@/shared/ui/button/Button';
-import Modal from '@/shared/ui/modal/Modal';
+import Sidebar from '@/components/sidebar/Sidebar';
+import Header from '@/components/header/Header';
+import EventTag from '@/components/event-tag/EventTag';
+import EventDescription from '@/components/event-description/EventDescription';
+import EventPhotosPreview from '@/components/event-photos-preview/EventPhotosPreview';
+import EventPost from '@/components/event-post/EventPost';
+import EventDetails from '@/components/event-details/EventDetails';
+import EventSubscribersPreview from '@/components/event-subscribers-preview/EventSubscribersPreview';
+import ContactsBlock from '@/components/event-contacts/EventContacts';
+import Button from '@/components/button/Button';
+import Modal from '@/components/modal/Modal';
 import SettingsIcon from '@/assets/img/settings.svg';
-import { AppRoute } from '@/const';
+import { AppRoute } from '@/utils/const';
 import {RootState} from "@/app/store";
 import {useSelector} from "react-redux";
-import { useEventSubscription } from '@/features/events/model/useEventSubscription';
+import { useEventSubscription } from '@/hooks/useEventSubscription';
 
 const EventPage: React.FC = () => {
     const navigate = useNavigate();

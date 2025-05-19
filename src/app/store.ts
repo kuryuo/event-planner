@@ -1,7 +1,7 @@
 import { configureStore } from '@reduxjs/toolkit';
-import profileReducer from '@/features/user-profile/model/profileSlice';
-import eventReducer from '@/features/events/model/eventsSlice';
-import { baseApi } from '@/shared/api/baseApi';
+import profileReducer from '@/services/profile/profileSlice';
+import eventReducer from '@/services/events/eventsSlice';
+import { baseApi } from '@/services/api/baseApi';
 
 export const store = configureStore({
     reducer: {

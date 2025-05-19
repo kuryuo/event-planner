@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 import styles from './EventPhotosPage.module.css';
-import Sidebar from '@/widgets/sidebar/Sidebar';
-import Header from '@/widgets/header/Header';
-import { AppRoute } from '@/const.ts';
+import Sidebar from '@/components/sidebar/Sidebar';
+import Header from '@/components/header/Header';
+import { AppRoute } from '@/utils/const.ts';
 import CloseIcon from '@/assets/img/close.svg?react';
 import Arrow from '@/assets/img/arrow.svg';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { useEventPhotos } from '@/features/events/model/useEventPhotos';
+import { useEventPhotos } from '@/hooks/useEventPhotos';
 import {RootState} from "@/app/store";
 import {useSelector} from "react-redux";
 

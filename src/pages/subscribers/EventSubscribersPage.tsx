@@ -1,15 +1,15 @@
 import React, { useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import styles from './EventSubscribersPage.module.css';
-import Sidebar from '@/widgets/sidebar/Sidebar';
-import Header from '@/widgets/header/Header';
-import InputField from "@/shared/ui/input-field/InputField";
-import UserRoleFilter from '@/features/manage-subscribers/ui/user-role-filter/UserRoleFilter';
-import UserCard from '@/entities/user/ui/user-card/UserCard';
-import Button from '@/shared/ui/button/Button';
+import Sidebar from '@/components/sidebar/Sidebar';
+import Header from '@/components/header/Header';
+import InputField from "@/components/input-field/InputField";
+import UserRoleFilter from '@/components/user-role-filter/UserRoleFilter';
+import UserCard from '@/components/user-card/UserCard';
+import Button from '@/components/button/Button';
 import Arrow from '@/assets/img/arrow.svg';
-import { AppRoute } from "@/const";
-import { useEventSubscribers } from '@/features/manage-subscribers/model/useEventSubscribers';
+import { AppRoute } from "@/utils/const";
+import { useEventSubscribers } from '@/hooks/useEventSubscribers';
 import {RootState} from "@/app/store";
 import {useSelector} from "react-redux";
 

@@ -1,8 +1,8 @@
 import React, { useEffect } from 'react';
 import styles from './CalendarPage.module.css'
-import Sidebar from '@/widgets/sidebar/Sidebar'
-import Header from '@/widgets/header/Header'
-import CalendarContainer from '@/features/calendar/ui/CalendarContainer'
+import Sidebar from '@/components/sidebar/Sidebar'
+import Header from '@/components/header/Header'
+import CalendarContainer from '@/components/event-calendar/CalendarContainer'
 
 const FILTER_STORAGE_KEY = 'event_filters';
 

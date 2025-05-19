@@ -1,14 +1,14 @@
 import React from 'react';
-import Sidebar from '@/widgets/sidebar/Sidebar';
-import Header from '@/widgets/header/Header';
-import Avatar from '@/shared/ui/avatar/Avatar';
-import FormButtons from '@/shared/ui/form-buttons/FormButtons';
-import { useProfileForm } from '@/features/user-profile/model/useProfileForm';
-import ProfileFormContainer from '@/features/user-profile/ui/profile-form/ProfileFormContainer';
-import Notification from '@/shared/ui/notification/Notification';
+import Sidebar from '@/components/sidebar/Sidebar';
+import Header from '@/components/header/Header';
+import Avatar from '@/components/avatar/Avatar';
+import FormButtons from '@/components/form-buttons/FormButtons';
+import { useProfileForm } from '@/hooks/useProfileForm';
+import ProfileFormContainer from '@/components/profile-form/ProfileFormContainer';
+import Notification from '@/components/notification/Notification';
 import styles from './ProfilePage.module.css';
 import { useNavigate } from 'react-router-dom';
-import {AppRoute} from "@/const";
+import {AppRoute} from "@/utils/const";
 
 const ProfilePage: React.FC = () => {
     const navigate = useNavigate();

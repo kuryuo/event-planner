@@ -1,21 +1,21 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
-import { useGetEventsQuery } from '@/shared/api/event/eventApi';
+import { useGetEventsQuery } from '@/services/api/event/eventApi';
 import { Link } from 'react-router-dom';
-import { AppRoute } from '@/const';
+import { AppRoute } from '@/utils/const';
 import styles from './EventsListPage.module.css';
-import Sidebar from '@/widgets/sidebar/Sidebar';
-import Header from '@/widgets/header/Header';
-import EventsToolbar from '@/widgets/events-toolbar/EventsToolbar';
-import EventListItem from '@/entities/event/ui/event-list-item/EventListItem';
+import Sidebar from '@/components/sidebar/Sidebar';
+import Header from '@/components/header/Header';
+import EventsToolbar from '@/components/events-toolbar/EventsToolbar';
+import EventListItem from '@/components/event-list-item/EventListItem';
 import { RootState } from '@/app/store';
-import { formatDateToMonthDay, formatTime } from '@/shared/lib/dateUtils';
-import { Event } from '@/features/events/model/eventsSlice';
+import { formatDateToMonthDay, formatTime } from '@/utils/dateUtils';
+import { Event } from '@/services/events/eventsSlice';
 import { startOfMonth, endOfMonth, isWithinInterval, format, addMonths, subMonths } from 'date-fns';
 import { ru } from 'date-fns/locale';
-import { useCalendar } from '@/features/calendar/model/useCalendar';
-import { EventFilters } from '@/shared/api/event/types';
-import { useEventFilter } from '@/features/filter/model/useEventFilter';
+import { useCalendar } from '@/hooks/useCalendar';
+import { EventFilters } from '@/services/api/event/types';
+import { useEventFilter } from '@/hooks/useEventFilter';
 
 const EventsListPage: React.FC = () => {
     const { data, error, isLoading } = useGetEventsQuery(undefined, {

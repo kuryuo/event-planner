@@ -2,16 +2,16 @@ import React from 'react';
 import { useParams } from 'react-router-dom';
 import styles from './EventManagementPage.module.css';
 
-import Sidebar from '@/widgets/sidebar/Sidebar';
-import Header from '@/widgets/header/Header';
-import EventInfoFormContainer from '@/features/events/ui/event-info-form/EventInfoFormContainer';
-import PositioningFormContainer from '@/features/events/ui/positioning-form/PositioningFormContainer';
-import FormButtons from '@/shared/ui/form-buttons/FormButtons';
-import Modal from '@/shared/ui/modal/Modal';
-import Button from '@/shared/ui/button/Button';
-import Notification from '@/shared/ui/notification/Notification';
+import Sidebar from '@/components/sidebar/Sidebar';
+import Header from '@/components/header/Header';
+import EventInfoFormContainer from '@/components/event-info-form/EventInfoFormContainer';
+import PositioningFormContainer from '@/components/positioning-form/PositioningFormContainer';
+import FormButtons from '@/components/form-buttons/FormButtons';
+import Modal from '@/components/modal/Modal';
+import Button from '@/components/button/Button';
+import Notification from '@/components/notification/Notification';
 
-import { useEventManagement } from '@/features/events/model/useEventManagement';
+import { useEventManagement } from '@/hooks/useEventManagement';
 
 interface EventManagementPageProps {
     isEditMode?: boolean;
