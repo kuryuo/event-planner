@@ -4,13 +4,12 @@ import { validateProfileForm } from '@/utils/validation/profileValidation';
 import { useDispatch } from 'react-redux';
 import { setProfile } from '@/services/profile/profileSlice';
 import { authStorage } from '@/utils/localStorage/authStorage';
-import { useSelector } from 'react-redux';
-import { RootState } from '@/app/store';
+import { useCurrentProfile } from '@/hooks';
 
 export const useProfileForm = () => {
     const [updateProfile] = useUpdateProfileMutation();
     const token = authStorage.getToken();
-    const currentProfile = useSelector((state: RootState) => state.profile);
+    const currentProfile = useCurrentProfile();
     const { data, isLoading, refetch } = useGetProfileQuery(undefined, {
         skip: !token,
     });
@@ -60,7 +59,7 @@ export const useProfileForm = () => {
     }, [data, isLoading, dispatch, currentProfile]);
 
     const handleChange = (field: string, value: string) => {
-        setFormData(prev => ({ ...prev, [field]: value }));
+        setFormData((prev) => ({ ...prev, [field]: value }));
     };
 
     const handleSubmit = async () => {

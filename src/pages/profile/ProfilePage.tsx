@@ -3,22 +3,17 @@ import Sidebar from '@/components/sidebar/Sidebar';
 import Header from '@/components/header/Header';
 import Avatar from '@/components/avatar/Avatar';
 import FormButtons from '@/components/form-buttons/FormButtons';
-import { useProfileForm } from '@/hooks/useProfileForm';
+import { useProfileForm } from '@/hooks';
 import ProfileFormContainer from '@/components/profile-form/ProfileFormContainer';
 import Notification from '@/components/notification/Notification';
 import styles from './ProfilePage.module.css';
 import { useNavigate } from 'react-router-dom';
-import {AppRoute} from "@/utils/const";
+import { AppRoute } from '@/utils/const';
 
 const ProfilePage: React.FC = () => {
     const navigate = useNavigate();
-    const {
-        formData,
-        handleChange,
-        handleSubmit,
-        notification,
-        setNotification,
-    } = useProfileForm();
+    const { formData, handleChange, handleSubmit, notification, setNotification } =
+        useProfileForm();
 
     return (
         <div className={styles.profilePage}>
@@ -28,10 +23,7 @@ const ProfilePage: React.FC = () => {
 
                 <div className={styles.profileContent}>
                     <div className={styles.profileFormContainer}>
-                        <ProfileFormContainer
-                            formData={formData}
-                            onChange={handleChange}
-                        />
+                        <ProfileFormContainer formData={formData} onChange={handleChange} />
                     </div>
                     <div className={styles.profilePhotoContainer}>
                         <Avatar />

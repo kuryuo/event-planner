@@ -1,21 +1,18 @@
 import React, { useState, useEffect } from 'react';
-import { useSelector } from 'react-redux';
 import { useGetEventsQuery } from '@/services/api/event/eventApi';
 import { Link } from 'react-router-dom';
-import { AppRoute } from '@/utils/const';
 import styles from './EventsListPage.module.css';
 import Sidebar from '@/components/sidebar/Sidebar';
 import Header from '@/components/header/Header';
 import EventsToolbar from '@/components/events-toolbar/EventsToolbar';
 import EventListItem from '@/components/event-list-item/EventListItem';
-import { RootState } from '@/app/store';
+import { useEventFilter, useCalendar, useCurrentProfile } from '@/hooks';
 import { formatDateToMonthDay, formatTime } from '@/utils/dateUtils';
-import { Event } from '@/services/events/eventsSlice';
+import { Event } from '@/types';
 import { startOfMonth, endOfMonth, isWithinInterval, format, addMonths, subMonths } from 'date-fns';
 import { ru } from 'date-fns/locale';
-import { useCalendar } from '@/hooks/useCalendar';
-import { EventFilters } from '@/services/api/event/types';
-import { useEventFilter } from '@/hooks/useEventFilter';
+import { EventFilters } from '@/types';
+import { getEventLink } from '@/utils/navigation';
 
 const EventsListPage: React.FC = () => {
     const { data, error, isLoading } = useGetEventsQuery(undefined, {
@@ -23,7 +20,7 @@ const EventsListPage: React.FC = () => {
     });
 
     const events = data || [];
-    const currentUserId = useSelector((state: RootState) => state.profile.id);
+    const currentUserId = useCurrentProfile().id;
     const FILTER_STORAGE_KEY = 'event_filters';
 
     useEffect(() => {
@@ -66,11 +63,6 @@ const EventsListPage: React.FC = () => {
     if (isLoading) return <div>Loading...</div>;
     if (error) return <div>Error loading events</div>;
 
-    const getEventLink = (eventId: string, responsiblePersonId: string) => {
-        const mode = responsiblePersonId === currentUserId ? 'organizer' : 'participant';
-        return `${AppRoute.EVENT.replace(':eventId', eventId)}?mode=${mode}`;
-    };
-
     return (
         <div className={styles.page}>
             <Sidebar />
@@ -88,7 +80,14 @@ const EventsListPage: React.FC = () => {
                         const endDate = new Date(event.endDate);
 
                         return (
-                            <Link key={event.id} to={getEventLink(event.id, event.responsiblePersonId)}>
+                            <Link
+                                key={event.id}
+                                to={getEventLink(
+                                    event.id,
+                                    event.responsiblePersonId,
+                                    currentUserId,
+                                )}
+                            >
                                 <EventListItem
                                     day={formatDateToMonthDay(startDate)}
                                     time={`${formatTime(startDate)} - ${formatTime(endDate)}`}

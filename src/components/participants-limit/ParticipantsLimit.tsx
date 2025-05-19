@@ -1,14 +1,14 @@
 import React from 'react';
 import styles from './ParticipantsLimit.module.css';
 
-interface ParticipantsLimitProps {
+interface Props {
     maxEnabled: boolean;
     setMaxEnabled: (val: boolean) => void;
     maxParticipants: number;
     setMaxParticipants: (val: number) => void;
 }
 
-const ParticipantsLimit: React.FC<ParticipantsLimitProps> = ({
+const ParticipantsLimit: React.FC<Props> = ({
                                                                  maxEnabled,
                                                                  setMaxEnabled,
                                                                  maxParticipants,

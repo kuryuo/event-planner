@@ -3,14 +3,13 @@ import {
     useCreateEventByIdMutation,
     useDeleteEventByIdMutation,
 } from '@/services/api/event/eventApi';
-import { useSelector } from 'react-redux';
-import { RootState } from '@/app/store';
+import { useCurrentProfile } from '@/hooks';
 
 export const useEventSubscription = (eventId: string, initialSubscribed: boolean) => {
     const [isSubscribed, setIsSubscribed] = useState(initialSubscribed);
     const [subscribe] = useCreateEventByIdMutation();
     const [unsubscribe] = useDeleteEventByIdMutation();
-    const userId = useSelector((state: RootState) => state.profile.id);
+    const currentUserId = useCurrentProfile().id;
 
     useEffect(() => {
         setIsSubscribed(initialSubscribed);
@@ -18,11 +17,9 @@ export const useEventSubscription = (eventId: string, initialSubscribed: boolean
 
     const handleToggleSubscription = async () => {
         try {
-            if (!eventId || !userId) return;
+            if (!eventId || !currentUserId) return;
 
-            const response = await (isSubscribed
-                ? unsubscribe(eventId)
-                : subscribe(eventId));
+            const response = await (isSubscribed ? unsubscribe(eventId) : subscribe(eventId));
 
             if ('data' in response) {
                 setIsSubscribed(!isSubscribed);

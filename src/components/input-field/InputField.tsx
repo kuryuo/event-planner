@@ -2,7 +2,7 @@ import React from 'react';
 import styles from './InputField.module.css';
 import searchIcon from '@/assets/img/search.svg';
 
-interface InputFieldProps {
+interface Props {
     label?: string;
     type?: string;
     placeholder?: string;
@@ -12,7 +12,7 @@ interface InputFieldProps {
     size?: 'small' | 'medium';
 }
 
-const InputField: React.FC<InputFieldProps> = ({
+const InputField: React.FC<Props> = ({
                                                    label,
                                                    type = 'text',
                                                    placeholder,

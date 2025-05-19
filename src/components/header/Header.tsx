@@ -4,7 +4,7 @@ import notificationIcon from '@/assets/img/notification.svg';
 import avatar from '@/assets/img/avatar.svg';
 import NotificationsModal from '@/components/notifications-modal/NotificationsModal';
 import ProfileModalContainer from '@/components/profile-modal/ProfileModalContainer';
-import { useClickOutside } from '@/hooks/useClickOutside';
+import { useClickOutside } from '@/hooks';
 
 type HeaderProps = {
     title: string;

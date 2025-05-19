@@ -1,7 +1,7 @@
 import React from 'react';
 import styles from './TagsInput.module.css';
 
-interface TagsInputProps {
+interface Props {
     label: string;
     tags: string[];
     inputValue: string;
@@ -11,7 +11,7 @@ interface TagsInputProps {
     placeholder?: string;
 }
 
-const TagsInput: React.FC<TagsInputProps> = ({
+const TagsInput: React.FC<Props> = ({
                                                  label,
                                                  tags,
                                                  inputValue,

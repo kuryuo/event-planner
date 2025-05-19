@@ -1,6 +1,6 @@
 import React from 'react';
 import ProfileModal from './ProfileModal';
-import { useProfileModal } from '@/hooks/useProfileModal';
+import { useProfileModal } from '@/hooks';
 
 type Props = {
     onClose: () => void;

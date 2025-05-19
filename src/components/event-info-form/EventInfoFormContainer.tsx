@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import EventInfoForm from './EventInfoForm';
-import { EventInfoFormData } from '@/services/events/types';
+import { EventInfoFormData } from '@/types';
 
 interface Props {
     onChange?: (data: EventInfoFormData) => void;

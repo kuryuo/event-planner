@@ -3,14 +3,14 @@ import styles from '@/components/user-card/UserCard.module.css';
 import avatar from '@/assets/img/avatar.svg';
 import moreIcon from '@/assets/img/more.svg';
 import Modal from '@/components/modal/Modal';
-import { useClickOutside } from '@/hooks/useClickOutside';
+import { useClickOutside } from '@/hooks';
 
-interface InteractiveUserCardProps {
+interface Props {
     name: string;
     role?: string;
 }
 
-const InteractiveUserCard: React.FC<InteractiveUserCardProps> = ({ name, role }) => {
+const InteractiveUserCard: React.FC<Props> = ({ name, role }) => {
     const [menuOpen, setMenuOpen] = useState(false);
     const [showModal, setShowModal] = useState(false);
 
@@ -34,7 +34,7 @@ const InteractiveUserCard: React.FC<InteractiveUserCardProps> = ({ name, role })
                         src={moreIcon}
                         alt="Меню"
                         className={styles.menu}
-                        onClick={() => setMenuOpen(prev => !prev)}
+                        onClick={() => setMenuOpen((prev) => !prev)}
                     />
 
                     {menuOpen && (

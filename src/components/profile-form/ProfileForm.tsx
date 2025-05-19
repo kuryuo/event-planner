@@ -1,7 +1,7 @@
 import React from 'react';
 import styles from './ProfileForm.module.css';
 import Input from '@/components/input-field/InputField';
-import { ProfileFormProps } from '@/services/profile/types';
+import { ProfileFormProps } from '@/types';
 
 const ProfileForm: React.FC<ProfileFormProps> = ({ formData, onChange }) => {
     return (

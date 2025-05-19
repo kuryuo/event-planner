@@ -4,7 +4,7 @@ import {
     RegisterRequest,
     LoginRequest,
     ForgotPasswordRequest,
-} from './types';
+} from '@/types';
 
 export const authApi = baseApi.injectEndpoints({
     endpoints: (builder) => ({

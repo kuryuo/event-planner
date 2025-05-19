@@ -4,7 +4,7 @@ import Button from '@/components/button/Button';
 import LinkButton from '@/components/link-button/LinkButton';
 import styles from './AuthForm.module.css';
 import Notification from '@/components/notification/Notification';
-import { useAuth } from '@/hooks/useAuth';
+import { useAuth } from '@/hooks';
 
 type Props = {
     mode: 'login' | 'register' | 'reset';
@@ -12,17 +12,11 @@ type Props = {
 };
 
 const AuthForm: React.FC<Props> = ({ mode, setMode }) => {
-    const {
-        email, password,
-        setEmail, setPassword,
-        handleSubmit,
-        notification,
-        setNotification,
-    } = useAuth(mode);
+    const { email, password, setEmail, setPassword, handleSubmit, notification, setNotification } =
+        useAuth(mode);
 
     return (
         <form className={styles.form} onSubmit={handleSubmit}>
-
             <h1 className={styles.title}>
                 {mode === 'login' && 'Вход'}
                 {mode === 'register' && 'Регистрация'}
@@ -63,8 +57,8 @@ const AuthForm: React.FC<Props> = ({ mode, setMode }) => {
                     mode === 'login'
                         ? 'Войти'
                         : mode === 'register'
-                            ? 'Зарегистрироваться'
-                            : 'Отправить запрос'
+                          ? 'Зарегистрироваться'
+                          : 'Отправить запрос'
                 }
                 variant="grey"
             />

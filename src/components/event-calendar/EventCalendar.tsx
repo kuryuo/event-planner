@@ -4,12 +4,12 @@ import { format, parse, startOfWeek, getDay } from 'date-fns';
 import { ru } from 'date-fns/locale';
 import React from 'react';
 import styles from './EventCalendar.module.css';
-import { EventType } from '@/hooks/useCalendar';
+import { EventType } from '@/hooks';
 import EventsToolbar from '@/components/events-toolbar/EventsToolbar';
 import { format as dateFnsFormat } from 'date-fns/format';
 import { useNavigate } from 'react-router-dom';
-import { AppRoute } from '@/utils/const';
-import { EventFilters } from '@/services/api/event/types';
+import { EventFilters } from '@/types';
+import { getEventLink } from '@/utils/navigation';
 
 const locales = { ru };
 
@@ -30,23 +30,22 @@ type EventCalendarProps = {
     onApplyFilters: (filters: EventFilters) => void;
 };
 
-const EventCalendar: React.FC<EventCalendarProps> = ({ date, events, onNavigate, onShowMore, currentUserId, onApplyFilters }) => {
+const EventCalendar: React.FC<EventCalendarProps> = ({
+    date,
+    events,
+    onNavigate,
+    onShowMore,
+    currentUserId,
+    onApplyFilters,
+}) => {
     const navigate = useNavigate();
 
-    const getEventLink = (eventId: string, responsiblePersonId: string) => {
-        const mode = responsiblePersonId === currentUserId ? 'organizer' : 'participant';
-        return `${AppRoute.EVENT.replace(':eventId', eventId)}?mode=${mode}`;
-    };
-
     const onEventClick = (eventId: string, responsiblePersonId: string) => {
-        navigate(getEventLink(eventId, responsiblePersonId));
+        navigate(getEventLink(eventId, responsiblePersonId, currentUserId));
     };
 
     const CustomToolbar = (props: any) => (
-        <EventsToolbar
-            {...props}
-            onApplyFilters={onApplyFilters}
-        />
+        <EventsToolbar {...props} onApplyFilters={onApplyFilters} />
     );
 
     return (

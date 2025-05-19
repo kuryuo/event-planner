@@ -2,21 +2,11 @@ import React from 'react';
 import styles from './EventInfoForm.module.css';
 import Input from '@/components/input-field/InputField';
 import TextArea from '@/components/text-area-field/TextAreaField';
+import {EventInfoFormData} from "@/types";
 
 interface Props {
-    formData: {
-        name: string;
-        description: string;
-        startDate: string;
-        startTime: string;
-        endDate: string;
-        endTime: string;
-        location: string;
-        format: string;
-        eventType: string;
-        responsiblePersonId: string;
-    };
-    onChange: (data: Props['formData']) => void;
+    formData: EventInfoFormData;
+    onChange: (data: EventInfoFormData) => void;
 }
 
 const EventInfoForm: React.FC<Props> = ({ formData, onChange }) => {

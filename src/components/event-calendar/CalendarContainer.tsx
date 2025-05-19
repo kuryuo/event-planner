@@ -1,18 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import { useGetEventsQuery } from '@/services/api/event/eventApi';
-import { Event } from '@/services/events/eventsSlice';
+import { Event } from '@/types';
 import EventCalendar from './EventCalendar';
 import EventModal from '../event-modal/EventModal';
-import { useCalendar } from '@/hooks/useCalendar';
-import { useSelector } from 'react-redux';
-import { RootState } from '@/app/store';
-import { EventFilters } from '@/services/api/event/types';
-import { useEventFilter } from '@/hooks/useEventFilter';
+import { EventFilters } from '@/types';
+import { useCurrentProfile, useEventFilter, useCalendar } from '@/hooks';
 
 const CalendarContainer: React.FC = () => {
     const { data = [], error, isLoading, refetch } = useGetEventsQuery();
     const [filters, setFilters] = useState<EventFilters>({});
-    const currentUserId = useSelector((state: RootState) => state.profile.id);
+    const currentUserId = useCurrentProfile().id;
 
     const {
         currentDate,

@@ -1,7 +1,7 @@
 import React from 'react';
 import styles from './Button.module.css';
 
-interface ButtonProps {
+interface Props {
     label: string;
     onClick?: () => void;
     variant: 'grey' | 'border' | 'red';
@@ -9,7 +9,7 @@ interface ButtonProps {
     className?: string;
 }
 
-const Button: React.FC<ButtonProps> = ({ label, onClick, variant, size = 'default', className }) => {
+const Button: React.FC<Props> = ({ label, onClick, variant, size = 'default', className }) => {
     const buttonClass = `${styles.button} ${styles[variant]} ${styles[size]} ${className ? className : ''}`;
 
     return (

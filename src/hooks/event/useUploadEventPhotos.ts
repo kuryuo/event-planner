@@ -1,6 +1,6 @@
 import { useUploadEventPhotoMutation } from '@/services/api/event/eventApi';
 
-export const useUploadEventPhotos = (eventId: string) => {
+export const useUploadEventPhotos = (eventId: string, onSuccess?: () => void) => {
     const [uploadPhoto, { isLoading, isError, isSuccess }] = useUploadEventPhotoMutation();
 
     const handleUpload = async (files: FileList | null) => {
@@ -13,6 +13,10 @@ export const useUploadEventPhotos = (eventId: string) => {
         try {
             await Promise.all(uploads);
             console.log('Все фото успешно загружены');
+
+            if (onSuccess) {
+                onSuccess();
+            }
         } catch (err) {
             console.error('Ошибка при загрузке фото:', err);
         }
@@ -20,3 +24,4 @@ export const useUploadEventPhotos = (eventId: string) => {
 
     return { handleUpload, isLoading, isError, isSuccess };
 };
+

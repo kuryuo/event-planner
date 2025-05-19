@@ -11,13 +11,13 @@ import Modal from '@/components/modal/Modal';
 import Button from '@/components/button/Button';
 import Notification from '@/components/notification/Notification';
 
-import { useEventManagement } from '@/hooks/useEventManagement';
+import { useEventManagement } from '@/hooks';
 
-interface EventManagementPageProps {
+interface Props {
     isEditMode?: boolean;
 }
 
-const EventManagementPage: React.FC<EventManagementPageProps> = ({ isEditMode = false }) => {
+const EventManagementPage: React.FC<Props> = ({ isEditMode = false }) => {
     const { eventId } = useParams<{ eventId: string }>();
     const {
         handleSubmit,

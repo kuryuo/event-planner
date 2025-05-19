@@ -8,7 +8,7 @@ import { format } from 'date-fns';
 import { ru } from 'date-fns/locale';
 import { AppRoute } from "@/utils/const";
 import EventFilterModal from "@/components/event-filter-modal/EventFilterModal";
-import { EventFilters } from '@/services/api/event/types';
+import { EventFilters } from '@/types';
 
 type ToolbarProps = {
     label: string;

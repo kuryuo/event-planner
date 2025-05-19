@@ -2,7 +2,7 @@ import React from 'react';
 import styles from './ProfileModal.module.css';
 import avatar from '@/assets/img/avatar.svg';
 import Modal from '@/components/modal/Modal';
-import { ProfileModalProps } from '@/services/profile/types';
+import { ProfileModalProps } from '@/types';
 
 const ProfileModal: React.FC<ProfileModalProps> = ({
                                                        firstName,

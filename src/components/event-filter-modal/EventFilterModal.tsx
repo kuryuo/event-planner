@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import styles from './EventFilterModal.module.css';
 import FormButtons from "@/components/form-buttons/FormButtons";
 import Button from "@/components/button/Button";
-import { EventFilters } from '@/services/api/event/types';
+import { EventFilters } from '@/types';
 import { useGetCategoriesQuery } from '@/services/api/category/categoryApi';
 
 type Props = {

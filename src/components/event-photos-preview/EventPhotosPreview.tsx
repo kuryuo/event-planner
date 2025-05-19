@@ -2,7 +2,7 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import styles from './EventPhotosPreview.module.css';
 import { AppRoute } from '@/utils/const.ts';
-import { useEventPhotos } from '@/hooks/useEventPhotos';
+import { useEventPhotos } from '@/hooks';
 
 type Props = {
     eventId: string;

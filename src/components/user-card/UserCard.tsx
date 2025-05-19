@@ -3,7 +3,7 @@ import ContactUserCard from '@/components/user-card/variants/ContactUserCard';
 import InteractiveUserCard from '@/components/user-card/variants/InteractiveUserCard';
 import CheckboxOnlyUserCard from '@/components/user-card/variants/CheckboxOnlyUserCard';
 
-interface UserCardProps {
+interface Props {
     name: string;
     role?: string;
     variant: 'basic' | 'contact' | 'interactive' | 'checkboxOnly';
@@ -12,7 +12,7 @@ interface UserCardProps {
     onMenuClick?: () => void;
 }
 
-const UserCard: React.FC<UserCardProps> = (props) => {
+const UserCard: React.FC<Props> = (props) => {
     switch (props.variant) {
         case 'contact':
             return <ContactUserCard name={props.name} role={props.role} />;

@@ -3,7 +3,7 @@ import styles from './EventSubscribersPreview.module.css';
 import avatarPlaceholder from '@/assets/img/avatar.svg';
 import { useNavigate } from 'react-router-dom';
 import { AppRoute } from '@/utils/const';
-import { useEventSubscribers } from '@/hooks/useEventSubscribers';
+import { useEventSubscribers } from '@/hooks';
 
 type Props = {
     eventId: string;

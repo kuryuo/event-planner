@@ -2,13 +2,11 @@ import React, { useState } from 'react';
 import styles from './EventPhotosPage.module.css';
 import Sidebar from '@/components/sidebar/Sidebar';
 import Header from '@/components/header/Header';
-import { AppRoute } from '@/utils/const.ts';
 import CloseIcon from '@/assets/img/close.svg?react';
 import Arrow from '@/assets/img/arrow.svg';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { useEventPhotos } from '@/hooks/useEventPhotos';
-import {RootState} from "@/app/store";
-import {useSelector} from "react-redux";
+import { getEventLink } from '@/utils/navigation';
+import { useCurrentProfile, useEventPhotos } from '@/hooks';
 
 const EventPhotosPage: React.FC = () => {
     const navigate = useNavigate();
@@ -20,14 +18,11 @@ const EventPhotosPage: React.FC = () => {
     const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
     const responsiblePersonId = location.state?.responsiblePersonId;
 
-    const currentUserId = useSelector((state: RootState) => state.profile.id);
-
-    const mode = responsiblePersonId === currentUserId ? 'organizer' : 'participant';
+    const currentUserId = useCurrentProfile().id;
 
     const handleBackClick = () => {
-        navigate(`${AppRoute.EVENT.replace(':eventId', eventId)}?mode=${mode}`);
+        navigate(getEventLink(eventId, responsiblePersonId, currentUserId));
     };
-
 
     const handlePhotoClick = (index: number) => {
         setSelectedIndex(index);
@@ -37,7 +32,8 @@ const EventPhotosPage: React.FC = () => {
     const showModal = selectedIndex !== null;
 
     const showPrev = () => setSelectedIndex((prev) => (prev! > 0 ? prev! - 1 : prev));
-    const showNext = () => setSelectedIndex((prev) => (prev! < photos.length - 1 ? prev! + 1 : prev));
+    const showNext = () =>
+        setSelectedIndex((prev) => (prev! < photos.length - 1 ? prev! + 1 : prev));
 
     return (
         <div className={styles.page}>
@@ -79,10 +75,14 @@ const EventPhotosPage: React.FC = () => {
                             <CloseIcon className={styles.icon} />
                         </button>
                         {selectedIndex! > 0 && (
-                            <button className={styles.prevButton} onClick={showPrev}>&lt;</button>
+                            <button className={styles.prevButton} onClick={showPrev}>
+                                &lt;
+                            </button>
                         )}
                         {selectedIndex! < photos.length - 1 && (
-                            <button className={styles.nextButton} onClick={showNext}>&gt;</button>
+                            <button className={styles.nextButton} onClick={showNext}>
+                                &gt;
+                            </button>
                         )}
                     </div>
                 </div>

@@ -1,5 +1,5 @@
-import { Event } from '@/services/events/eventsSlice';
-import { EventFilters } from '@/services/api/event/types';
+import { Event } from '@/types';
+import { EventFilters } from '@/types';
 
 export const useEventFilter = (events: Event[], filters: EventFilters): Event[] => {
     return events.filter(event => {

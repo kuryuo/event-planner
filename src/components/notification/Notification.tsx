@@ -2,13 +2,13 @@ import React from 'react';
 import styles from './Notification.module.css';
 import Close from '@/assets/img/close.svg?react';
 
-interface NotificationProps {
+interface Props {
     message: string;
     type: 'success' | 'error' | 'info';
     onClose: () => void;
 }
 
-const Notification: React.FC<NotificationProps> = ({ message, type, onClose }) => {
+const Notification: React.FC<Props> = ({ message, type, onClose }) => {
     const containerClass =
         type === 'success'
             ? `${styles.container} ${styles.success}`

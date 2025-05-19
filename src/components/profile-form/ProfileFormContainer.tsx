@@ -1,10 +1,10 @@
 import React from 'react';
 import ProfileForm from './ProfileForm';
-import { ProfileFormData } from '@/services/profile/types';
+import { BaseProfile } from '@/types';
 
 interface Props {
-    formData: ProfileFormData;
-    onChange: (field: keyof ProfileFormData, value: string) => void;
+    formData: BaseProfile;
+    onChange: (field: keyof BaseProfile, value: string) => void;
 }
 
 const ProfileFormContainer: React.FC<Props> = ({ formData, onChange }) => {

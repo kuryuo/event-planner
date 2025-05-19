@@ -1,20 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { eventApi } from '@/services/api/event/eventApi';
-
-export interface Event {
-    id: string;
-    name: string;
-    description: string;
-    startDate: string;
-    endDate: string;
-    location: string;
-    format: string;
-    eventType: string;
-    responsiblePersonId: string;
-    maxParticipants: number;
-    roles: string[];
-    categories: string[];
-}
+import {Event} from "@/types";
 
 interface EventState {
     events: Event[];

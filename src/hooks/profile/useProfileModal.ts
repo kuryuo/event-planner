@@ -1,18 +1,18 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { baseApi } from '@/services/api/baseApi';
 import { clearProfile } from '@/services/profile/profileSlice';
 import { AppRoute } from '@/utils/const';
-import { RootState } from '@/app/store';
 import { useLogoutMutation } from '@/services/api/auth/authApi';
+import { useCurrentProfile } from '@/hooks';
 
 export const useProfileModal = (onClose: () => void) => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
-    const { firstName, lastName } = useSelector((state: RootState) => state.profile);
-    const [isLogoutModalOpen, setLogoutModalOpen] = useState(false);
+    const { firstName, lastName } = useCurrentProfile();
 
+    const [isLogoutModalOpen, setLogoutModalOpen] = useState(false);
     const [logout] = useLogoutMutation();
 
     const handleProfileClick = () => {

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import PositioningForm from './PositioningForm';
-import { PositioningFormData } from "@/services/events/types";
+import { PositioningFormData } from "@/types";
 
 interface Props {
     onChange?: (data: PositioningFormData) => void;

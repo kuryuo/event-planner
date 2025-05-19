@@ -1,12 +1,16 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useDeleteEventMutation, useGetEventByIdQuery, useCreateEventMutation, useUpdateEventMutation } from '@/services/api/event/eventApi';
+import {
+    useDeleteEventMutation,
+    useGetEventByIdQuery,
+    useCreateEventMutation,
+    useUpdateEventMutation,
+} from '@/services/api/event/eventApi';
 import { AppRoute } from '@/utils/const';
-import { CreateEventRequest } from '@/services/api/event/types';
 import { validateCreateEvent } from '@/utils/validation/validateCreateEvent';
-import { EventInfoFormData, PositioningFormData } from '@/services/events/types';
-import { useSelector } from 'react-redux';
-import { RootState } from '@/app/store';
+import { EventInfoFormData, PositioningFormData, CreateEventRequest } from '@/types';
+import { useCurrentProfile } from '@/hooks';
+import { getEventLink } from '@/utils/navigation';
 
 export const useEventManagement = (eventId: string | undefined, isEditMode: boolean) => {
     const navigate = useNavigate();
@@ -16,11 +20,14 @@ export const useEventManagement = (eventId: string | undefined, isEditMode: bool
     const [createEvent] = useCreateEventMutation();
     const [updateEvent] = useUpdateEventMutation();
 
-    const currentUserId = useSelector((state: RootState) => state.profile.id);
+    const currentUserId = useCurrentProfile().id;
 
     const [eventInfo, setEventInfo] = useState<EventInfoFormData | null>(null);
     const [positioning, setPositioning] = useState<PositioningFormData | null>(null);
-    const [notification, setNotification] = useState<{ message: string; type: 'success' | 'error' | 'info'} | null>(null);
+    const [notification, setNotification] = useState<{
+        message: string;
+        type: 'success' | 'error' | 'info';
+    } | null>(null);
     const [isModalOpen, setIsModalOpen] = useState(false);
 
     useEffect(() => {
@@ -32,14 +39,9 @@ export const useEventManagement = (eventId: string | undefined, isEditMode: bool
 
     const toISOString = (date: string) => new Date(date).toISOString();
 
-    const getEventLink = (eventId: string, responsiblePersonId: string) => {
-        const mode = responsiblePersonId === currentUserId ? 'organizer' : 'participant';
-        return `${AppRoute.EVENT.replace(':eventId', eventId)}?mode=${mode}`;
-    };
-
     const handleCancel = () => {
         if (isEditMode && eventId && event) {
-            navigate(getEventLink(eventId, event.responsiblePersonId));
+            navigate(getEventLink(eventId!, event.responsiblePersonId, currentUserId));
         } else {
             setIsModalOpen(true);
         }
@@ -103,7 +105,6 @@ export const useEventManagement = (eventId: string | undefined, isEditMode: bool
             maxParticipants: positioning!.maxParticipants ?? 0,
         };
 
-
         console.log('📦 Отправка мероприятия:', body);
 
         try {
@@ -111,9 +112,7 @@ export const useEventManagement = (eventId: string | undefined, isEditMode: bool
                 await updateEvent({ eventId, body }).unwrap();
                 setNotification({ type: 'success', message: 'Мероприятие успешно обновлено!' });
 
-                const redirectId = eventId;
-                const redirectResponsible = currentUserId;
-                navigate(getEventLink(redirectId, redirectResponsible));
+                navigate(getEventLink(eventId!, currentUserId, currentUserId));
             } else {
                 await createEvent(body).unwrap();
                 setNotification({ type: 'success', message: 'Мероприятие успешно создано!' });
@@ -122,7 +121,9 @@ export const useEventManagement = (eventId: string | undefined, isEditMode: bool
         } catch {
             setNotification({
                 type: 'error',
-                message: isEditMode ? 'Ошибка при обновлении мероприятия' : 'Ошибка при создании события',
+                message: isEditMode
+                    ? 'Ошибка при обновлении мероприятия'
+                    : 'Ошибка при создании события',
             });
         }
     };

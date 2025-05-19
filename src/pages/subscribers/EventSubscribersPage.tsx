@@ -3,22 +3,21 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import styles from './EventSubscribersPage.module.css';
 import Sidebar from '@/components/sidebar/Sidebar';
 import Header from '@/components/header/Header';
-import InputField from "@/components/input-field/InputField";
+import InputField from '@/components/input-field/InputField';
 import UserRoleFilter from '@/components/user-role-filter/UserRoleFilter';
 import UserCard from '@/components/user-card/UserCard';
 import Button from '@/components/button/Button';
 import Arrow from '@/assets/img/arrow.svg';
-import { AppRoute } from "@/utils/const";
-import { useEventSubscribers } from '@/hooks/useEventSubscribers';
-import {RootState} from "@/app/store";
-import {useSelector} from "react-redux";
+import { AppRoute } from '@/utils/const';
+import { getEventLink } from '@/utils/navigation';
+import { useCurrentProfile, useEventSubscribers } from '@/hooks';
 
 const EventSubscribersPage: React.FC = () => {
     const navigate = useNavigate();
     const location = useLocation();
     const eventId = location.state?.eventId;
     const responsiblePersonId = location.state?.responsiblePersonId;
-    const currentUserId = useSelector((state: RootState) => state.profile.id);
+    const currentUserId = useCurrentProfile().id;
 
     const [searchValue, setSearchValue] = useState('');
 
@@ -41,8 +40,7 @@ const EventSubscribersPage: React.FC = () => {
                             className={styles.arrow}
                             alt="arrow"
                             onClick={() => {
-                                const mode = responsiblePersonId === currentUserId ? 'organizer' : 'participant';
-                                navigate(`${AppRoute.EVENT.replace(':eventId', eventId)}?mode=${mode}`);
+                                navigate(getEventLink(eventId, responsiblePersonId, currentUserId));
                             }}
                         />
                         <span className={styles.participants}>Участники</span>
@@ -67,7 +65,8 @@ const EventSubscribersPage: React.FC = () => {
                         <div className={styles.grid}>
                             {isLoading && <p>Загрузка участников...</p>}
                             {isError && <p>Ошибка при загрузке участников</p>}
-                            {!isLoading && !isError &&
+                            {!isLoading &&
+                                !isError &&
                                 subscribers.map((p: any, i: number) => {
                                     const fullName = [p.lastName, p.firstName, p.middleName]
                                         .filter(Boolean)

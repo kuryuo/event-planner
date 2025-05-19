@@ -1,7 +1,6 @@
 import React, { useState, useRef } from 'react';
 import { useParams, useNavigate, useLocation } from 'react-router-dom';
 import { useGetEventByIdQuery } from '@/services/api/event/eventApi';
-import { useUploadEventPhotos } from '@/hooks/useUploadEventPhotos';
 import styles from './EventPage.module.css';
 
 import Sidebar from '@/components/sidebar/Sidebar';
@@ -16,10 +15,8 @@ import ContactsBlock from '@/components/event-contacts/EventContacts';
 import Button from '@/components/button/Button';
 import Modal from '@/components/modal/Modal';
 import SettingsIcon from '@/assets/img/settings.svg';
-import { AppRoute } from '@/utils/const';
-import {RootState} from "@/app/store";
-import {useSelector} from "react-redux";
-import { useEventSubscription } from '@/hooks/useEventSubscription';
+import { getEditEventLink } from '@/utils/navigation';
+import { useCurrentProfile, useUploadEventPhotos, useEventSubscription, useEventPhotos } from '@/hooks';
 
 const EventPage: React.FC = () => {
     const navigate = useNavigate();
@@ -28,9 +25,12 @@ const EventPage: React.FC = () => {
     const { eventId } = useParams<{ eventId: string }>();
     const { search } = useLocation();
     const { data: event, error, isLoading } = useGetEventByIdQuery(eventId || '');
-    const currentUserId = useSelector((state: RootState) => state.profile.id);
+    const currentUserId = useCurrentProfile().id;
     const initialSubscribed = !!event?.subscribers?.includes(currentUserId);
-    const { isSubscribed, handleToggleSubscription } = useEventSubscription(eventId || '', initialSubscribed);
+    const { isSubscribed, handleToggleSubscription } = useEventSubscription(
+        eventId || '',
+        initialSubscribed,
+    );
 
     const isOrganizer = new URLSearchParams(search).get('mode') === 'organizer';
 
@@ -43,14 +43,11 @@ const EventPage: React.FC = () => {
     };
 
     const fileInputRef = useRef<HTMLInputElement>(null);
-    const { handleUpload } = useUploadEventPhotos(eventId || '');
+    const { refetch: refetchPhotos } = useEventPhotos(eventId || '');
+    const { handleUpload } = useUploadEventPhotos(eventId || '', refetchPhotos);
 
     const handleEditEvent = () => {
-        if (eventId) {
-            navigate(AppRoute.EDIT_EVENT.replace(':eventId', eventId));
-        } else {
-            console.error('eventId is undefined');
-        }
+        navigate(getEditEventLink(eventId!));
     };
 
     if (isLoading) {

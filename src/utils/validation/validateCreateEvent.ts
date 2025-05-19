@@ -1,4 +1,4 @@
-import { EventInfoFormData, PositioningFormData } from '@/services/events/types';
+import { EventInfoFormData, PositioningFormData } from '@/types';
 
 interface ValidationResult {
     isValid: boolean;
