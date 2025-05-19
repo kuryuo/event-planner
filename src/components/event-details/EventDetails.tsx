@@ -1,5 +1,5 @@
 import React from 'react';
-import { Event } from '@/services/events/eventsSlice';
+import { Event } from '@/types';
 import unlockIcon from '@/assets/img/unlock.svg';
 import locationIcon from '@/assets/img/location.svg';
 import clockIcon from '@/assets/img/clock.svg';

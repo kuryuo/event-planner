@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { eventApi } from '@/services/api/event/eventApi';
-import {Event} from "@/types";
+import { Event } from '@/types';
 
 interface EventState {
     events: Event[];
@@ -21,18 +21,12 @@ const eventSlice = createSlice({
         },
     },
     extraReducers: (builder) => {
-        builder.addMatcher(
-            eventApi.endpoints.getEvents.matchFulfilled,
-            (state, action) => {
-                state.events = action.payload;
-            }
-        );
-        builder.addMatcher(
-            eventApi.endpoints.createEvent.matchFulfilled,
-            (state, action) => {
-                state.events.push(action.payload);
-            }
-        );
+        builder.addMatcher(eventApi.endpoints.getEvents.matchFulfilled, (state, action) => {
+            state.events = action.payload;
+        });
+        builder.addMatcher(eventApi.endpoints.createEvent.matchFulfilled, (state, action) => {
+            state.events.push(action.payload);
+        });
     },
 });
 

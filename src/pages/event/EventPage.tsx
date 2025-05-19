@@ -30,7 +30,9 @@ const EventPage: React.FC = () => {
     const { eventId } = useParams<{ eventId: string }>();
     const { search } = useLocation();
 
-    const { data: event, error, isLoading } = useGetEventByIdQuery(eventId || '');
+    const { data: event, error, isLoading } = useGetEventByIdQuery(eventId || '', {
+        refetchOnMountOrArgChange: true,
+    });
 
     const {
         isSubscribersLoading,

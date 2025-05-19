@@ -105,7 +105,7 @@ export const useEventManagement = (eventId: string | undefined, isEditMode: bool
             maxParticipants: positioning!.maxParticipants ?? 0,
         };
 
-        console.log('📦 Отправка мероприятия:', body);
+        console.log('Отправка мероприятия:', body);
 
         try {
             if (isEditMode && eventId) {
