@@ -6,7 +6,7 @@ import Sidebar from '@/components/sidebar/Sidebar';
 import Header from '@/components/header/Header';
 import EventsToolbar from '@/components/events-toolbar/EventsToolbar';
 import EventListItem from '@/components/event-list-item/EventListItem';
-import { useEventFilter, useCalendar, useCurrentProfile } from '@/hooks';
+import { useCalendar, useCurrentProfile } from '@/hooks';
 import { formatDateToMonthDay, formatTime } from '@/utils/dateUtils';
 import { Event } from '@/types';
 import { startOfMonth, endOfMonth, isWithinInterval, format, addMonths, subMonths } from 'date-fns';
@@ -15,20 +15,24 @@ import { EventFilters } from '@/types';
 import { getEventLink } from '@/utils/navigation';
 
 const EventsListPage: React.FC = () => {
-    const { data, error, isLoading } = useGetEventsQuery(undefined, {
-        refetchOnMountOrArgChange: true,
-    });
-
-    const events = data || [];
+    const [filters, setFilters] = useState<EventFilters>({});
+    const { data = [], error, isLoading } = useGetEventsQuery({ ...filters, count: 50 });
+    const { currentDate, onNavigate } = useCalendar();
     const currentUserId = useCurrentProfile().id;
+
     const FILTER_STORAGE_KEY = 'event_filters';
 
     useEffect(() => {
         localStorage.removeItem(FILTER_STORAGE_KEY);
     }, []);
 
-    const { currentDate, onNavigate } = useCalendar();
-    const [filters, setFilters] = useState<EventFilters>({});
+    const eventsInMonth = data.filter((event: Event) => {
+        const eventStart = new Date(event.startDate);
+        return isWithinInterval(eventStart, {
+            start: startOfMonth(currentDate),
+            end: endOfMonth(currentDate),
+        });
+    });
 
     const handleNavigate = (action: 'PREV' | 'NEXT' | 'TODAY' | 'DATE') => {
         let newDate = new Date();
@@ -41,6 +45,8 @@ const EventsListPage: React.FC = () => {
                 newDate = addMonths(currentDate, 1);
                 break;
             case 'TODAY':
+                newDate = new Date();
+                break;
             case 'DATE':
             default:
                 newDate = new Date();
@@ -50,15 +56,7 @@ const EventsListPage: React.FC = () => {
         onNavigate(newDate);
     };
 
-    const eventsInMonth = events.filter((event: Event) => {
-        const eventStart = new Date(event.startDate);
-        return isWithinInterval(eventStart, {
-            start: startOfMonth(currentDate),
-            end: endOfMonth(currentDate),
-        });
-    });
-
-    const filteredEvents = useEventFilter(eventsInMonth, filters);
+    const filteredEvents = eventsInMonth;
 
     if (isLoading) return <div>Loading...</div>;
     if (error) return <div>Error loading events</div>;
@@ -104,5 +102,6 @@ const EventsListPage: React.FC = () => {
         </div>
     );
 };
+
 
 export default EventsListPage;

@@ -47,7 +47,7 @@ const ProfileForm: React.FC<ProfileFormProps> = ({ formData, onChange }) => {
                     <div className={styles.column}>
                         <div className={styles.group}>
                             <Input
-                                label="Телеграмм"
+                                label="Телеграм"
                                 value={formData.telegram}
                                 onChange={(v) => onChange('telegram', v)}
                             />

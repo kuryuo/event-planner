@@ -47,8 +47,8 @@ const EventFilterModal: React.FC<Props> = ({ onClose, onApply }) => {
 
     const handleApply = () => {
         const filters: EventFilters = {
-            start: dateFrom || undefined,
-            end: dateTo || undefined,
+            start: dateFrom ? new Date(dateFrom).toISOString() : undefined,
+            end: dateTo ? new Date(dateTo).toISOString() : undefined,
             format: format || undefined,
             hasFreePlaces: availableOnly || undefined,
             categories: categories.length > 0 ? categories : undefined,

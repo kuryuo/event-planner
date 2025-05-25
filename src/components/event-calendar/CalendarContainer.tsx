@@ -7,8 +7,13 @@ import { EventFilters } from '@/types';
 import { useCurrentProfile, useEventFilter, useCalendar } from '@/hooks';
 
 const CalendarContainer: React.FC = () => {
-    const { data = [], error, isLoading, refetch } = useGetEventsQuery();
     const [filters, setFilters] = useState<EventFilters>({});
+    const cleanedFilters = Object.fromEntries(
+        Object.entries(filters).filter(([_, v]) => v !== undefined)
+    );
+
+    const { data = [], error, isLoading, refetch } = useGetEventsQuery({ ...cleanedFilters, count: 50 });
+
     const currentUserId = useCurrentProfile().id;
 
     const {

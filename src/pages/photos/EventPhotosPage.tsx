@@ -11,9 +11,10 @@ import { useCurrentProfile, useEventPhotos } from '@/hooks';
 const EventPhotosPage: React.FC = () => {
     const navigate = useNavigate();
     const location = useLocation();
-    const BASE_URL = 'https://smarteventmanager.ru/';
+    const BASE_URL = 'https://smarteventmanager.ru';
     const eventId = location.state?.eventId;
     const { photos, isLoading, isError } = useEventPhotos(eventId || '');
+    const eventTitle = location.state?.eventTitle || 'Фотографии события';
 
     const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
     const responsiblePersonId = location.state?.responsiblePersonId;
@@ -39,7 +40,7 @@ const EventPhotosPage: React.FC = () => {
         <div className={styles.page}>
             <Sidebar />
             <div className={styles.content}>
-                <Header title="Масленница 2025" />
+                <Header title={eventTitle} />
 
                 <div className={styles.back} onClick={handleBackClick}>
                     <img src={Arrow} className={styles.arrow} alt="Назад" />

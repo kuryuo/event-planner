@@ -7,18 +7,20 @@ import { useEventPhotos } from '@/hooks';
 type Props = {
     eventId: string;
     responsiblePersonId: string;
+    eventTitle: string;
 };
 
-const EventPhotosPreview: React.FC<Props> = ({ eventId, responsiblePersonId }) => {
+const EventPhotosPreview: React.FC<Props> = ({ eventId, responsiblePersonId, eventTitle  }) => {
     const navigate = useNavigate();
     const { photos, isLoading, isError } = useEventPhotos(eventId);
-    const BASE_URL = 'https://smarteventmanager.ru/';
+    const BASE_URL = 'https://smarteventmanager.ru';
 
     const handleShowAllClick = () => {
         navigate(AppRoute.PHOTOS_EVENT, {
             state: {
                 eventId,
                 responsiblePersonId,
+                eventTitle,
             },
         });
     };
