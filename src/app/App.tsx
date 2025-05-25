@@ -10,21 +10,28 @@ import InviteUserPage from "@/pages/invite-user/InviteUserPage";
 import CalendarPage from "@/pages/calendar/CalendarPage";
 
 import { AppRoute } from '@/utils/const';
+import { PrivateRoute } from '@/components/routes/PrivateRoute';
+import { PublicOnlyRoute } from '@/components/routes/PublicOnlyRoute';
 
 function App() {
     return (
         <Router>
             <Routes>
-                <Route path={AppRoute.AUTH} element={<AuthPage />} />
-                <Route path={AppRoute.PROFILE} element={<ProfilePage />} />
-                <Route path={AppRoute.CREATE_EVENT} element={<EventManagementPage />} />
-                <Route path={AppRoute.EDIT_EVENT} element={<EventManagementPage isEditMode />} />
-                <Route path={AppRoute.EVENT} element={<EventPage />} />
-                <Route path={AppRoute.EVENT_LIST} element={<EventsListPage />} />
-                <Route path={AppRoute.PHOTOS_EVENT} element={<EventPhotosPage/>} />
-                <Route path={AppRoute.SUBSCRIBERS} element={<EventSubscribersPage/>} />
-                <Route path={AppRoute.INVITE} element={<InviteUserPage/>} />
-                <Route path={AppRoute.CALENDAR} element={<CalendarPage/>} />
+                <Route element={<PublicOnlyRoute />}>
+                    <Route path={AppRoute.AUTH} element={<AuthPage />} />
+                </Route>
+                <Route element={<PrivateRoute />}>
+                    <Route path={AppRoute.PROFILE} element={<ProfilePage />} />
+                    <Route path={AppRoute.CREATE_EVENT} element={<EventManagementPage />} />
+                    <Route path={AppRoute.EDIT_EVENT} element={<EventManagementPage isEditMode />} />
+                    <Route path={AppRoute.EVENT} element={<EventPage />} />
+                    <Route path={AppRoute.EVENT_LIST} element={<EventsListPage />} />
+                    <Route path={AppRoute.PHOTOS_EVENT} element={<EventPhotosPage />} />
+                    <Route path={AppRoute.SUBSCRIBERS} element={<EventSubscribersPage />} />
+                    <Route path={AppRoute.INVITE} element={<InviteUserPage />} />
+                    <Route path={AppRoute.CALENDAR} element={<CalendarPage />} />
+                </Route>
+
             </Routes>
         </Router>
     );
