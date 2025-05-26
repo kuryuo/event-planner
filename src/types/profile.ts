@@ -9,6 +9,7 @@ export interface BaseProfile {
 
 export interface ProfileResponse extends Partial<BaseProfile> {
     id: string;
+    avatarUrl?: string;
 }
 
 export interface UpdateProfileRequest extends BaseProfile {

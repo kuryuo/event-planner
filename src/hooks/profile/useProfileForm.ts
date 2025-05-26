@@ -6,6 +6,17 @@ import { setProfile } from '@/services/profile/profileSlice';
 import { authStorage } from '@/utils/localStorage/authStorage';
 import { useCurrentProfile } from '@/hooks';
 
+type ProfileFormData = {
+    firstName: string;
+    lastName: string;
+    middleName: string;
+    phoneNumber: string;
+    telegram: string;
+    city: string;
+    file?: File;
+    avatarUrl?: string;
+};
+
 export const useProfileForm = () => {
     const [updateProfile] = useUpdateProfileMutation();
     const token = authStorage.getToken();
@@ -19,14 +30,19 @@ export const useProfileForm = () => {
         message: string;
     } | null>(null);
 
-    const [formData, setFormData] = useState({
+    const [formData, setFormData] = useState<ProfileFormData>({
         firstName: '',
         lastName: '',
         middleName: '',
         phoneNumber: '',
         telegram: '',
         city: '',
+        file: undefined,
     });
+
+    const handleFileChange = (file: File | null) => {
+        setFormData((prev) => ({ ...prev, file: file ?? undefined }));
+    };
 
     const [successMessage, setSuccessMessage] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
@@ -37,14 +53,21 @@ export const useProfileForm = () => {
             const id = data.id;
             const firstName = data.firstName || '';
             const lastName = data.lastName || '';
+            const avatarUrl = data.avatarUrl
+                ? `http://95.82.231.190:5002${data.avatarUrl}`
+                : undefined;
+            console.log('[PROFILE FORM] avatarUrl:', avatarUrl);
 
             const isSame =
                 currentProfile.id === id &&
                 currentProfile.firstName === firstName &&
-                currentProfile.lastName === lastName;
+                currentProfile.lastName === lastName &&
+                currentProfile.avatarUrl === avatarUrl;
 
             if (!isSame) {
-                dispatch(setProfile({ id, firstName, lastName }));
+                const profilePayload = { id, firstName, lastName, avatarUrl };
+                dispatch(setProfile(profilePayload));
+                localStorage.setItem('userProfile', JSON.stringify(profilePayload));
             }
 
             setFormData({
@@ -54,11 +77,13 @@ export const useProfileForm = () => {
                 phoneNumber: data.phoneNumber || '',
                 telegram: data.telegram || '',
                 city: data.city || '',
+                file: undefined,
+                avatarUrl,
             });
         }
     }, [data, isLoading, dispatch, currentProfile]);
 
-    const handleChange = (field: string, value: string) => {
+    const handleChange = (field: keyof ProfileFormData, value: string) => {
         setFormData((prev) => ({ ...prev, [field]: value }));
     };
 
@@ -84,6 +109,7 @@ export const useProfileForm = () => {
         formData,
         handleChange,
         handleSubmit,
+        handleFileChange,
         isLoading,
         notification,
         setNotification,

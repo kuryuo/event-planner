@@ -12,21 +12,25 @@ import { AppRoute } from '@/utils/const';
 
 const ProfilePage: React.FC = () => {
     const navigate = useNavigate();
-    const { formData, handleChange, handleSubmit, notification, setNotification } =
+    const { formData, handleChange, handleSubmit, notification, setNotification, handleFileChange, } =
         useProfileForm();
 
     return (
         <div className={styles.profilePage}>
             <Sidebar />
             <div className={styles.contentContainer}>
-                <Header title="Мой профиль" />
+                <Header title="Мой профиль"  />
 
                 <div className={styles.profileContent}>
                     <div className={styles.profileFormContainer}>
                         <ProfileFormContainer formData={formData} onChange={handleChange} />
                     </div>
                     <div className={styles.profilePhotoContainer}>
-                        <Avatar />
+                        <Avatar
+                            title="Аватар"
+                            onFileChange={handleFileChange}
+                            avatarUrl={formData.avatarUrl}
+                        />
                     </div>
                 </div>
 

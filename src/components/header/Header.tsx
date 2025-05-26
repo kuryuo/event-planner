@@ -4,7 +4,7 @@ import notificationIcon from '@/assets/img/notification.svg';
 import avatar from '@/assets/img/avatar.svg';
 import NotificationsModal from '@/components/notifications-modal/NotificationsModal';
 import ProfileModalContainer from '@/components/profile-modal/ProfileModalContainer';
-import { useClickOutside } from '@/hooks';
+import { useClickOutside, useCurrentProfile } from '@/hooks';
 
 type HeaderProps = {
     title: string;
@@ -13,7 +13,7 @@ type HeaderProps = {
 const Header: React.FC<HeaderProps> = ({ title }) => {
     const [showModal, setShowModal] = useState(false);
     const [showProfile, setShowProfile] = useState(false);
-
+    const { avatarUrl } = useCurrentProfile();
     const notificationRef = useRef<HTMLDivElement>(null);
     const profileRef = useRef<HTMLDivElement>(null);
 
@@ -36,12 +36,16 @@ const Header: React.FC<HeaderProps> = ({ title }) => {
 
                 <div style={{ position: 'relative' }} ref={profileRef}>
                     <img
-                        src={avatar}
+                        src={avatarUrl || avatar}
                         alt="Профиль"
                         className={styles.avatar}
                         onClick={() => setShowProfile(true)}
                     />
-                    {showProfile && <ProfileModalContainer onClose={() => setShowProfile(false)} />}
+                    {showProfile && (
+                        <ProfileModalContainer
+                            onClose={() => setShowProfile(false)}
+                        />
+                    )}
                 </div>
             </div>
         </header>

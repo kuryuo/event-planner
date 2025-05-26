@@ -7,12 +7,14 @@ interface ProfileState {
     id: string;
     firstName: string;
     lastName: string;
+    avatarUrl?: string;
 }
 
 const initialState: ProfileState = parsedProfile || {
     id: '',
     firstName: '',
     lastName: '',
+    avatarUrl: undefined,
 };
 
 const profileSlice = createSlice({
@@ -23,6 +25,7 @@ const profileSlice = createSlice({
             state.id = action.payload.id;
             state.firstName = action.payload.firstName;
             state.lastName = action.payload.lastName;
+            state.avatarUrl = action.payload.avatarUrl;
         },
         clearProfile(state) {
             state.id = '';

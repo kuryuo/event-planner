@@ -3,6 +3,7 @@ import styles from './ProfileModal.module.css';
 import avatar from '@/assets/img/avatar.svg';
 import Modal from '@/components/modal/Modal';
 import { ProfileModalProps } from '@/types';
+import { useCurrentProfile } from '@/hooks';
 
 const ProfileModal: React.FC<ProfileModalProps> = ({
                                                        firstName,
@@ -13,11 +14,12 @@ const ProfileModal: React.FC<ProfileModalProps> = ({
                                                        onLogoutConfirm,
                                                        onLogoutCancel,
                                                    }) => {
+    const { avatarUrl } = useCurrentProfile();
     return (
         <div className={styles.overlay}>
             <div className={styles.modal}>
                 <div className={styles.name}>{lastName} {firstName}</div>
-                <img src={avatar} alt="Аватар" className={styles.avatar} />
+                <img src={avatarUrl || avatar} alt="Аватар" className={styles.avatar} />
                 <div className={styles.actions}>
                     <div className={styles.link} onClick={onProfileClick}>
                         Перейти в профиль
