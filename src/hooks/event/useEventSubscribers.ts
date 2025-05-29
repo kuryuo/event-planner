@@ -5,7 +5,6 @@ export const useEventSubscribers = (eventId?: string) => {
         data,
         isLoading,
         isError,
-        refetch,
     } = useGetEventSubscribersQuery(eventId!, {
         skip: !eventId,
     });
@@ -16,6 +15,5 @@ export const useEventSubscribers = (eventId?: string) => {
         subscribers,
         isLoading,
         isError,
-        refetch,
     };
 };

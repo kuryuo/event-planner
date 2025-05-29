@@ -22,7 +22,7 @@ const eventSlice = createSlice({
     },
     extraReducers: (builder) => {
         builder.addMatcher(eventApi.endpoints.getEvents.matchFulfilled, (state, action) => {
-            state.events = action.payload;
+            state.events = action.payload.result;
         });
         builder.addMatcher(eventApi.endpoints.createEvent.matchFulfilled, (state, action) => {
             state.events.push(action.payload);

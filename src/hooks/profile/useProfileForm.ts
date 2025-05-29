@@ -21,7 +21,7 @@ export const useProfileForm = () => {
     const [updateProfile] = useUpdateProfileMutation();
     const token = authStorage.getToken();
     const currentProfile = useCurrentProfile();
-    const { data, isLoading, refetch } = useGetProfileQuery(undefined, {
+    const { data, isLoading } = useGetProfileQuery(undefined, {
         skip: !token,
     });
 
@@ -98,7 +98,6 @@ export const useProfileForm = () => {
 
         try {
             await updateProfile(formData).unwrap();
-            await refetch();
             setNotification({ type: 'success', message: 'Данные профиля успешно обновлены' });
         } catch {
             setNotification({ type: 'error', message: 'Ошибка при обновлении профиля' });

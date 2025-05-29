@@ -1,14 +1,14 @@
 import React from 'react';
-import Sidebar from '@/components/sidebar/Sidebar';
-import Header from '@/components/header/Header';
-import Avatar from '@/components/avatar/Avatar';
-import FormButtons from '@/components/form-buttons/FormButtons';
+import Sidebar from '@/components/layout/sidebar/Sidebar';
+import Header from '@/components/layout/header/Header';
+import Avatar from '@/components/user/avatar/Avatar';
+import FormButtons from '@/components/ui/form-buttons/FormButtons';
 import { useProfileForm } from '@/hooks';
-import ProfileFormContainer from '@/components/profile-form/ProfileFormContainer';
-import Notification from '@/components/notification/Notification';
+import ProfileFormContainer from '@/components/user/profile-form/ProfileFormContainer';
 import styles from './ProfilePage.module.css';
 import { useNavigate } from 'react-router-dom';
 import { AppRoute } from '@/utils/const';
+import ErrorToast from '@/components/ui/notification/ErrorToast';
 
 const ProfilePage: React.FC = () => {
     const navigate = useNavigate();
@@ -44,13 +44,11 @@ const ProfilePage: React.FC = () => {
                 </div>
 
                 {notification && (
-                    <div style={{ position: 'fixed', bottom: 20, right: 20, zIndex: 1000 }}>
-                        <Notification
-                            message={notification.message}
-                            type={notification.type}
-                            onClose={() => setNotification(null)}
-                        />
-                    </div>
+                    <ErrorToast
+                        message={notification.message}
+                        type={notification.type}
+                        onClose={() => setNotification(null)}
+                    />
                 )}
             </div>
         </div>

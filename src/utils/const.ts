@@ -10,3 +10,7 @@ export enum AppRoute {
     CALENDAR = "/calendar",
     EDIT_EVENT = "/edit-event/:eventId",
 }
+
+export const API_BASE_URL = 'https://smarteventmanager.ru';
+
+export const API_BASE_PATH = `${API_BASE_URL}/api`;

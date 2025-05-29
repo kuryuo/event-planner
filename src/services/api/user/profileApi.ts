@@ -8,6 +8,7 @@ export const profileApi = baseApi.injectEndpoints({
                 url: 'profile',
                 method: 'GET',
             }),
+            providesTags: ['Profile']
         }),
         updateProfile: builder.mutation<ProfileResponse, UpdateProfileRequest>({
             query: (body) => {
@@ -30,6 +31,7 @@ export const profileApi = baseApi.injectEndpoints({
                     body: formData,
                 };
             },
+            invalidatesTags: ['Profile']
         }),
     }),
     overrideExisting: false,

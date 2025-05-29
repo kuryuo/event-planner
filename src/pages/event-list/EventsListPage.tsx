@@ -2,21 +2,21 @@ import React, { useState, useEffect } from 'react';
 import { useGetEventsQuery } from '@/services/api/event/eventApi';
 import { Link } from 'react-router-dom';
 import styles from './EventsListPage.module.css';
-import Sidebar from '@/components/sidebar/Sidebar';
-import Header from '@/components/header/Header';
-import EventsToolbar from '@/components/events-toolbar/EventsToolbar';
-import EventListItem from '@/components/event-list-item/EventListItem';
+import Sidebar from '@/components/layout/sidebar/Sidebar';
+import Header from '@/components/layout/header/Header';
+import EventsToolbar from '@/components/event/events-toolbar/EventsToolbar';
+import EventListItem from '@/components/ui/event-list-item/EventListItem';
 import { useCalendar, useCurrentProfile } from '@/hooks';
 import { formatDateToMonthDay, formatTime } from '@/utils/dateUtils';
-import { Event } from '@/types';
+import { Event, EventFilters } from '@/types';
 import { startOfMonth, endOfMonth, isWithinInterval, format, addMonths, subMonths } from 'date-fns';
 import { ru } from 'date-fns/locale';
-import { EventFilters } from '@/types';
 import { getEventLink } from '@/utils/navigation';
 
 const EventsListPage: React.FC = () => {
     const [filters, setFilters] = useState<EventFilters>({});
-    const { data = [], error, isLoading } = useGetEventsQuery({ ...filters, count: 50 });
+    const { data, error, isLoading } = useGetEventsQuery({ ...filters, count: 50 });
+    const events: Event[] = Array.isArray(data?.result) ? data.result : [];
     const { currentDate, onNavigate } = useCalendar();
     const currentUserId = useCurrentProfile().id;
 
@@ -26,7 +26,7 @@ const EventsListPage: React.FC = () => {
         localStorage.removeItem(FILTER_STORAGE_KEY);
     }, []);
 
-    const eventsInMonth = data.filter((event: Event) => {
+    const eventsInMonth = events.filter((event: Event) => {
         const eventStart = new Date(event.startDate);
         return isWithinInterval(eventStart, {
             start: startOfMonth(currentDate),

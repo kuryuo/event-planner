@@ -3,23 +3,22 @@ import { useParams, useNavigate, useLocation } from 'react-router-dom';
 import { useGetEventByIdQuery } from '@/services/api/event/eventApi';
 import styles from './EventPage.module.css';
 
-import Sidebar from '@/components/sidebar/Sidebar';
-import Notification from '@/components/notification/Notification';
-import Header from '@/components/header/Header';
-import EventTag from '@/components/event-tag/EventTag';
-import EventDescription from '@/components/event-description/EventDescription';
-import EventActionsPanel from '@/components/event-actions-panel/EventActionsPanel';
-import EventPhotosPreview from '@/components/event-photos-preview/EventPhotosPreview';
-import EventPost from '@/components/event-post/EventPost';
-import EventDetails from '@/components/event-details/EventDetails';
-import EventSubscribersPreview from '@/components/event-subscribers-preview/EventSubscribersPreview';
-import ContactsBlock from '@/components/event-contacts/EventContacts';
-import Button from '@/components/button/Button';
-import Modal from '@/components/modal/Modal';
+import Sidebar from '@/components/layout/sidebar/Sidebar';
+import ErrorToast from "@/components/ui/notification/ErrorToast";
+import Header from '@/components/layout/header/Header';
+import EventTag from '@/components/ui/event-tag/EventTag';
+import EventDescription from '@/components/ui/event-description/EventDescription';
+import EventActionsPanel from '@/components/ui/event-actions-panel/EventActionsPanel';
+import EventPhotosPreview from '@/components/event/event-photos-preview/EventPhotosPreview';
+import EventPost from '@/components/ui/event-post/EventPost';
+import EventDetails from '@/components/ui/event-details/EventDetails';
+import EventSubscribersPreview from '@/components/event/event-subscribers-preview/EventSubscribersPreview';
+import ContactsBlock from '@/components/event/event-contacts/EventContacts';
+import Button from '@/components/ui/button/Button';
+import Modal from '@/components/ui/modal/Modal';
 import { getEditEventLink } from '@/utils/navigation';
 import {
     useUploadEventPhotos,
-    useEventPhotos,
     useEventSubscriptionStatus
 } from '@/hooks';
 
@@ -30,9 +29,9 @@ const EventPage: React.FC = () => {
     const { eventId } = useParams<{ eventId: string }>();
     const { search } = useLocation();
 
-    const { data: event, error, isLoading } = useGetEventByIdQuery(eventId || '', {
-        refetchOnMountOrArgChange: true,
-    });
+    const { data, error, isLoading } = useGetEventByIdQuery(eventId || '');
+
+    const event = data?.result;
 
     const {
         isSubscribersLoading,
@@ -44,8 +43,7 @@ const EventPage: React.FC = () => {
     const isOrganizer = new URLSearchParams(search).get('mode') === 'organizer';
 
     const fileInputRef = useRef<HTMLInputElement>(null);
-    const { refetch: refetchPhotos } = useEventPhotos(eventId || '');
-    const { handleUpload } = useUploadEventPhotos(eventId || '', refetchPhotos);
+    const { handleUpload } = useUploadEventPhotos(eventId || '');
 
     const handleFinish = () => setIsFinishModalOpen(true);
     const handleConfirmFinish = () => setIsFinishModalOpen(false);
@@ -57,13 +55,11 @@ const EventPage: React.FC = () => {
 
     if (error || isSubscribersError) {
         return (
-            <div style={{ position: 'fixed', bottom: 20, right: 20, zIndex: 1000 }}>
-                <Notification
-                    message="Ошибка загрузки данных мероприятия"
-                    type="error"
-                    onClose={() => {}}
-                />
-            </div>
+            <ErrorToast
+                message="Ошибка загрузки данных мероприятия"
+                type="error"
+                onClose={() => {}}
+            />
         );
     }
 

@@ -9,6 +9,7 @@ import { AppRoute } from '@/utils/const';
 import { validateAuth } from '@/utils/validation/validateAuth';
 import { authStorage } from '@/utils/localStorage/authStorage';
 import { saveProfileToStorage } from '@/utils/localStorage/profileStorage';
+import { getAvatarUrl } from '@/utils/getAvatarUrl';
 
 import { setProfile } from '@/services/profile/profileSlice';
 import { baseApi } from '@/services/api/baseApi';
@@ -45,10 +46,12 @@ export function useAuth(mode: 'login' | 'register' | 'reset') {
             dispatch(baseApi.util.resetApiState());
 
             const profile = await fetchProfile().unwrap();
+            const avatarUrl = getAvatarUrl(profile.avatarUrl);
             const normalized = {
                 id: profile.id,
                 firstName: profile.firstName ?? '',
                 lastName: profile.lastName ?? '',
+                avatarUrl,
             };
 
             dispatch(setProfile(normalized));

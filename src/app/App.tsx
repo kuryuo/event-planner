@@ -10,8 +10,8 @@ import InviteUserPage from "@/pages/invite-user/InviteUserPage";
 import CalendarPage from "@/pages/calendar/CalendarPage";
 
 import { AppRoute } from '@/utils/const';
-import { PrivateRoute } from '@/components/routes/PrivateRoute';
-import { PublicOnlyRoute } from '@/components/routes/PublicOnlyRoute';
+import { PrivateRoute } from '@/components/layout/routes/PrivateRoute';
+import { PublicOnlyRoute } from '@/components/layout/routes/PublicOnlyRoute';
 
 function App() {
     return (

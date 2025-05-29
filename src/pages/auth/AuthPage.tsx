@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import styles from './AuthPage.module.css';
 import img from '@/assets/img/img.svg';
-import AuthForm from '@/components/auth-form/AuthForm';
-import LinkButton from "@/components/link-button/LinkButton";
+import AuthForm from '@/components/auth/auth-form/AuthForm';
+import LinkButton from "@/components/ui/link-button/LinkButton";
 
 const AuthPage: React.FC = () => {
     const [mode, setMode] = useState<'login' | 'register' | 'reset'>('login');

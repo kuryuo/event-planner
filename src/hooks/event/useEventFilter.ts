@@ -3,6 +3,8 @@ import { EventFilters } from '@/types';
 
 export const useEventFilter = (events: Event[], filters: EventFilters): Event[] => {
     return events.filter(event => {
+        console.log('events:', events, 'type:', typeof events, 'isArray:', Array.isArray(events));
+
         const eventStart = new Date(event.startDate);
 
         if (filters.start) {

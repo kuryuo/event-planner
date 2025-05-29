@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import styles from './EventSubscribersPage.module.css';
-import Sidebar from '@/components/sidebar/Sidebar';
-import Header from '@/components/header/Header';
-import InputField from '@/components/input-field/InputField';
-import UserRoleFilter from '@/components/user-role-filter/UserRoleFilter';
-import UserCard from '@/components/user-card/UserCard';
-import Button from '@/components/button/Button';
+import Sidebar from '@/components/layout/sidebar/Sidebar';
+import Header from '@/components/layout/header/Header';
+import InputField from '@/components/ui/input-field/InputField';
+import UserRoleFilter from '@/components/user/user-role-filter/UserRoleFilter';
+import UserCard from '@/components/user/user-card/UserCard';
+import Button from '@/components/ui/button/Button';
 import Arrow from '@/assets/img/arrow.svg';
 import { AppRoute } from '@/utils/const';
 import { getEventLink } from '@/utils/navigation';
@@ -79,6 +79,7 @@ const EventSubscribersPage: React.FC = () => {
                                             name={fullName || p.email}
                                             role={p.eventRole || 'Участник'}
                                             variant="interactive"
+                                            avatarUrl={p.avatarUrl}
                                         />
                                     );
                                 })}

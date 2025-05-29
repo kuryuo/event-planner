@@ -2,16 +2,16 @@ import React from 'react';
 import { useParams } from 'react-router-dom';
 import styles from './EventManagementPage.module.css';
 
-import Sidebar from '@/components/sidebar/Sidebar';
-import Header from '@/components/header/Header';
-import EventInfoFormContainer from '@/components/event-info-form/EventInfoFormContainer';
-import PositioningFormContainer from '@/components/positioning-form/PositioningFormContainer';
-import FormButtons from '@/components/form-buttons/FormButtons';
-import Modal from '@/components/modal/Modal';
-import Button from '@/components/button/Button';
-import Notification from '@/components/notification/Notification';
+import Sidebar from '@/components/layout/sidebar/Sidebar';
+import Header from '@/components/layout/header/Header';
+import EventInfoFormContainer from '@/components/event/event-info-form/EventInfoFormContainer';
+import PositioningFormContainer from '@/components/event/positioning-form/PositioningFormContainer';
+import FormButtons from '@/components/ui/form-buttons/FormButtons';
+import Modal from '@/components/ui/modal/Modal';
+import Button from '@/components/ui/button/Button';
 
 import { useEventManagement } from '@/hooks';
+import ErrorToast from "@/components/ui/notification/ErrorToast";
 
 interface Props {
     isEditMode?: boolean;
@@ -25,6 +25,7 @@ const EventManagementPage: React.FC<Props> = ({ isEditMode = false }) => {
         handleConfirmCancel,
         handleConfirmDelete,
         notification,
+        setNotification,
         isLoading,
         error,
         event,
@@ -112,13 +113,11 @@ const EventManagementPage: React.FC<Props> = ({ isEditMode = false }) => {
                 )}
 
                 {notification && (
-                    <div style={{ position: 'fixed', bottom: 20, right: 20, zIndex: 1000 }}>
-                        <Notification
-                            type={notification.type}
-                            message={notification.message}
-                            onClose={() => setIsModalOpen(false)}
-                        />
-                    </div>
+                    <ErrorToast
+                        message={notification.message}
+                        type={notification.type}
+                        onClose={() => setNotification(null)}
+                    />
                 )}
             </div>
         </div>

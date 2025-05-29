@@ -7,7 +7,7 @@ export type Category = {
 
 export const categoryApi = baseApi.injectEndpoints({
     endpoints: (builder) => ({
-        getCategories: builder.query<Category[], void>({
+        getCategories: builder.query<{ result: Category[] }, void>({
             query: () => 'categories',
         }),
     }),

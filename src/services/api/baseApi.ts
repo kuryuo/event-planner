@@ -1,10 +1,12 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { authStorage } from '@/utils/localStorage/authStorage';
+import { API_BASE_PATH } from '@/utils/const';
 
 export const baseApi = createApi({
     reducerPath: 'api',
+    tagTypes: ['Profile', 'Events', 'Subscribers', 'Photos'],
     baseQuery: fetchBaseQuery({
-        baseUrl: 'https://smarteventmanager.ru/api',
+        baseUrl: API_BASE_PATH,
         prepareHeaders: (headers) => {
             const token = authStorage.getToken();
             if (token) {

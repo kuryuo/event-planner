@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import styles from './EventPhotosPage.module.css';
-import Sidebar from '@/components/sidebar/Sidebar';
-import Header from '@/components/header/Header';
+import Sidebar from '@/components/layout/sidebar/Sidebar';
+import Header from '@/components/layout/header/Header';
 import CloseIcon from '@/assets/img/close.svg?react';
 import Arrow from '@/assets/img/arrow.svg';
 import { useLocation, useNavigate } from 'react-router-dom';

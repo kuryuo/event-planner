@@ -1,11 +1,11 @@
 import React, {useState} from 'react';
 import styles from './InviteUserPage.module.css';
-import Sidebar from '@/components/sidebar/Sidebar';
-import Header from '@/components/header/Header';
-import InputField from "@/components/input-field/InputField";
+import Sidebar from '@/components/layout/sidebar/Sidebar';
+import Header from '@/components/layout/header/Header';
+import InputField from "@/components/ui/input-field/InputField";
 import Arrow from '@/assets/img/arrow.svg';
 import { useNavigate } from 'react-router-dom';
-import UserCard from "@/components/user-card/UserCard";
+import UserCard from "@/components/user/user-card/UserCard";
 import {AppRoute} from "@/utils/const";
 
 const participants = Array(8).fill({
