@@ -14,16 +14,36 @@ interface Props {
     onClick?: () => void;
     eventId: string;
     userId: string;
+    isOrganizer?: boolean;
 }
 
-const UserCard: React.FC<Props> = (props,) => {
+const UserCard: React.FC<Props> = (props) => {
     switch (props.variant) {
         case 'contact':
-            return <ContactUserCard name={props.name} role={props.role} avatarUrl={props.avatarUrl} />;
+            return (
+                <ContactUserCard name={props.name} role={props.role} avatarUrl={props.avatarUrl} />
+            );
         case 'interactive':
-            return <InteractiveUserCard name={props.name} role={props.role} avatarUrl={props.avatarUrl} eventId={props.eventId} userId={props.userId} onClick={props.onClick}/>;
+            return (
+                <InteractiveUserCard
+                    name={props.name}
+                    role={props.role}
+                    avatarUrl={props.avatarUrl}
+                    eventId={props.eventId}
+                    userId={props.userId}
+                    onClick={props.onClick}
+                    isOrganizer={props.isOrganizer}
+                />
+            );
         case 'checkboxOnly':
-            return <CheckboxOnlyUserCard name={props.name} checked={props.checked} onToggle={props.onToggle} avatarUrl={props.avatarUrl} />;
+            return (
+                <CheckboxOnlyUserCard
+                    name={props.name}
+                    checked={props.checked}
+                    onToggle={props.onToggle}
+                    avatarUrl={props.avatarUrl}
+                />
+            );
         default:
             return null;
     }

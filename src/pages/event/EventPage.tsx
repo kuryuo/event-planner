@@ -4,7 +4,7 @@ import { useGetEventByIdQuery } from '@/services/api/event/eventApi';
 import styles from './EventPage.module.css';
 
 import Sidebar from '@/components/layout/sidebar/Sidebar';
-import ErrorToast from "@/components/ui/notification/ErrorToast";
+import ErrorToast from '@/components/ui/notification/ErrorToast';
 import Header from '@/components/layout/header/Header';
 import EventTag from '@/components/ui/event-tag/EventTag';
 import EventDescription from '@/components/ui/event-description/EventDescription';
@@ -17,10 +17,7 @@ import ContactsBlock from '@/components/event/event-contacts/EventContacts';
 import Button from '@/components/ui/button/Button';
 import Modal from '@/components/ui/modal/Modal';
 import { getEditEventLink } from '@/utils/navigation';
-import {
-    useUploadEventPhotos,
-    useEventSubscriptionStatus
-} from '@/hooks';
+import { useUploadEventPhotos, useEventSubscriptionStatus } from '@/hooks';
 
 const EventPage: React.FC = () => {
     const navigate = useNavigate();
@@ -31,12 +28,8 @@ const EventPage: React.FC = () => {
 
     const { data: event, error, isLoading } = useGetEventByIdQuery(eventId || '');
 
-    const {
-        isSubscribersLoading,
-        isSubscribersError,
-        isSubscribed,
-        handleToggleSubscription,
-    } = useEventSubscriptionStatus(eventId);
+    const { isSubscribersLoading, isSubscribersError, isSubscribed, handleToggleSubscription } =
+        useEventSubscriptionStatus(eventId);
 
     const isOrganizer = new URLSearchParams(search).get('mode') === 'organizer';
 
@@ -120,8 +113,12 @@ const EventPage: React.FC = () => {
 
                         <EventDetails event={event!} />
 
-                        <EventSubscribersPreview eventId={eventId || ''} eventTitle={event?.name || ''} responsiblePersonId={event?.responsiblePersonId || ''}/>
-                        <ContactsBlock />
+                        <EventSubscribersPreview
+                            eventId={eventId || ''}
+                            eventTitle={event?.name || ''}
+                            responsiblePersonId={event?.responsiblePersonId || ''}
+                        />
+                        <ContactsBlock eventId={eventId || ''} />
 
                         <Modal
                             isOpen={isFinishModalOpen}

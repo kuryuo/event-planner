@@ -4,7 +4,7 @@ import { API_BASE_PATH } from '@/utils/const';
 
 export const baseApi = createApi({
     reducerPath: 'api',
-    tagTypes: ['Profile', 'Events', 'Subscribers', 'Photos', 'EventPosts', 'Invites', 'Notifications'],
+    tagTypes: ['Profile', 'Events', 'Subscribers', 'Photos', 'EventPosts', 'Invites', 'Notifications', 'Contacts'],
     baseQuery: fetchBaseQuery({
         baseUrl: API_BASE_PATH,
         prepareHeaders: (headers) => {

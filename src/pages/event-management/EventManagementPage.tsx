@@ -11,7 +11,7 @@ import Modal from '@/components/ui/modal/Modal';
 import Button from '@/components/ui/button/Button';
 
 import { useEventManagement } from '@/hooks';
-import ErrorToast from "@/components/ui/notification/ErrorToast";
+import ErrorToast from '@/components/ui/notification/ErrorToast';
 
 interface Props {
     isEditMode?: boolean;

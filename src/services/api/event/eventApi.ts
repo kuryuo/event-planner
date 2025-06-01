@@ -44,7 +44,10 @@ export const eventApi = baseApi.injectEndpoints({
         /**
          * Обновить ивент по ID
          */
-        updateEvent: builder.mutation<Event, { eventId: string; body: Partial<CreateEventRequest> }>({
+        updateEvent: builder.mutation<
+            Event,
+            { eventId: string; body: Partial<CreateEventRequest> }
+        >({
             query: ({ eventId, body }) => ({
                 url: 'events',
                 method: 'PUT',
@@ -91,7 +94,10 @@ export const eventApi = baseApi.injectEndpoints({
         /**
          * Добавить пользователя к ивенту с ролью (необязательной)
          */
-        addUserToEvent: builder.mutation<void, { eventId: string; userId: string; roleName?: string }>({
+        addUserToEvent: builder.mutation<
+            void,
+            { eventId: string; userId: string; roleName?: string }
+        >({
             query: ({ eventId, userId, roleName }) => ({
                 url: `events/${eventId}/${userId}`,
                 method: 'POST',
@@ -133,6 +139,7 @@ export const eventApi = baseApi.injectEndpoints({
                 method: 'POST',
                 params: { eventId, userId },
             }),
+            invalidatesTags: ['Contacts'],
         }),
 
         /**
@@ -140,6 +147,8 @@ export const eventApi = baseApi.injectEndpoints({
          */
         getEventContacts: builder.query<ProfileResponse[], string>({
             query: (eventId) => `events/${eventId}/contacts`,
+            transformResponse: (response: { result: ProfileResponse[] }) => response.result,
+            providesTags: ['Contacts'],
         }),
 
         /**

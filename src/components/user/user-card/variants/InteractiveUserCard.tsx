@@ -4,6 +4,7 @@ import moreIcon from '@/assets/img/more.svg';
 import Modal from '@/components/ui/modal/Modal';
 import { useClickOutside } from '@/hooks';
 import UserAvatar from '@/components/user/user-avatar/UserAvatar';
+import { useContactActions } from '@/hooks/event/useAddContactToEvent';
 
 interface Props {
     name: string;
@@ -11,19 +12,30 @@ interface Props {
     avatarUrl?: string;
     eventId: string;
     userId: string;
+    isOrganizer?: boolean;
     onClick?: () => void;
 }
 
-const InteractiveUserCard: React.FC<Props> = ({ name, role, avatarUrl, onClick }) => {
+const InteractiveUserCard: React.FC<Props> = ({
+    name,
+    role,
+    avatarUrl,
+    eventId,
+    userId,
+    onClick,
+    isOrganizer,
+}) => {
     const [menuOpen, setMenuOpen] = useState(false);
     const [showExcludeModal, setShowExcludeModal] = useState(false);
-
     const menuRef = useRef<HTMLDivElement | null>(null);
+
     useClickOutside(menuRef, () => menuOpen && setMenuOpen(false));
 
-    const handleConfirmExclude = () => {
-        setShowExcludeModal(false);
-        // исключение
+    const { addContact, isLoading } = useContactActions();
+
+    const handleAddContact = async () => {
+        await addContact({ eventId, userId });
+        setMenuOpen(false);
     };
 
     return (
@@ -32,49 +44,59 @@ const InteractiveUserCard: React.FC<Props> = ({ name, role, avatarUrl, onClick }
             <div className={styles.infoBlock}>
                 <div className={styles.headerWithMenu}>
                     <p className={styles.name}>{name}</p>
-                    <img
-                        src={moreIcon}
-                        alt="Меню"
-                        className={styles.menu}
-                        onClick={() => setMenuOpen((prev) => !prev)}
-                    />
+                    {isOrganizer && (
+                        <>
+                            <img
+                                src={moreIcon}
+                                alt="Меню"
+                                className={styles.menu}
+                                onClick={() => setMenuOpen((prev) => !prev)}
+                            />
 
-                    {menuOpen && (
-                        <div className={styles.menuDropdown} ref={menuRef}>
-                            <button
-                                className={styles.excludeButton}
-                                onClick={() => {
-                                    setShowExcludeModal(true);
-                                    setMenuOpen(false);
-                                }}
-                            >
-                                Исключить
-                            </button>
-                            <button
-                                className={styles.excludeButton}
-                                onClick={() => {
-                                    onClick?.();
-                                    setMenuOpen(false);
-                                }}
-                            >
-                                Изменить роль
-                            </button>
-                        </div>
+                            {menuOpen && (
+                                <div className={styles.menuDropdown} ref={menuRef}>
+                                    <button
+                                        className={styles.excludeButton}
+                                        onClick={handleAddContact}
+                                        disabled={isLoading}
+                                    >
+                                        Добавить в контакты
+                                    </button>
+
+                                    <button
+                                        className={styles.excludeButton}
+                                        onClick={() => {
+                                            onClick?.();
+                                            setMenuOpen(false);
+                                        }}
+                                    >
+                                        Изменить роль
+                                    </button>
+
+                                    <button
+                                        className={styles.excludeButton}
+                                        onClick={() => {
+                                            setShowExcludeModal(true);
+                                            setMenuOpen(false);
+                                        }}
+                                    >
+                                        Исключить
+                                    </button>
+                                </div>
+                            )}
+                        </>
                     )}
                 </div>
 
                 {role && <p className={styles.role}>{role}</p>}
-
-                <label className={styles.checkboxRow}>
-                    <input type="checkbox" className={styles.checkbox} />
-                    <span className={styles.label}>Добавить в блок "Контакты"</span>
-                </label>
             </div>
 
             <Modal
                 isOpen={showExcludeModal}
                 onClose={() => setShowExcludeModal(false)}
-                onConfirm={handleConfirmExclude}
+                onConfirm={() => {
+                    setShowExcludeModal(false);
+                }}
                 title="Подтверждение исключения"
                 description={`Вы уверены, что хотите исключить ${name} с мероприятия “Масленница 2025”?`}
                 primaryText="Исключить"
