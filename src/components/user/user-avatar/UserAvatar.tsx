@@ -1,6 +1,6 @@
 import React from 'react';
 import { getAvatarUrl } from '@/utils/getAvatarUrl';
-import avatarPlaceholder from '@/assets/img/avatar.svg';
+import avatar from '@/assets/img/avatar.svg';
 import styles from './UserAvatar.module.css';
 
 type Props = {
@@ -18,7 +18,7 @@ const UserAvatar: React.FC<Props> = ({ avatarUrl, alt = 'Аватар', classNam
             className={className || styles.avatar}
             onClick={onClick}
             onError={(e) => {
-                (e.target as HTMLImageElement).src = avatarPlaceholder;
+                (e.target as HTMLImageElement).src = avatar;
             }}
         />
     );

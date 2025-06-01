@@ -1,33 +1,32 @@
 import React from 'react';
 import styles from './UserRoleFilter.module.css';
-import InputField from '@/components/ui/input-field/InputField';
 
 export interface UserRoleFilterProps {
     roles: string[];
-    searchValue: string;
-    onSearchChange: (v: string) => void;
+    selectedRoles: string[];
+    onChange: (roles: string[]) => void;
 }
 
-const UserRoleFilter: React.FC<UserRoleFilterProps> = ({
-                                                           roles,
-                                                           searchValue,
-                                                           onSearchChange,
-                                                       }) => {
+const UserRoleFilter: React.FC<UserRoleFilterProps> = ({ roles, selectedRoles, onChange }) => {
+    const toggleRole = (role: string) => {
+        if (selectedRoles.includes(role)) {
+            onChange(selectedRoles.filter((r) => r !== role));
+        } else {
+            onChange([...selectedRoles, role]);
+        }
+    };
+
     return (
         <div className={styles.root}>
             <p className={styles.title}>Роль в проекте</p>
-            <InputField
-                icon="search"
-                placeholder="Поиск"
-                value={searchValue}
-                onChange={onSearchChange}
-                size="small"
-            />
-
             <div className={styles.checkboxList}>
                 {roles.map((role, index) => (
                     <label key={index} className={styles.checkboxRow}>
-                        <input type="checkbox" />
+                        <input
+                            type="checkbox"
+                            checked={selectedRoles.includes(role)}
+                            onChange={() => toggleRole(role)}
+                        />
                         <span className={styles.role}>{role}</span>
                     </label>
                 ))}

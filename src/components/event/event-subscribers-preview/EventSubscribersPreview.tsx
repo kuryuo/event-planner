@@ -8,14 +8,15 @@ import UserAvatar from '@/components/user/user-avatar/UserAvatar';
 type Props = {
     eventId: string;
     eventTitle: string;
+    responsiblePersonId: string;
 };
 
-const EventSubscribersPreview: React.FC<Props> = ({ eventId, eventTitle }) => {
+const EventSubscribersPreview: React.FC<Props> = ({ eventId, eventTitle, responsiblePersonId  }) => {
     const navigate = useNavigate();
     const { subscribers, isLoading, isError } = useEventSubscribers(eventId);
 
     const handleClick = () => {
-        navigate(AppRoute.SUBSCRIBERS, { state: { eventId, eventTitle, } });
+        navigate(AppRoute.SUBSCRIBERS, { state: { eventId, eventTitle, responsiblePersonId, } });
     };
 
     if (isError) return null;

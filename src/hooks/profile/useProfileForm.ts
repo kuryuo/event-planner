@@ -50,12 +50,12 @@ export const useProfileForm = () => {
 
     useEffect(() => {
         if (!isLoading && data) {
+            console.log('[PROFILE FORM] full profile data:', data); // добавь это
+
             const id = data.id;
             const firstName = data.firstName || '';
             const lastName = data.lastName || '';
-            const avatarUrl = data.avatarUrl
-                ? `http://95.82.231.190:5002${data.avatarUrl}`
-                : undefined;
+            const avatarUrl = data.avatarUrl || undefined;
             console.log('[PROFILE FORM] avatarUrl:', avatarUrl);
 
             const isSame =

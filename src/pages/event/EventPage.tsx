@@ -120,7 +120,7 @@ const EventPage: React.FC = () => {
 
                         <EventDetails event={event!} />
 
-                        <EventSubscribersPreview eventId={eventId || ''} eventTitle={event?.name || ''}/>
+                        <EventSubscribersPreview eventId={eventId || ''} eventTitle={event?.name || ''} responsiblePersonId={event?.responsiblePersonId || ''}/>
                         <ContactsBlock />
 
                         <Modal
