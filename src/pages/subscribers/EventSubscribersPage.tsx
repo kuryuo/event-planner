@@ -11,6 +11,9 @@ import Arrow from '@/assets/img/arrow.svg';
 import { AppRoute } from '@/utils/const';
 import { getEventLink } from '@/utils/navigation';
 import { useCurrentProfile, useEventSubscribers } from '@/hooks';
+import { useEventRoles } from '@/hooks/roles/useEventRoles';
+import { useChangeRoleModal } from '@/hooks/roles/useChangeRoleModal';
+import ChangeRoleModal from '@/components/user/user-card/change-role-modal/ChangeRoleModal';
 
 const EventSubscribersPage: React.FC = () => {
     const navigate = useNavigate();
@@ -18,6 +21,15 @@ const EventSubscribersPage: React.FC = () => {
     const eventId = location.state?.eventId;
     const responsiblePersonId = location.state?.responsiblePersonId;
     const currentUserId = useCurrentProfile().id;
+    const changeRoleModal = useChangeRoleModal();
+    const eventTitle = location.state?.eventTitle || 'Подписчики события';
+    const {
+        filteredRoles,
+        searchValue: roleSearch,
+        setSearchValue: setRoleSearch,
+        isLoading: rolesLoading,
+        isError: rolesError,
+    } = useEventRoles(eventId);
 
     const [searchValue, setSearchValue] = useState('');
 
@@ -31,7 +43,7 @@ const EventSubscribersPage: React.FC = () => {
         <div className={styles.page}>
             <Sidebar />
             <div className={styles.content}>
-                <Header title="Масленница 2025" />
+                <Header title={eventTitle} />
 
                 <div className={styles.topRow}>
                     <div className={styles.tabs}>
@@ -80,14 +92,32 @@ const EventSubscribersPage: React.FC = () => {
                                             role={p.eventRole || 'Участник'}
                                             variant="interactive"
                                             avatarUrl={p.avatarUrl}
+                                            eventId={eventId}
+                                            userId={p.id}
+                                            onClick={() => changeRoleModal.open(p.id, p.eventRole)}
                                         />
                                     );
                                 })}
                         </div>
                     </div>
                     <div className={styles.filterBlock}>
-                        <UserRoleFilter />
+                        {rolesLoading && <p>Загрузка ролей...</p>}
+                        {rolesError && <p>Ошибка при загрузке ролей</p>}
+                        {!rolesLoading && !rolesError && (
+                            <UserRoleFilter
+                                roles={filteredRoles}
+                                searchValue={roleSearch}
+                                onSearchChange={setRoleSearch}
+                            />
+                        )}
                     </div>
+                    <ChangeRoleModal
+                        isOpen={changeRoleModal.isOpen}
+                        onClose={changeRoleModal.close}
+                        onConfirm={(newRole) => changeRoleModal.submit({ eventId, roleName: newRole })}
+                        eventId={eventId}
+                        currentRole={changeRoleModal.currentRole}
+                    />
                 </div>
             </div>
         </div>

@@ -55,12 +55,12 @@ export const useEventManagement = (eventId: string | undefined, isEditMode: bool
     const handleConfirmDelete = async () => {
         try {
             if (eventId) {
-                const response = await deleteEvent(eventId);
+                const { message } = await deleteEvent(eventId).unwrap();
 
                 setIsModalOpen(false);
                 setNotification({
                     type: 'success',
-                    message: response.data,
+                    message,
                 });
 
                 navigate(AppRoute.EVENT_LIST);

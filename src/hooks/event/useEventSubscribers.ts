@@ -2,14 +2,10 @@ import { useGetEventSubscribersQuery } from '@/services/api/event/eventApi';
 
 export const useEventSubscribers = (eventId?: string) => {
     const {
-        data,
+        data: subscribers = [],
         isLoading,
         isError,
-    } = useGetEventSubscribersQuery(eventId!, {
-        skip: !eventId,
-    });
-
-    const subscribers = Array.isArray(data?.res) ? data.res : [];
+    } = useGetEventSubscribersQuery(eventId!, { skip: !eventId });
 
     return {
         subscribers,

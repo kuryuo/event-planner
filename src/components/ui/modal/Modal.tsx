@@ -6,14 +6,15 @@ import Button from '@/components/ui/button/Button';
 type ModalProps = {
     isOpen: boolean;
     onClose: () => void;
-    onConfirm: () => void;
+    onConfirm?: () => void;
     title: string;
-    description: string;
-    primaryText: string;
-    secondaryText: string;
+    description?: string; // делаем необязательным
+    primaryText?: string;
+    secondaryText?: string;
     primaryType?: 'grey' | 'red' | 'border';
     secondaryType?: 'grey' | 'red' | 'border';
     buttonSize?: 'default' | 'small';
+    children?: React.ReactNode; // ✅ добавляем поддержку children
 };
 
 const Modal: React.FC<ModalProps> = ({
@@ -27,6 +28,7 @@ const Modal: React.FC<ModalProps> = ({
                                          primaryType = 'grey',
                                          secondaryType = 'border',
                                          buttonSize = 'default',
+                                         children,
                                      }) => {
     if (!isOpen) return null;
 
@@ -40,24 +42,30 @@ const Modal: React.FC<ModalProps> = ({
                     </button>
                 </div>
 
-                <p className={styles.description}>{description}</p>
+                {description && <p className={styles.description}>{description}</p>}
 
-                <div className={styles.footer}>
-                    <Button
-                        label={secondaryText}
-                        onClick={onClose}
-                        variant={secondaryType}
-                        size={buttonSize}
-                    />
-                    <Button
-                        label={primaryText}
-                        onClick={() => {
-                            onConfirm?.();
-                        }}
-                        variant={primaryType}
-                        size={buttonSize}
-                    />
-                </div>
+                {children && <div className={styles.children}>{children}</div>}
+
+                {(primaryText || secondaryText) && (
+                    <div className={styles.footer}>
+                        {secondaryText && (
+                            <Button
+                                label={secondaryText}
+                                onClick={onClose}
+                                variant={secondaryType}
+                                size={buttonSize}
+                            />
+                        )}
+                        {primaryText && (
+                            <Button
+                                label={primaryText}
+                                onClick={() => onConfirm?.()}
+                                variant={primaryType}
+                                size={buttonSize}
+                            />
+                        )}
+                    </div>
+                )}
             </div>
         </div>
     );

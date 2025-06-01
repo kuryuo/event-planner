@@ -4,7 +4,7 @@ import { Event } from '@/types';
 import EventCalendar from './EventCalendar';
 import EventModal from '@/components/event/event-modal/EventModal';
 import { EventFilters } from '@/types';
-import { useCurrentProfile, useEventFilter, useCalendar } from '@/hooks';
+import { useCurrentProfile, useCalendar } from '@/hooks';
 
 const CalendarContainer: React.FC = () => {
     const [filters, setFilters] = useState<EventFilters>({});
@@ -12,7 +12,7 @@ const CalendarContainer: React.FC = () => {
         Object.entries(filters).filter(([_, v]) => v !== undefined)
     );
 
-    const { data = { result: [] }, error, isLoading} = useGetEventsQuery({ ...cleanedFilters, count: 50 });
+    const { data = { result: [] }, error, isLoading } = useGetEventsQuery({ ...cleanedFilters, count: 50 });
 
     const currentUserId = useCurrentProfile().id;
 
@@ -26,7 +26,11 @@ const CalendarContainer: React.FC = () => {
         selectedDate,
     } = useCalendar();
 
-    const filteredEvents = useEventFilter(Array.isArray(data?.result) ? data.result : [], filters);
+    const events = Array.isArray(data?.result) ? data.result : [];
+
+    console.log('%c[ФИЛЬТРАЦИЯ С СЕРВЕРА]', 'color: green; font-weight: bold;');
+    console.log('Применённые фильтры:', cleanedFilters);
+    console.log('События от сервера:', events);
 
     if (isLoading) return <div>Loading...</div>;
     if (error) return <div>Error loading events</div>;
@@ -35,7 +39,7 @@ const CalendarContainer: React.FC = () => {
         <div>
             <EventCalendar
                 date={currentDate}
-                events={filteredEvents.map((event: Event) => ({
+                events={events.map((event: Event) => ({
                     id: event.id,
                     title: event.name,
                     start: new Date(event.startDate),

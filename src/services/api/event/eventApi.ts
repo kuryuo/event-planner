@@ -1,126 +1,199 @@
 import { baseApi } from '../baseApi';
-import { Event } from '@/types';
+import { Event, CreateEventRequest, EventFilters, ProfileResponse } from '@/types';
 
 export const eventApi = baseApi.injectEndpoints({
     endpoints: (builder) => ({
-        getEvents: builder.query<{ result: Event[] }, Record<string, any> | void>({
+        /**
+         * Получить список ивентов с фильтрами
+         */
+        getEvents: builder.query<{ result: Event[] }, EventFilters | void>({
             query: (params) => {
                 const preparedParams = {
                     ...params,
                     Count: 50,
                 };
-
                 return {
                     url: 'events',
                     method: 'GET',
                     params: preparedParams,
                 };
             },
-            providesTags: ['Events']
+            providesTags: ['Events'],
         }),
 
-        getEventById: builder.query<any, string>({
+        /**
+         * Получить ивент по ID
+         */
+        getEventById: builder.query<Event, string>({
             query: (eventId) => `events/${eventId}`,
+            transformResponse: (response: { result: Event }) => response.result,
         }),
 
-        createEvent: builder.mutation<any, any>({
+        /**
+         * Создать ивент
+         */
+        createEvent: builder.mutation<Event, CreateEventRequest>({
             query: (body) => ({
                 url: 'events',
                 method: 'POST',
                 body,
             }),
-            invalidatesTags: ['Events']
+            invalidatesTags: ['Events'],
         }),
 
-        updateEvent: builder.mutation<any, { eventId: string; body: any }>({
+        /**
+         * Обновить ивент по ID
+         */
+        updateEvent: builder.mutation<Event, { eventId: string; body: Partial<CreateEventRequest> }>({
             query: ({ eventId, body }) => ({
                 url: 'events',
                 method: 'PUT',
                 params: { eventId },
                 body,
             }),
-            invalidatesTags: ['Events']
+            invalidatesTags: ['Events'],
         }),
 
-        deleteEvent: builder.mutation<any, string>({
+        /**
+         * Удалить ивент по ID
+         */
+        deleteEvent: builder.mutation<{ message: string }, string>({
             query: (eventId) => ({
                 url: 'events',
                 method: 'DELETE',
                 params: { eventId },
             }),
-            invalidatesTags: ['Events']
+            invalidatesTags: ['Events'],
         }),
 
-        createEventById: builder.mutation<any, string>({ // подписка
+        /**
+         * Подписаться на ивент
+         */
+        createEventById: builder.mutation<void, string>({
             query: (eventId) => ({
                 url: `events/${eventId}`,
                 method: 'POST',
             }),
-            invalidatesTags: ['Subscribers']
+            invalidatesTags: ['Subscribers'],
         }),
 
-        deleteEventById: builder.mutation<any, string>({ //отписка
+        /**
+         * Отписаться от ивента
+         */
+        deleteEventById: builder.mutation<void, string>({
             query: (eventId) => ({
                 url: `events/${eventId}`,
                 method: 'DELETE',
             }),
-            invalidatesTags: ['Subscribers']
+            invalidatesTags: ['Subscribers'],
         }),
 
-        addUserToEvent: builder.mutation<any, { eventId: string; userId: string; roleId?: string }>({
-            query: ({ eventId, userId, roleId }) => ({
+        /**
+         * Добавить пользователя к ивенту с ролью (необязательной)
+         */
+        addUserToEvent: builder.mutation<void, { eventId: string; userId: string; roleName?: string }>({
+            query: ({ eventId, userId, roleName }) => ({
                 url: `events/${eventId}/${userId}`,
                 method: 'POST',
-                params: roleId ? { roleId } : undefined,
+                params: roleName ? { roleName } : undefined,
             }),
         }),
 
-        getEventRoles: builder.query<any, string>({
-            query: (eventId) => `events/roles/${eventId}`,
+        /**
+         * Получить роли пользователей на ивенте
+         */
+        getEventRoles: builder.query<string[], string>({
+            query: (eventId) => ({
+                url: `events/roles/${eventId}`,
+                method: 'GET',
+            }),
+            transformResponse: (response: { res: { name: string }[] }) =>
+                response.res.map((r) => r.name),
         }),
 
-        getEventSubscribers: builder.query<any, string>({
+        /**
+         * Получить подписчиков ивента
+         */
+        getEventSubscribers: builder.query<ProfileResponse[], string>({
             query: (eventId) => ({
                 url: 'events/subscribers',
                 method: 'GET',
                 params: { eventId },
             }),
-            providesTags: ['Subscribers']
+            transformResponse: (response: { res: ProfileResponse[] }) => response.res,
+            providesTags: ['Subscribers'],
         }),
 
+        /**
+         * Добавить пользователя как контактное лицо ивента
+         */
+        addContactToEvent: builder.mutation<void, { eventId: string; userId: string }>({
+            query: ({ eventId, userId }) => ({
+                url: 'events/contact',
+                method: 'POST',
+                params: { eventId, userId },
+            }),
+        }),
+
+        /**
+         * Получить список контактных лиц ивента
+         */
+        getEventContacts: builder.query<ProfileResponse[], string>({
+            query: (eventId) => `events/${eventId}/contacts`,
+        }),
+
+        /**
+         * Поиск пользователей по имени (для выбора контакта или роли)
+         */
+        getEventUsers: builder.query<ProfileResponse[], string>({
+            query: (userName) => ({
+                url: 'events/users',
+                method: 'GET',
+                params: { userName },
+            }),
+        }),
+
+        /**
+         * Получить список фото, загруженных к ивенту
+         */
         getEventPhotos: builder.query<{ result: string[] }, string>({
             query: (eventId) => `events/${eventId}/photos`,
-            providesTags: ['Photos']
+            providesTags: ['Photos'],
         }),
 
-        uploadEventPhoto: builder.mutation<any, { eventId: string; file: File }>({
+        /**
+         * Загрузить фото для ивента
+         */
+        uploadEventPhoto: builder.mutation<void, { eventId: string; file: File }>({
             query: ({ eventId, file }) => {
                 const formData = new FormData();
                 formData.append('file', file);
-
                 return {
                     url: `events/${eventId}/photos`,
                     method: 'POST',
                     body: formData,
                 };
             },
-            invalidatesTags: ['Photos']
+            invalidatesTags: ['Photos'],
         }),
     }),
     overrideExisting: false,
 });
 
 export const {
-    useGetEventsQuery, //список ивентов
-    useGetEventByIdQuery, //найти ивент по id ивент
-    useCreateEventMutation, //создать ивент
-    useUpdateEventMutation, //обновить ивент
-    useDeleteEventMutation, //удалить ивент
-    useCreateEventByIdMutation, //подписка
-    useDeleteEventByIdMutation, //отписка
-    useAddUserToEventMutation, //задать роль
-    useGetEventRolesQuery, //роли на ивенте
-    useGetEventSubscribersQuery, //список подписчиков
-    useGetEventPhotosQuery, //фотки
-    useUploadEventPhotoMutation, //загрузить фотки
+    useGetEventsQuery,
+    useGetEventByIdQuery,
+    useCreateEventMutation,
+    useUpdateEventMutation,
+    useDeleteEventMutation,
+    useCreateEventByIdMutation,
+    useDeleteEventByIdMutation,
+    useAddUserToEventMutation, //?????????????
+    useGetEventRolesQuery,
+    useGetEventSubscribersQuery,
+    useAddContactToEventMutation,
+    useGetEventContactsQuery,
+    useGetEventUsersQuery,
+    useGetEventPhotosQuery,
+    useUploadEventPhotoMutation,
 } = eventApi;

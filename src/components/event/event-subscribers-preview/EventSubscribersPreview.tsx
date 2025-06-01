@@ -7,14 +7,15 @@ import UserAvatar from '@/components/user/user-avatar/UserAvatar';
 
 type Props = {
     eventId: string;
+    eventTitle: string;
 };
 
-const EventSubscribersPreview: React.FC<Props> = ({ eventId }) => {
+const EventSubscribersPreview: React.FC<Props> = ({ eventId, eventTitle }) => {
     const navigate = useNavigate();
     const { subscribers, isLoading, isError } = useEventSubscribers(eventId);
 
     const handleClick = () => {
-        navigate(AppRoute.SUBSCRIBERS, { state: { eventId } });
+        navigate(AppRoute.SUBSCRIBERS, { state: { eventId, eventTitle, } });
     };
 
     if (isError) return null;

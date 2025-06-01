@@ -1,19 +1,18 @@
-import React, {useState} from 'react';
+import React from 'react';
 import styles from './UserRoleFilter.module.css';
 import InputField from '@/components/ui/input-field/InputField';
 
-const roles = [
-    'Роль 1',
-    'Роль 2',
-    'Роль 3',
-    'Роль 4',
-    'Роль 5',
-    'Роль 6',
-];
+export interface UserRoleFilterProps {
+    roles: string[];
+    searchValue: string;
+    onSearchChange: (v: string) => void;
+}
 
-const UserRoleFilter: React.FC = () => {
-    const [searchValue, setSearchValue] = useState('');
-
+const UserRoleFilter: React.FC<UserRoleFilterProps> = ({
+                                                           roles,
+                                                           searchValue,
+                                                           onSearchChange,
+                                                       }) => {
     return (
         <div className={styles.root}>
             <p className={styles.title}>Роль в проекте</p>
@@ -21,7 +20,7 @@ const UserRoleFilter: React.FC = () => {
                 icon="search"
                 placeholder="Поиск"
                 value={searchValue}
-                onChange={setSearchValue}
+                onChange={onSearchChange}
                 size="small"
             />
 

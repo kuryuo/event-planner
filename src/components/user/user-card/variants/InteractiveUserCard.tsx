@@ -9,20 +9,21 @@ interface Props {
     name: string;
     role?: string;
     avatarUrl?: string;
+    eventId: string;
+    userId: string;
+    onClick?: () => void;
 }
 
-const InteractiveUserCard: React.FC<Props> = ({ name, role, avatarUrl }) => {
+const InteractiveUserCard: React.FC<Props> = ({ name, role, avatarUrl, onClick }) => {
     const [menuOpen, setMenuOpen] = useState(false);
-    const [showModal, setShowModal] = useState(false);
+    const [showExcludeModal, setShowExcludeModal] = useState(false);
 
     const menuRef = useRef<HTMLDivElement | null>(null);
-
-    useClickOutside(menuRef, () => {
-        if (menuOpen) setMenuOpen(false);
-    });
+    useClickOutside(menuRef, () => menuOpen && setMenuOpen(false));
 
     const handleConfirmExclude = () => {
-        setShowModal(false);
+        setShowExcludeModal(false);
+        // исключение
     };
 
     return (
@@ -43,11 +44,20 @@ const InteractiveUserCard: React.FC<Props> = ({ name, role, avatarUrl }) => {
                             <button
                                 className={styles.excludeButton}
                                 onClick={() => {
-                                    setShowModal(true);
+                                    setShowExcludeModal(true);
                                     setMenuOpen(false);
                                 }}
                             >
                                 Исключить
+                            </button>
+                            <button
+                                className={styles.excludeButton}
+                                onClick={() => {
+                                    onClick?.();
+                                    setMenuOpen(false);
+                                }}
+                            >
+                                Изменить роль
                             </button>
                         </div>
                     )}
@@ -62,8 +72,8 @@ const InteractiveUserCard: React.FC<Props> = ({ name, role, avatarUrl }) => {
             </div>
 
             <Modal
-                isOpen={showModal}
-                onClose={() => setShowModal(false)}
+                isOpen={showExcludeModal}
+                onClose={() => setShowExcludeModal(false)}
                 onConfirm={handleConfirmExclude}
                 title="Подтверждение исключения"
                 description={`Вы уверены, что хотите исключить ${name} с мероприятия “Масленница 2025”?`}

@@ -29,9 +29,7 @@ const EventPage: React.FC = () => {
     const { eventId } = useParams<{ eventId: string }>();
     const { search } = useLocation();
 
-    const { data, error, isLoading } = useGetEventByIdQuery(eventId || '');
-
-    const event = data?.result;
+    const { data: event, error, isLoading } = useGetEventByIdQuery(eventId || '');
 
     const {
         isSubscribersLoading,
@@ -84,7 +82,7 @@ const EventPage: React.FC = () => {
                         <div className={styles.galleryContainer}>
                             <EventPhotosPreview
                                 eventId={eventId || ''}
-                                responsiblePersonId={event?.responsiblePersonId}
+                                responsiblePersonId={event!.responsiblePersonId}
                                 eventTitle={event?.name || ''}
                             />
 
@@ -120,9 +118,9 @@ const EventPage: React.FC = () => {
                             onEdit={handleEditEvent}
                         />
 
-                        <EventDetails event={event} />
+                        <EventDetails event={event!} />
 
-                        <EventSubscribersPreview eventId={eventId || ''} />
+                        <EventSubscribersPreview eventId={eventId || ''} eventTitle={event?.name || ''}/>
                         <ContactsBlock />
 
                         <Modal

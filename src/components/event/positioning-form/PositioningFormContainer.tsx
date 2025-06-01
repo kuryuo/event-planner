@@ -47,6 +47,11 @@ const PositioningFormContainer: React.FC<Props> = ({ onChange, initialValues }) 
             setRoles(initialValues.roles || []);
             setMaxEnabled(!!initialValues.maxParticipants);
             setMaxParticipants(initialValues.maxParticipants || 250);
+        } else {
+            setCategories([]);
+            setRoles([]);
+            setMaxEnabled(false);
+            setMaxParticipants(250);
         }
     }, [initialValues]);
 

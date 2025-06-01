@@ -2,7 +2,6 @@ export * from './auth/useAuth';
 
 export * from './calendar/useCalendar';
 
-export * from './event/useEventFilter';
 export * from './event/useEventManagement';
 export * from './event/useEventPhotos';
 export * from './event/useEventSubscribers';

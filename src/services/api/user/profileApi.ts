@@ -3,13 +3,20 @@ import { ProfileResponse, UpdateProfileRequest } from '@/types';
 
 export const profileApi = baseApi.injectEndpoints({
     endpoints: (builder) => ({
+        /**
+         * Получить текущий профиль пользователя
+         */
         getProfile: builder.query<ProfileResponse, void>({
             query: () => ({
                 url: 'profile',
                 method: 'GET',
             }),
-            providesTags: ['Profile']
+            providesTags: ['Profile'],
         }),
+
+        /**
+         * Обновить данные профиля пользователя (включая фото)
+         */
         updateProfile: builder.mutation<ProfileResponse, UpdateProfileRequest>({
             query: (body) => {
                 const formData = new FormData();
@@ -31,7 +38,7 @@ export const profileApi = baseApi.injectEndpoints({
                     body: formData,
                 };
             },
-            invalidatesTags: ['Profile']
+            invalidatesTags: ['Profile'],
         }),
     }),
     overrideExisting: false,
