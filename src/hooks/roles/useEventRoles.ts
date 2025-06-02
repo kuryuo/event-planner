@@ -12,9 +12,11 @@ export const useEventRoles = (eventId?: string) => {
     const [searchValue, setSearchValue] = useState('');
 
     const filteredRoles = useMemo(() => {
-        return roles.filter((role) =>
-            role.toLowerCase().includes(searchValue.toLowerCase())
-        );
+        return roles
+            .filter((role) => role !== 'Организатор')
+            .filter((role) =>
+                role.toLowerCase().includes(searchValue.toLowerCase())
+            );
     }, [roles, searchValue]);
 
     return {
