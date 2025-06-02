@@ -56,3 +56,11 @@
     border: 1px solid var(--light-grey);
     color: var(--grey)
 }
+
+.actions {
+    display: flex;
+    justify-content: flex-end;
+    padding: 20px;
+    border-top: 1px solid #eee;
+    background-color: #fff;
+}

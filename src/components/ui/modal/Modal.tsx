@@ -7,20 +7,22 @@ type ModalProps = {
     isOpen: boolean;
     onClose: () => void;
     onConfirm?: () => void;
+    onSecondary?: () => void;
     title: string;
-    description?: string; // делаем необязательным
+    description?: string;
     primaryText?: string;
     secondaryText?: string;
     primaryType?: 'grey' | 'red' | 'border';
     secondaryType?: 'grey' | 'red' | 'border';
     buttonSize?: 'default' | 'small';
-    children?: React.ReactNode; // ✅ добавляем поддержку children
+    children?: React.ReactNode;
 };
 
 const Modal: React.FC<ModalProps> = ({
                                          isOpen,
                                          onClose,
                                          onConfirm,
+                                         onSecondary,
                                          title,
                                          description,
                                          primaryText,
@@ -51,7 +53,7 @@ const Modal: React.FC<ModalProps> = ({
                         {secondaryText && (
                             <Button
                                 label={secondaryText}
-                                onClick={onClose}
+                                onClick={onSecondary || onClose}
                                 variant={secondaryType}
                                 size={buttonSize}
                             />

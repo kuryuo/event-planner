@@ -20,7 +20,7 @@ export const useFilteredSubscribers = ({
 
             const matchesRole =
                 selectedRoles.length === 0 ||
-                (user.eventRoleName !== undefined && selectedRoles.includes(user.eventRoleName));
+                (user.role !== undefined && selectedRoles.includes(user.role));
 
             return matchesName && matchesRole;
         });

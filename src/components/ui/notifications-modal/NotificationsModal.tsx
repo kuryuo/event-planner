@@ -1,48 +1,27 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import styles from './NotificationsModal.module.css';
 import CloseIcon from '@/assets/img/close.svg?react';
-import avatar from '@/assets/img/avatar.svg';
-
-type Notification = {
-    id: number;
-    title: string;
-    message: string;
-    avatar?: string;
-};
-
+import { useInviteNotifications } from '@/hooks/notifications/useInviteNotifications';
+import InviteModal from '@/components/event/invite-modal/InviteModal';
+import { Invite } from '@/types/invite';
+import { useMarkNotification } from '@/hooks/notifications/useMarkNotificationAsRead';
 type Props = {
     onClose: () => void;
 };
 
-const notifications: Notification[] = [
-    {
-        id: 1,
-        title: 'Иванов И.И.',
-        message: 'Новое сообщение в чате “Работа”',
-        avatar,
-    },
-    {
-        id: 2,
-        title: 'Системное уведомление',
-        message: 'Вы поменяли пароль от аккаунта',
-        avatar,
-    },
-    {
-        id: 3,
-        title: 'Системное уведомление',
-        message: 'Новое мероприятие',
-        avatar,
-    },
-    {
-        id: 4,
-        title: 'Иванов И.И.',
-        message: 'Новое сообщение',
-        avatar,
-    },
-];
-
 const NotificationsModal: React.FC<Props> = ({ onClose }) => {
     const ref = useRef<HTMLDivElement>(null);
+    const { invites, isLoading, isError } = useInviteNotifications();
+    const { markNotificationAsRead, markAllNotificationsAsRead } = useMarkNotification();
+
+    const [selectedInvite, setSelectedInvite] = useState<Invite | null>(null);
+    const [isInviteModalOpen, setInviteModalOpen] = useState(false);
+
+    const handleOpenInvite = async (invite: Invite) => {
+        await markNotificationAsRead(invite.id);
+        setSelectedInvite(invite);
+        setInviteModalOpen(true);
+    };
 
     return (
         <div className={styles.overlay}>
@@ -55,17 +34,40 @@ const NotificationsModal: React.FC<Props> = ({ onClose }) => {
                 </div>
 
                 <div className={styles.content}>
-                    {notifications.map((n) => (
-                        <div key={n.id} className={styles.item}>
-                            <img src={n.avatar} alt="" className={styles.avatar} />
-                            <div>
-                                <div className={styles.title}>{n.title}</div>
-                                <div className={styles.message}>{n.message}</div>
+                    {isLoading && <p>Загрузка...</p>}
+                    {isError && <p>Ошибка загрузки уведомлений</p>}
+                    {!isLoading &&
+                        invites.map((invite) => (
+                            <div
+                                key={invite.id}
+                                className={`${styles.item} ${invite.isRead ? styles.read : ''}`}
+                                onClick={() => handleOpenInvite(invite)}
+                            >
+                                <img src={invite.avatar} alt="" className={styles.avatar} />
+                                <div>
+                                    <div className={styles.title}>{invite.inviterUsername}</div>
+                                    <div className={styles.message}>
+                                        Приглашение в "{invite.communityName}"
+                                    </div>
+                                </div>
                             </div>
+                        ))}
+
+                    {!isLoading && invites.length > 0 && (
+                        <div className={styles.readAll} onClick={markAllNotificationsAsRead}>
+                            Прочитать все
                         </div>
-                    ))}
+                    )}
                 </div>
             </div>
+
+            {selectedInvite && (
+                <InviteModal
+                    isOpen={isInviteModalOpen}
+                    onClose={() => setInviteModalOpen(false)}
+                    invite={selectedInvite}
+                />
+            )}
         </div>
     );
 };

@@ -1,0 +1,12 @@
+.emptyState {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    min-height: 300px;
+    font-size: 40px;
+    font-weight: 500;
+    color: var(--grey);
+    text-align: center;
+    padding: 20px;
+}

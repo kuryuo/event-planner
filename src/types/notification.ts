@@ -1,7 +1,8 @@
 export interface Notification {
     id: string;
-    message: string;
-    createdAt: string;
+    userId: string;
+    type: 'Invite' | string;
+    payload: string;
     isRead: boolean;
-    type?: string;
+    createdAt: string;
 }

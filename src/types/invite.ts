@@ -1,10 +1,11 @@
 export interface Invite {
     id: string;
+    inviteId: string;
     eventId: string;
-    invitedId: string;
-    invitedName: string;
-    status: 'PENDING' | 'ACCEPTED' | 'DECLINED';
-    createdAt: string;
+    inviterUsername: string;
+    communityName: string;
+    avatar: string;
+    isRead: boolean;
 }
 
 export interface SendInviteRequest {

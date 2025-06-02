@@ -5,6 +5,7 @@ import NotificationsModal from '@/components/ui/notifications-modal/Notification
 import ProfileModalContainer from '@/components/user/profile-modal/ProfileModalContainer';
 import { useClickOutside, useCurrentProfile } from '@/hooks';
 import UserAvatar from '@/components/user/user-avatar/UserAvatar';
+import { useInviteNotifications } from '@/hooks/notifications/useInviteNotifications';
 
 type HeaderProps = {
     title: string;
@@ -16,6 +17,7 @@ const Header: React.FC<HeaderProps> = ({ title }) => {
     const { avatarUrl } = useCurrentProfile();
     const notificationRef = useRef<HTMLDivElement>(null);
     const profileRef = useRef<HTMLDivElement>(null);
+    const { hasUnread } = useInviteNotifications();
 
     useClickOutside(notificationRef, () => showModal && setShowModal(false));
     useClickOutside(profileRef, () => showProfile && setShowProfile(false));
@@ -24,13 +26,14 @@ const Header: React.FC<HeaderProps> = ({ title }) => {
         <header className={styles.header}>
             <h1 className={styles.title}>{title}</h1>
             <div className={styles.right}>
-                <div ref={notificationRef}>
+                <div className={styles.notificationWrapper} ref={notificationRef}>
                     <img
                         src={notificationIcon}
                         alt="Уведомления"
                         className={styles.icon}
                         onClick={() => setShowModal(true)}
                     />
+                    {hasUnread && <span className={styles.indicator} />}
                     {showModal && <NotificationsModal onClose={() => setShowModal(false)} />}
                 </div>
 

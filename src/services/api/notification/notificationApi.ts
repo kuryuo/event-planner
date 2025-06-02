@@ -11,6 +11,7 @@ export const notificationApi = baseApi.injectEndpoints({
                 url: 'notifications',
                 method: 'GET',
             }),
+            transformResponse: (response: { result: Notification[] }) => response.result,
             providesTags: ['Notifications'],
         }),
 

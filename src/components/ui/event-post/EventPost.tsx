@@ -1,6 +1,7 @@
 import React from 'react';
 import styles from './EventPost.module.css';
 import cat from '@/assets/img/cat.png';
+import More from '@/assets/img/more.svg?react';
 
 const EventPost: React.FC = () => {
     const notifications = [
@@ -14,15 +15,15 @@ const EventPost: React.FC = () => {
 
     return (
         <div className={styles.notifications}>
-            <h4 className={styles.title}>Уведомления</h4>
+            <h4 className={styles.title}>Посты</h4>
             <ul className={styles.list}>
                 {notifications.map((n, index) => (
                     <li key={index} className={styles.item}>
+                        <More className={styles.more} />
                         <img src={cat} alt="Иконка" className={styles.icon} />
                         <div className={styles.content}>
                             <div className={styles.nameRow}>
                                 <span className={styles.name}>{n.title}</span>
-                                {/*<span className={styles.year}>{n.year}</span>*/}
                             </div>
                             <p className={styles.text}>{n.message}</p>
                         </div>

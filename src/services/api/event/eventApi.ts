@@ -27,6 +27,7 @@ export const eventApi = baseApi.injectEndpoints({
         getEventById: builder.query<Event, string>({
             query: (eventId) => `events/${eventId}`,
             transformResponse: (response: { result: Event }) => response.result,
+            providesTags: ['Events'],
         }),
 
         /**
@@ -103,6 +104,7 @@ export const eventApi = baseApi.injectEndpoints({
                 method: 'POST',
                 params: roleName ? { roleName } : undefined,
             }),
+            invalidatesTags: ['Subscribers'],
         }),
 
         /**
@@ -115,6 +117,7 @@ export const eventApi = baseApi.injectEndpoints({
             }),
             transformResponse: (response: { res: { name: string }[] }) =>
                 response.res.map((r) => r.name),
+            providesTags: ['Events'],
         }),
 
         /**
@@ -160,6 +163,7 @@ export const eventApi = baseApi.injectEndpoints({
                 method: 'GET',
                 params: { userName },
             }),
+            transformResponse: (response: { result: ProfileResponse[] }) => response.result,
         }),
 
         /**
@@ -197,7 +201,7 @@ export const {
     useDeleteEventMutation,
     useCreateEventByIdMutation,
     useDeleteEventByIdMutation,
-    useAddUserToEventMutation, //?????????????
+    useAddUserToEventMutation,
     useGetEventRolesQuery,
     useGetEventSubscribersQuery,
     useAddContactToEventMutation,

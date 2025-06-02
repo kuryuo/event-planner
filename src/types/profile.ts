@@ -10,11 +10,9 @@ export interface BaseProfile {
 export interface ProfileResponse extends Partial<BaseProfile> {
     id: string;
     avatarUrl?: string;
-    photoUrl?: string;
-    eventRoleName?: string;
+    role?: string;
     name: string;
     email?: string;
-    role?: string;
 }
 
 export interface UpdateProfileRequest extends BaseProfile {

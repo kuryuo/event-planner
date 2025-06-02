@@ -16,27 +16,46 @@ import { useChangeRoleModal } from '@/hooks/roles/useChangeRoleModal';
 import ChangeRoleModal from '@/components/user/user-card/change-role-modal/ChangeRoleModal';
 import { ProfileResponse } from '@/types';
 import { useFilteredSubscribers } from '@/hooks/event/useFilteredSubscribers';
+import ErrorToast from '@/components/ui/notification/ErrorToast';
 
 const EventSubscribersPage: React.FC = () => {
     const navigate = useNavigate();
     const location = useLocation();
     const eventId = location.state?.eventId;
     const responsiblePersonId = location.state?.responsiblePersonId;
+    const eventTitle = location.state?.eventTitle || 'Подписчики события';
+
     const currentUserId = useCurrentProfile().id;
     const changeRoleModal = useChangeRoleModal();
-    const eventTitle = location.state?.eventTitle || 'Подписчики события';
-    const { filteredRoles, isLoading: rolesLoading, isError: rolesError } = useEventRoles(eventId);
 
     const [searchValue, setSearchValue] = useState('');
     const [selectedRoles, setSelectedRoles] = useState<string[]>([]);
+    const [showError, setShowError] = useState(true);
 
-    const { subscribers, isLoading, isError } = useEventSubscribers(eventId);
+    const {
+        filteredRoles,
+        isLoading: rolesLoading,
+        isError: rolesError
+    } = useEventRoles(eventId);
+
+    const {
+        subscribers,
+        isLoading: isSubscribersLoading,
+        isError: isSubscribersError
+    } = useEventSubscribers(eventId);
 
     const filteredSubscribers = useFilteredSubscribers({
         subscribers: subscribers || [],
         nameSearch: searchValue,
         selectedRoles,
     });
+
+    const getErrorMessage = () => {
+        if (isSubscribersError && rolesError) return 'Ошибка при загрузке участников и ролей';
+        if (isSubscribersError) return 'Ошибка при загрузке участников';
+        if (rolesError) return 'Ошибка при загрузке ролей';
+        return '';
+    };
 
     if (!eventId) {
         return <div>Не передан ID события</div>;
@@ -55,14 +74,6 @@ const EventSubscribersPage: React.FC = () => {
                             className={styles.arrow}
                             alt="arrow"
                             onClick={() => {
-                                console.log('[Назад]:', {
-                                    eventId,
-                                    responsiblePersonId,
-                                    currentUserId,
-                                    link: getEventLink(eventId, responsiblePersonId, currentUserId),
-                                    isOrganizer: responsiblePersonId === currentUserId,
-                                });
-
                                 navigate(getEventLink(eventId, responsiblePersonId, currentUserId));
                             }}
                         />
@@ -71,7 +82,11 @@ const EventSubscribersPage: React.FC = () => {
                             label="Пригласить пользователя"
                             variant="border"
                             size="small"
-                            onClick={() => navigate(AppRoute.INVITE)}
+                            onClick={() =>
+                                navigate(AppRoute.INVITE, {
+                                    state: { eventId, eventTitle, responsiblePersonId },
+                                })
+                            }
                         />
                     </div>
                     <InputField
@@ -84,30 +99,37 @@ const EventSubscribersPage: React.FC = () => {
                 </div>
 
                 <div className={styles.mainContent}>
+                    {(isSubscribersError || rolesError) && showError && (
+                        <ErrorToast
+                            message={getErrorMessage()}
+                            type="error"
+                            onClose={() => setShowError(false)}
+                        />
+                    )}
+
                     <div className={styles.participantsList}>
-                        <div className={styles.grid}>
-                            {isLoading && <p>Загрузка участников...</p>}
-                            {isError && <p>Ошибка при загрузке участников</p>}
-                            {!isLoading &&
-                                !isError &&
-                                filteredSubscribers.map((p: ProfileResponse, i: number) => (
-                                    <UserCard
-                                        key={p.id || i}
-                                        name={p.name || p.email || 'Аноним'}
-                                        role={p.eventRoleName || 'Участник'}
-                                        variant="interactive"
-                                        avatarUrl={p.avatarUrl}
-                                        eventId={eventId}
-                                        userId={p.id}
-                                        onClick={() => changeRoleModal.open(p.id, p.eventRoleName)}
-                                        isOrganizer={responsiblePersonId === currentUserId}
-                                    />
-                                ))}
-                        </div>
+                        {!isSubscribersLoading &&
+                            !isSubscribersError &&
+                            filteredSubscribers.length > 0 && (
+                                <div className={styles.grid}>
+                                    {filteredSubscribers.map((p: ProfileResponse, i: number) => (
+                                        <UserCard
+                                            key={p.id || i}
+                                            name={p.name || p.email || 'Аноним'}
+                                            role={p.role || 'Участник'}
+                                            variant="interactive"
+                                            avatarUrl={p.avatarUrl}
+                                            eventId={eventId}
+                                            userId={p.id}
+                                            onClick={() => changeRoleModal.open(p.id, p.role)}
+                                            isOrganizer={responsiblePersonId === currentUserId}
+                                        />
+                                    ))}
+                                </div>
+                            )}
                     </div>
+
                     <div className={styles.filterBlock}>
-                        {rolesLoading && <p>Загрузка ролей...</p>}
-                        {rolesError && <p>Ошибка при загрузке ролей</p>}
                         {!rolesLoading && !rolesError && (
                             <UserRoleFilter
                                 roles={filteredRoles}
@@ -116,6 +138,7 @@ const EventSubscribersPage: React.FC = () => {
                             />
                         )}
                     </div>
+
                     <ChangeRoleModal
                         isOpen={changeRoleModal.isOpen}
                         onClose={changeRoleModal.close}

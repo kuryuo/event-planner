@@ -50,7 +50,7 @@ export const useProfileForm = () => {
 
     useEffect(() => {
         if (!isLoading && data) {
-            console.log('[PROFILE FORM] full profile data:', data); // добавь это
+            console.log('[PROFILE FORM] full profile data:', data);
 
             const id = data.id;
             const firstName = data.firstName || '';
