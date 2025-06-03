@@ -19,7 +19,7 @@ import Modal from '@/components/ui/modal/Modal';
 import { getEditEventLink } from '@/utils/navigation';
 import { useUploadEventPhotos, useEventSubscriptionStatus } from '@/hooks';
 
-const EventPage: React.FC = () => {
+const   EventPage: React.FC = () => {
     const navigate = useNavigate();
     const [isFinishModalOpen, setIsFinishModalOpen] = useState(false);
 
@@ -99,7 +99,10 @@ const EventPage: React.FC = () => {
                             )}
                         </div>
 
-                        <EventPost />
+                        <EventPost
+                            isOrganizer={isOrganizer}
+                            eventTitle={event?.name || ''}
+                        />
                     </div>
 
                     <div className={styles.rightColumn}>

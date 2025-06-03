@@ -12,6 +12,7 @@ export const eventPostApi = baseApi.injectEndpoints({
                 method: 'GET',
                 params: { eventId },
             }),
+            transformResponse: (response: { result: EventPost[] }) => response.result,
             providesTags: ['EventPosts'],
         }),
 

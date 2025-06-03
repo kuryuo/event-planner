@@ -68,13 +68,75 @@
     color: var(--grey);
 }
 
-.more {
+.moreIcon {
     position: absolute;
-    color: var(--dark-grey);
     top: 16px;
     right: 16px;
     width: 24px;
     height: 24px;
     cursor: pointer;
+    color: var(--dark-grey);
+    opacity: 0.6;
+    transition: transform 0.2s ease, opacity 0.2s ease;
 }
 
+.moreIcon:hover {
+    opacity: 1;
+    transform: scale(1.05);
+}
+
+.moreIcon:active {
+    transform: scale(0.95);
+}
+
+.menuDropdown {
+    position: absolute;
+    top: 40px;
+    right: 16px;
+    background-color: var(--white);
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 8px 12px;
+    z-index: 10;
+
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.menuButton {
+    background: none;
+    border: none;
+    font-size: 16px;
+    color: var(--light-red);
+    cursor: pointer;
+    padding: 6px;
+    text-align: left;
+    transition: background 0.2s;
+}
+
+.menuButton:hover {
+    color: var(--deep-red);
+}
+
+.editIcon {
+    width: 25px;
+    height: 25px;
+    cursor: pointer;
+
+    transition: transform 0.2s ease;
+}
+
+.editIcon:hover {
+    transform: scale(1.05);
+}
+
+.editIcon:active {
+    transform: scale(0.95);
+}
+
+.titleRow {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
