@@ -8,6 +8,7 @@ export const useEventContacts = (eventId?: string) => {
         refetch,
     } = useGetEventContactsQuery(eventId!, {
         skip: !eventId,
+        refetchOnMountOrArgChange: true,
     });
 
     return {

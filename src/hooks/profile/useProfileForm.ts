@@ -50,13 +50,11 @@ export const useProfileForm = () => {
 
     useEffect(() => {
         if (!isLoading && data) {
-            console.log('[PROFILE FORM] full profile data:', data);
 
             const id = data.id;
             const firstName = data.firstName || '';
             const lastName = data.lastName || '';
             const avatarUrl = data.avatarUrl || undefined;
-            console.log('[PROFILE FORM] avatarUrl:', avatarUrl);
 
             const isSame =
                 currentProfile.id === id &&

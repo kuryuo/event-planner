@@ -18,7 +18,6 @@ const InviteUserPage: React.FC = () => {
     const location = useLocation();
     const { eventId, eventTitle, responsiblePersonId, avatarUrl } = location.state || {};
     const { sendInvites, toasts, removeToast } = useSendInvites(eventId);
-    console.log('InviteUserPage state:', { eventId, eventTitle, responsiblePersonId, avatarUrl });
 
     const {
         searchValue,
@@ -94,7 +93,6 @@ const InviteUserPage: React.FC = () => {
                         label="Отправить приглашения"
                         variant="grey"
                         onClick={() => {
-                            console.log('Отправка приглашений:', selectedIds);
                             sendInvites(selectedIds);
                         }}
                     />

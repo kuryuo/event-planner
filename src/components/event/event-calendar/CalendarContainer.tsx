@@ -28,10 +28,6 @@ const CalendarContainer: React.FC = () => {
 
     const events = Array.isArray(data?.result) ? data.result : [];
 
-    console.log('%c[ФИЛЬТРАЦИЯ С СЕРВЕРА]', 'color: green; font-weight: bold;');
-    console.log('Применённые фильтры:', cleanedFilters);
-    console.log('События от сервера:', events);
-
     if (isLoading) return <div>Loading...</div>;
     if (error) return <div>Error loading events</div>;
 

@@ -12,7 +12,6 @@ export const useUploadEventPhotos = (eventId: string, onSuccess?: () => void) =>
 
         try {
             await Promise.all(uploads);
-            console.log('Все фото успешно загружены');
 
             if (onSuccess) {
                 onSuccess();

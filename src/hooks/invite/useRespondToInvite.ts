@@ -6,7 +6,6 @@ export function useRespondToInvite() {
     const respond = async (inviteId: string, accept: boolean) => {
         try {
             await respondToInvite({ inviteId, accept }).unwrap();
-            console.log(`Приглашение ${accept ? 'принято' : 'отклонено'}`);
         } catch (e) {
             console.error('Ошибка при ответе на приглашение:', e);
         }

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import Modal from '@/components/ui/modal/Modal';
 import { useRespondToInvite } from '@/hooks/invite/useRespondToInvite';
 import { Invite } from '@/types/invite';
@@ -16,10 +16,6 @@ const InviteModal: React.FC<InviteModalProps> = ({
                                                  }) => {
     const { respond } = useRespondToInvite();
     const { inviteId, communityName, inviterUsername } = invite;
-
-    useEffect(() => {
-        console.log('[InviteModal] Получен invite:', invite);
-    }, [invite]);
 
     const handleAccept = async () => {
         await respond(inviteId, true);
