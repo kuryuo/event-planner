@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import styles from './EventPhotosPreview.module.css';
 import { AppRoute } from '@/utils/const.ts';
 import { useEventPhotos } from '@/hooks';
+import {API_BASE_URL} from "@/utils/const.ts";
 
 type Props = {
     eventId: string;
@@ -13,7 +14,6 @@ type Props = {
 const EventPhotosPreview: React.FC<Props> = ({ eventId, responsiblePersonId, eventTitle  }) => {
     const navigate = useNavigate();
     const { photos, isLoading, isError } = useEventPhotos(eventId);
-    const BASE_URL = 'https://smarteventmanager.ru';
 
     const handleShowAllClick = () => {
         navigate(AppRoute.PHOTOS_EVENT, {
@@ -35,7 +35,7 @@ const EventPhotosPreview: React.FC<Props> = ({ eventId, responsiblePersonId, eve
                     {photos.slice(0, 5).map((src: string, index: number) => (
                         <img
                             key={index}
-                            src={`${BASE_URL}${src}`}
+                            src={`${API_BASE_URL}${src}`}
                             alt={`Фото ${index + 1}`}
                             className={styles.image}
                         />

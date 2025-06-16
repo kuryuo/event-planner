@@ -16,7 +16,7 @@ import ErrorToast from '@/components/ui/notification/ErrorToast';
 const InviteUserPage: React.FC = () => {
     const navigate = useNavigate();
     const location = useLocation();
-    const { eventId, eventTitle, responsiblePersonId, avatarUrl } = location.state || {};
+    const { eventId, eventTitle, responsiblePersonId } = location.state || {};
     const { sendInvites, toasts, removeToast } = useSendInvites(eventId);
 
     const {

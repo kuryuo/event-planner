@@ -11,6 +11,6 @@ export enum AppRoute {
     EDIT_EVENT = "/edit-event/:eventId",
 }
 
-export const API_BASE_URL = 'https://smarteventmanager.ru';
+export const API_BASE_URL = 'http://95.82.231.190:5002';
 
 export const API_BASE_PATH = `${API_BASE_URL}/api`;

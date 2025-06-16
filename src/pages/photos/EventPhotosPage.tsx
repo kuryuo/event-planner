@@ -7,11 +7,11 @@ import Arrow from '@/assets/img/arrow.svg';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { getEventLink } from '@/utils/navigation';
 import { useCurrentProfile, useEventPhotos } from '@/hooks';
+import {API_BASE_URL} from "@/utils/const";
 
 const EventPhotosPage: React.FC = () => {
     const navigate = useNavigate();
     const location = useLocation();
-    const BASE_URL = 'https://smarteventmanager.ru';
     const eventId = location.state?.eventId;
     const { photos, isLoading, isError } = useEventPhotos(eventId || '');
     const eventTitle = location.state?.eventTitle || 'Фотографии события';
@@ -54,7 +54,7 @@ const EventPhotosPage: React.FC = () => {
                         {photos.map((src: string, i: number) => (
                             <img
                                 key={i}
-                                src={`${BASE_URL}${src}`}
+                                src={`${API_BASE_URL}${src}`}
                                 alt={`Фото ${i + 1}`}
                                 className={styles.photo}
                                 onClick={() => handlePhotoClick(i)}
@@ -68,7 +68,7 @@ const EventPhotosPage: React.FC = () => {
                 <div className={styles.modalOverlay}>
                     <div className={styles.modalContent}>
                         <img
-                            src={`${BASE_URL}${photos[selectedIndex!]}`}
+                            src={`${API_BASE_URL}${photos[selectedIndex!]}`}
                             alt={`Фото ${selectedIndex! + 1}`}
                             className={styles.modalImage}
                         />
